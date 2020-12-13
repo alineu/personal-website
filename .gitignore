@@ -1,7 +1,8 @@
 **/.ipynb_checkpoints
+**/*.ipynb
 *.tex
 *.md
 team.html
 portfolio-details.html
 portfolio.html
-service.html
+services.html
