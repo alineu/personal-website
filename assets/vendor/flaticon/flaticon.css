@@ -1,0 +1,175 @@
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: normal;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+
+.flaticon-matrix:before { content: "\f100"; }
+.flaticon-matrix-big:before { content: "\f100"; font-size: 70px; padding-left: 1rem}
+.flaticon-linear-regression:before { content: "\f101"; }
+.flaticon-linear-regression-big:before { content: "\f101"; font-size: 70px; padding-left: 1rem}
+.flaticon-iteration:before { content: "\f102"; }
+.flaticon-iteration-big:before { content: "\f102"; font-size: 70px; padding-left: 1rem}
+.flaticon-dot-plot:before { content: "\f103"; }
+.flaticon-dot-plot-big:before { content: "\f103"; font-size: 70px; padding-left: 1rem}
+.flaticon-feelings:before { content: "\f104"; }
+.flaticon-feelings-big:before { content: "\f104"; font-size: 70px; padding-left: 1rem}
+.flaticon-machine-learning:before { content: "\f105"; }
+.flaticon-machine-learning-big:before { content: "\f105"; font-size: 70px; padding-left: 1rem}
+.flaticon-mesh:before { content: "\f106"; }
+.flaticon-mesh-big:before { content: "\f106"; font-size: 70px; padding-left: 1rem}
+.flaticon-deep-learning:before { content: "\f107"; }
+.flaticon-deep-learning-big:before { content: "\f107"; font-size: 70px; padding-left: 1rem}
+.flaticon-artificial-intelligence:before { content: "\f108"; }
+.flaticon-artificial-intelligence-big:before { content: "\f108"; font-size: 70px; padding-left: 1rem}
+.flaticon-neural:before { content: "\f109"; }
+.flaticon-neural-big:before { content: "\f109"; font-size: 70px; padding-left: 1rem}
+.flaticon-machine:before { content: "\f10a"; }
+.flaticon-machine-big:before { content: "\f10a"; font-size: 70px; padding-left: 1rem}
+.flaticon-math:before { content: "\f10b"; }
+.flaticon-math-big:before { content: "\f10b"; font-size: 70px; padding-left: 1rem}
+.flaticon-math-1:before { content: "\f10c"; }
+.flaticon-math-1-big:before { content: "\f10c"; font-size: 70px; padding-left: 1rem}
+.flaticon-git:before { content: "\f10d"; }
+.flaticon-git-big:before { content: "\f10d"; font-size: 70px; padding-left: 1rem}
+.flaticon-forest:before { content: "\f10e"; }
+.flaticon-forest-big:before { content: "\f10e"; font-size: 70px; padding-left: 1rem}
+.flaticon-chart:before { content: "\f10f"; }
+.flaticon-chart-big:before { content: "\f10f"; font-size: 70px; padding-left: 1rem}
+.flaticon-pie-graph:before { content: "\f110"; }
+.flaticon-pie-graph-big:before { content: "\f110"; font-size: 70px; padding-left: 1rem}
+.flaticon-is-approximately-equal-to:before { content: "\f111"; }
+.flaticon-is-approximately-equal-to-big:before { content: "\f111"; font-size: 70px; padding-left: 1rem}
+.flaticon-time:before { content: "\f112"; }
+.flaticon-time-big:before { content: "\f112"; font-size: 70px; padding-left: 1rem}
+.flaticon-calculation:before { content: "\f113"; }
+.flaticon-calculation-big:before { content: "\f113"; font-size: 70px; padding-left: 1rem}
+.flaticon-data-collection:before { content: "\f114"; }
+.flaticon-data-collection-big:before { content: "\f114"; font-size: 70px; padding-left: 1rem}
+.flaticon-data-collection-1:before { content: "\f115"; }
+.flaticon-data-collection-1-big:before { content: "\f115"; font-size: 70px; padding-left: 1rem}
+.flaticon-filter:before { content: "\f116"; }
+.flaticon-filter-big:before { content: "\f116"; font-size: 70px; padding-left: 1rem}
+.flaticon-filter-1:before { content: "\f117"; }
+.flaticon-filter-1-big:before { content: "\f117"; font-size: 70px; padding-left: 1rem}
+.flaticon-settings:before { content: "\f118"; }
+.flaticon-settings-big:before { content: "\f118"; font-size: 70px; padding-left: 1rem}
+.flaticon-settings-1:before { content: "\f119"; }
+.flaticon-settings-1-big:before { content: "\f119"; font-size: 70px; padding-left: 1rem}
+.flaticon-levels:before { content: "\f11a"; }
+.flaticon-levels-big:before { content: "\f11a"; font-size: 70px; padding-left: 1rem}
+.flaticon-spam:before { content: "\f11b"; }
+.flaticon-spam-big:before { content: "\f11b"; font-size: 70px; padding-left: 1rem}
+.flaticon-mountain:before { content: "\f11c"; }
+.flaticon-mountain-big:before { content: "\f11c"; font-size: 70px; padding-left: 1rem}
+.flaticon-analytics:before { content: "\f11d"; }
+.flaticon-analytics-big:before { content: "\f11d"; font-size: 70px; padding-left: 1rem}
+.flaticon-voting:before { content: "\f11e"; }
+.flaticon-voting-big:before { content: "\f11e"; font-size: 70px; padding-left: 1rem}
+.flaticon-line-chart:before { content: "\f11f"; }
+.flaticon-line-chart-big:before { content: "\f11f"; font-size: 70px; padding-left: 1rem}
+.flaticon-graph:before { content: "\f120"; }
+.flaticon-graph-big:before { content: "\f120"; font-size: 70px; padding-left: 1rem}
+.flaticon-area-chart:before { content: "\f121"; }
+.flaticon-area-chart-big:before { content: "\f121"; font-size: 70px; padding-left: 1rem}
+.flaticon-crowd:before { content: "\f122"; }
+.flaticon-crowd-big:before { content: "\f122"; font-size: 70px; padding-left: 1rem}
+.flaticon-polling:before { content: "\f123"; }
+.flaticon-polling-big:before { content: "\f123"; font-size: 70px; padding-left: 1rem}
+.flaticon-ouroboros:before { content: "\f124"; }
+.flaticon-ouroboros-big:before { content: "\f124"; font-size: 70px; padding-left: 1rem}
+.flaticon-terminal:before { content: "\f125"; }
+.flaticon-terminal-big:before { content: "\f125"; font-size: 70px; padding-left: 1rem}
+.flaticon-command-window:before { content: "\f126"; }
+.flaticon-command-window-big:before { content: "\f126"; font-size: 70px; padding-left: 1rem}
+.flaticon-terminal-1:before { content: "\f127"; }
+.flaticon-terminal-1-big:before { content: "\f127"; font-size: 70px; padding-left: 1rem}
+.flaticon-sql-server:before { content: "\f128"; }
+.flaticon-sql-server-big:before { content: "\f128"; font-size: 70px; padding-left: 1rem}
+.flaticon-sql-server-1:before { content: "\f129"; }
+.flaticon-sql-server-1-big:before { content: "\f129"; font-size: 70px; padding-left: 1rem}
+.flaticon-big-data:before { content: "\f12a"; ; padding-left: 1rem}
+.flaticon-big-data-big:before { content: "\f12a"; font-size: 70px; padding-left: 1rem}
+.flaticon-big-data-1:before { content: "\f12b"; ; padding-left: 1rem}
+.flaticon-big-data-1-big:before { content: "\f12b"; font-size: 70px; padding-left: 1rem}
+.flaticon-big-data-2:before { content: "\f12c"; ; padding-left: 1rem}
+.flaticon-big-data-2-big:before { content: "\f12c"; font-size: 70px; padding-left: 1rem}
+.flaticon-github:before { content: "\f12d"; }
+.flaticon-github-big:before { content: "\f12d"; font-size: 70px; padding-left: 1rem}
+.flaticon-route:before { content: "\f12e"; }
+.flaticon-route-big:before { content: "\f12e"; font-size: 70px; padding-left: 1rem}
+.flaticon-storm:before { content: "\f12f"; }
+.flaticon-storm-big:before { content: "\f12f"; font-size: 70px; padding-left: 1rem}
+.flaticon-cloudy:before { content: "\f130"; }
+.flaticon-cloudy-big:before { content: "\f130"; font-size: 70px; padding-left: 1rem}
+.flaticon-forecast:before { content: "\f131"; }
+.flaticon-forecast-big:before { content: "\f131"; font-size: 70px; padding-left: 1rem}
+.flaticon-language:before { content: "\f132"; }
+.flaticon-language-big:before { content: "\f132"; font-size: 70px; padding-left: 1rem}
+.flaticon-language-1:before { content: "\f133"; }
+.flaticon-language-1-big:before { content: "\f133"; font-size: 70px; padding-left: 1rem}
+.flaticon-classification:before { content: "\f134"; }
+.flaticon-classification-big:before { content: "\f134"; font-size: 70px; padding-left: 1rem}
+.flaticon-mail:before { content: "\f135"; }
+.flaticon-mail-big:before { content: "\f135"; font-size: 70px; padding-left: 1rem}
+.flaticon-population:before { content: "\f136"; }
+.flaticon-population-big:before { content: "\f136"; font-size: 70px; padding-left: 1rem}
+.flaticon-population-1:before { content: "\f137"; }
+.flaticon-population-1-big:before { content: "\f137"; font-size: 70px; padding-left: 1rem}
+.flaticon-plant:before { content: "\f138"; }
+.flaticon-plant-big:before { content: "\f138"; font-size: 70px; padding-left: 1rem}
+.flaticon-statistics:before { content: "\f139"; }
+.flaticon-statistics-big:before { content: "\f139"; font-size: 70px; padding-left: 1rem}
+.flaticon-cancer:before { content: "\f13a"; }
+.flaticon-cancer-big:before { content: "\f13a"; font-size: 70px; padding-left: 1rem}
+.flaticon-cancer-1:before { content: "\f13b"; }
+.flaticon-cancer-1-big:before { content: "\f13b"; font-size: 70px; padding-left: 1rem}
+.flaticon-ribbon:before { content: "\f13c"; }
+.flaticon-ribbon-big:before { content: "\f13c"; font-size: 70px; padding-left: 1rem}
+.flaticon-heart:before { content: "\f13d"; }
+.flaticon-heart-big:before { content: "\f13d"; font-size: 70px; padding-left: 1rem}
+.flaticon-smartphone:before { content: "\f13e"; }
+.flaticon-smartphone-big:before { content: "\f13e"; font-size: 70px; padding-left: 1rem}
+.flaticon-fraud:before { content: "\f13f"; }
+.flaticon-fraud-big:before { content: "\f13f"; font-size: 70px; padding-left: 1rem}
+.flaticon-leakage:before { content: "\f140"; }
+.flaticon-leakage-big:before { content: "\f140"; font-size: 70px; padding-left: 1rem}
+.flaticon-fishing:before { content: "\f141"; }
+.flaticon-fishing-big:before { content: "\f141"; font-size: 70px; padding-left: 1rem}
+.flaticon-face-detection:before { content: "\f142"; }
+.flaticon-face-detection-big:before { content: "\f142"; font-size: 70px; padding-left: 1rem}
+.flaticon-face-detection-1:before { content: "\f143"; }
+.flaticon-face-detection-1-big:before { content: "\f143"; font-size: 70px; padding-left: 1rem}
+.flaticon-face-detection-2:before { content: "\f144"; }
+.flaticon-face-detection-2-big:before { content: "\f144"; font-size: 70px; padding-left: 1rem}
+.flaticon-floor:before { content: "\f145"; }
+.flaticon-floor-big:before { content: "\f145"; font-size: 70px; padding-left: 1rem}
+.flaticon-pattern:before { content: "\f146"; }
+.flaticon-pattern-big:before { content: "\f146"; font-size: 70px; padding-left: 1rem}
+.flaticon-recognition:before { content: "\f147"; }
+.flaticon-recognition-big:before { content: "\f147"; font-size: 70px; padding-left: 1rem}
+.flaticon-filter-2:before { content: "\f148"; }
+.flaticon-filter-2-big:before { content: "\f148"; font-size: 70px; padding-left: 1rem}

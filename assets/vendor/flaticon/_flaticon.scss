@@ -1,0 +1,186 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 17/12/2020 23:21
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-matrix:before { content: "\f100"; }
+.flaticon-linear-regression:before { content: "\f101"; }
+.flaticon-iteration:before { content: "\f102"; }
+.flaticon-dot-plot:before { content: "\f103"; }
+.flaticon-feelings:before { content: "\f104"; }
+.flaticon-machine-learning:before { content: "\f105"; }
+.flaticon-mesh:before { content: "\f106"; }
+.flaticon-deep-learning:before { content: "\f107"; }
+.flaticon-artificial-intelligence:before { content: "\f108"; }
+.flaticon-neural:before { content: "\f109"; }
+.flaticon-machine:before { content: "\f10a"; }
+.flaticon-math:before { content: "\f10b"; }
+.flaticon-math-1:before { content: "\f10c"; }
+.flaticon-git:before { content: "\f10d"; }
+.flaticon-forest:before { content: "\f10e"; }
+.flaticon-chart:before { content: "\f10f"; }
+.flaticon-pie-graph:before { content: "\f110"; }
+.flaticon-is-approximately-equal-to:before { content: "\f111"; }
+.flaticon-time:before { content: "\f112"; }
+.flaticon-calculation:before { content: "\f113"; }
+.flaticon-data-collection:before { content: "\f114"; }
+.flaticon-data-collection-1:before { content: "\f115"; }
+.flaticon-filter:before { content: "\f116"; }
+.flaticon-filter-1:before { content: "\f117"; }
+.flaticon-settings:before { content: "\f118"; }
+.flaticon-settings-1:before { content: "\f119"; }
+.flaticon-levels:before { content: "\f11a"; }
+.flaticon-spam:before { content: "\f11b"; }
+.flaticon-mountain:before { content: "\f11c"; }
+.flaticon-analytics:before { content: "\f11d"; }
+.flaticon-voting:before { content: "\f11e"; }
+.flaticon-line-chart:before { content: "\f11f"; }
+.flaticon-graph:before { content: "\f120"; }
+.flaticon-area-chart:before { content: "\f121"; }
+.flaticon-crowd:before { content: "\f122"; }
+.flaticon-polling:before { content: "\f123"; }
+.flaticon-ouroboros:before { content: "\f124"; }
+.flaticon-terminal:before { content: "\f125"; }
+.flaticon-command-window:before { content: "\f126"; }
+.flaticon-terminal-1:before { content: "\f127"; }
+.flaticon-sql-server:before { content: "\f128"; }
+.flaticon-sql-server-1:before { content: "\f129"; }
+.flaticon-big-data:before { content: "\f12a"; }
+.flaticon-big-data-1:before { content: "\f12b"; }
+.flaticon-big-data-2:before { content: "\f12c"; }
+.flaticon-github:before { content: "\f12d"; }
+.flaticon-route:before { content: "\f12e"; }
+.flaticon-storm:before { content: "\f12f"; }
+.flaticon-cloudy:before { content: "\f130"; }
+.flaticon-forecast:before { content: "\f131"; }
+.flaticon-language:before { content: "\f132"; }
+.flaticon-language-1:before { content: "\f133"; }
+.flaticon-classification:before { content: "\f134"; }
+.flaticon-mail:before { content: "\f135"; }
+.flaticon-population:before { content: "\f136"; }
+.flaticon-population-1:before { content: "\f137"; }
+.flaticon-plant:before { content: "\f138"; }
+.flaticon-statistics:before { content: "\f139"; }
+.flaticon-cancer:before { content: "\f13a"; }
+.flaticon-cancer-1:before { content: "\f13b"; }
+.flaticon-ribbon:before { content: "\f13c"; }
+.flaticon-heart:before { content: "\f13d"; }
+.flaticon-smartphone:before { content: "\f13e"; }
+.flaticon-fraud:before { content: "\f13f"; }
+.flaticon-leakage:before { content: "\f140"; }
+.flaticon-fishing:before { content: "\f141"; }
+.flaticon-face-detection:before { content: "\f142"; }
+.flaticon-face-detection-1:before { content: "\f143"; }
+.flaticon-face-detection-2:before { content: "\f144"; }
+.flaticon-floor:before { content: "\f145"; }
+.flaticon-pattern:before { content: "\f146"; }
+.flaticon-recognition:before { content: "\f147"; }
+.flaticon-filter-2:before { content: "\f148"; }
+    
+    $font-Flaticon-matrix: "\f100";
+    $font-Flaticon-linear-regression: "\f101";
+    $font-Flaticon-iteration: "\f102";
+    $font-Flaticon-dot-plot: "\f103";
+    $font-Flaticon-feelings: "\f104";
+    $font-Flaticon-machine-learning: "\f105";
+    $font-Flaticon-mesh: "\f106";
+    $font-Flaticon-deep-learning: "\f107";
+    $font-Flaticon-artificial-intelligence: "\f108";
+    $font-Flaticon-neural: "\f109";
+    $font-Flaticon-machine: "\f10a";
+    $font-Flaticon-math: "\f10b";
+    $font-Flaticon-math-1: "\f10c";
+    $font-Flaticon-git: "\f10d";
+    $font-Flaticon-forest: "\f10e";
+    $font-Flaticon-chart: "\f10f";
+    $font-Flaticon-pie-graph: "\f110";
+    $font-Flaticon-is-approximately-equal-to: "\f111";
+    $font-Flaticon-time: "\f112";
+    $font-Flaticon-calculation: "\f113";
+    $font-Flaticon-data-collection: "\f114";
+    $font-Flaticon-data-collection-1: "\f115";
+    $font-Flaticon-filter: "\f116";
+    $font-Flaticon-filter-1: "\f117";
+    $font-Flaticon-settings: "\f118";
+    $font-Flaticon-settings-1: "\f119";
+    $font-Flaticon-levels: "\f11a";
+    $font-Flaticon-spam: "\f11b";
+    $font-Flaticon-mountain: "\f11c";
+    $font-Flaticon-analytics: "\f11d";
+    $font-Flaticon-voting: "\f11e";
+    $font-Flaticon-line-chart: "\f11f";
+    $font-Flaticon-graph: "\f120";
+    $font-Flaticon-area-chart: "\f121";
+    $font-Flaticon-crowd: "\f122";
+    $font-Flaticon-polling: "\f123";
+    $font-Flaticon-ouroboros: "\f124";
+    $font-Flaticon-terminal: "\f125";
+    $font-Flaticon-command-window: "\f126";
+    $font-Flaticon-terminal-1: "\f127";
+    $font-Flaticon-sql-server: "\f128";
+    $font-Flaticon-sql-server-1: "\f129";
+    $font-Flaticon-big-data: "\f12a";
+    $font-Flaticon-big-data-1: "\f12b";
+    $font-Flaticon-big-data-2: "\f12c";
+    $font-Flaticon-github: "\f12d";
+    $font-Flaticon-route: "\f12e";
+    $font-Flaticon-storm: "\f12f";
+    $font-Flaticon-cloudy: "\f130";
+    $font-Flaticon-forecast: "\f131";
+    $font-Flaticon-language: "\f132";
+    $font-Flaticon-language-1: "\f133";
+    $font-Flaticon-classification: "\f134";
+    $font-Flaticon-mail: "\f135";
+    $font-Flaticon-population: "\f136";
+    $font-Flaticon-population-1: "\f137";
+    $font-Flaticon-plant: "\f138";
+    $font-Flaticon-statistics: "\f139";
+    $font-Flaticon-cancer: "\f13a";
+    $font-Flaticon-cancer-1: "\f13b";
+    $font-Flaticon-ribbon: "\f13c";
+    $font-Flaticon-heart: "\f13d";
+    $font-Flaticon-smartphone: "\f13e";
+    $font-Flaticon-fraud: "\f13f";
+    $font-Flaticon-leakage: "\f140";
+    $font-Flaticon-fishing: "\f141";
+    $font-Flaticon-face-detection: "\f142";
+    $font-Flaticon-face-detection-1: "\f143";
+    $font-Flaticon-face-detection-2: "\f144";
+    $font-Flaticon-floor: "\f145";
+    $font-Flaticon-pattern: "\f146";
+    $font-Flaticon-recognition: "\f147";
+    $font-Flaticon-filter-2: "\f148";

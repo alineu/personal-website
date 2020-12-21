@@ -2,6 +2,8 @@
 **/*.ipynb
 *.tex
 *.md
+*.pdf
+assets/img/later/*
 team.html
 portfolio-details.html
 portfolio.html
