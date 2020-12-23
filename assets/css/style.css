@@ -27,18 +27,54 @@ h1, h2, h3, h4, h5, h6, .font-primary {
 }
 
 pre{
+  font-family: monospace;
   margin: 1rem 0rem 1rem 0rem;
+  font-size: 1.2em;
 }
 pre.prettyprint{
     margin: 0.5rem 0rem 0rem;
 }
 
-.table-striped>tbody>tr:nth-child(odd)>td, 
-.table-striped>tbody>tr:nth-child(odd)>th {
-   background-color: #f3f8fa}
-.table{
-   width: 100%;
-   margin: 0rem 0rem 1rem;}
+pre.prettyprint{
+    margin: 0.5rem 0rem 0rem;
+}
+
+code.method  {
+  font-weight: normal;
+  font-size: 1.1rem;
+  font-family: Menlo,monospace;
+  color: #0099ff;
+}
+
+code.object  {
+  font-weight: normal;
+  font-size: 1.1rem;
+  font-family: Menlo,monospace;
+  color: #862d59;
+}
+
+code.arg {
+  font-weight: normal;
+  font-size: 1.0em;
+  font-family: Monaco,monospace;
+  color: #003399;
+}
+
+code.builtin {
+  font-weight: normal;
+  font-size: 1.0em;
+  font-family: Monaco,monospace;
+  color: #009900;
+}
+
+code.bool {
+  font-weight: bold;
+  font-size: 1.0em;
+  font-family: Monaco,monospace;
+  color: #009900;
+}
+
+/*"Droid Sans Mono","Courier","Menlo","Consolas","Bitstream Vera Sans Mono",*/
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -116,6 +152,7 @@ pre.prettyprint{
 #main {
   margin-top: 80px;
 }
+
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -557,6 +594,60 @@ Notes cards
 .notes .icon-box-tetrafour:hover {
   border-color: #3e4069;
 }
+
+/* text(25):006627 | main-bg(75):66ffa1 | table-bg(90):b3ffd0 | light(96):e6ffef */
+
+.notes .icon-box-tetrafive .icon {
+  background: #9effc3;
+}
+
+.notes .icon-box-tetrafive .icon i {
+  color: #4f7f62;
+}
+
+.notes .icon-box-tetrafive:hover {
+  border-color: #4f7f62;
+}
+
+/* text(25):3a505f | main-bg(75):a0b6c5 | table-bg(90):d0dbe2 | light(96):f3f6f8 */
+
+.notes .icon-box-tetrasix .icon {
+  background: #9dd9ff;
+}
+
+.notes .icon-box-tetrasix .icon i {
+  color: #4f6e82;
+}
+
+.notes .icon-box-tetrasix:hover {
+  border-color: #4f6e82;
+}
+/* text(25):802d00 | main-bg(75):ffac80 | table-bg(90):ffdecc | light(96):fff2eb */
+
+.notes .icon-box-tetraseven .icon {
+  background: #ffc39e;
+}
+
+.notes .icon-box-tetraseven .icon i {
+  color: #802d00;
+}
+
+.notes .icon-box-tetraseven:hover {
+  border-color: #802d00;
+}
+
+/* text(25):80004c | main-bg(75):ff99d6 | table-bg(90):ffcceb | light(96):fff0f9 */
+.notes .icon-box-tetraeight .icon {
+  background: #ffcceb;
+}
+
+.notes .icon-box-tetraeight .icon i {
+  color: #b3006b;
+}
+
+.notes .icon-box-tetraeight:hover {
+  border-color: #b3006b;
+}
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
@@ -820,7 +911,7 @@ section {
 --------------------------------------------------------------*/
 .breadcrumbs {
   padding: 15px 0;
-  background-color: #cee3e3;
+  background-color: #dbeaf0;
   min-height: 40px;
 }
 
@@ -873,8 +964,20 @@ section {
   line-height: 1em;
 }
 
-.tutorials a {
-  color: #003366;
+.tutorials li a {
+  color: #003399;
+}
+
+.tutorials li a:hover {
+  color: #68A4C4;
+  cursor: pointer;
+}
+
+.tutorials a.header_arg {
+    display: block;
+    position: relative;
+    top: -60px;
+    visibility: hidden;
 }
 
 .tutorials h1 .major_line{
@@ -914,8 +1017,37 @@ section {
   font-weight: normal;
 }
 
-.tutorials p{
+.tutorials p {
   font-size: 1.1em;
+}
+
+.tutorials thead:nth-child(odd) {
+    background-color: #ffcabd;
+    }
+
+.tutorials tr:nth-child(even) {
+    background-color: #ffebe6;
+    line-height: 0.8em;
+    min-height: 0.8em;
+    height: 0.8em;
+    }
+
+.tutorials tr:nth-child(odd) {
+    line-height: 0.8em;
+    min-height: 0.8em;
+    height: 0.8em;
+    }
+
+.tutorials th:nth-child(even) {
+  /*index*/
+    background-color: #ffcabd;
+    }
+
+.tutorials .table{
+   font-family: Roboto;
+   font-size: 0.9em;
+   width: fit-content;
+   margin: 1em 0em 2.0em;
 }
 
 .tutorials .blurb{
@@ -946,8 +1078,12 @@ section {
   transition: all 0.3s ease-in-out;
   text-align: center;
   border: 1px solid #fff;
+  display: inline-block;
 }
 
+.services .icon-box a{
+  display: block;
+}
 .services .icon {
   margin: 0 auto 20px auto;
   padding-top: 17px;
@@ -1039,8 +1175,54 @@ section {
   border-color: #3e4069;
 }
 
+.services .icon-box-tetrafive .icon {
+  background: #9effc3;
+}
+
+.services .icon-box-tetrafive .icon i {
+  color: #4f7f62;
+}
+
+.services .icon-box-tetrafive:hover {
+  border-color: #4f7f62;
+}
 
 
+.services .icon-box-tetrasix .icon {
+  background: #9dd9ff;
+}
+
+.services .icon-box-tetrasix .icon i {
+  color: #4f6e82;
+}
+
+.services .icon-box-tetrasix:hover {
+  border-color: #4f6e82;
+}
+
+.services .icon-box-tetraseven .icon {
+  background: #ffc39e;
+}
+
+.services .icon-box-tetraseven .icon i {
+  color: #ff6200;
+}
+
+.services .icon-box-tetraseven:hover {
+  border-color: #ff6200;
+}
+
+.services .icon-box-tetraeight .icon {
+  background: #ffcceb;
+}
+
+.services .icon-box-tetraeight .icon i {
+  color: #b3006b;
+}
+
+.services .icon-box-tetraeight:hover {
+  border-color: #b3006b;
+}
 
 .services .icon-box-cyan .icon {
   background: #e6fdfc;
