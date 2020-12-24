@@ -115,12 +115,11 @@
             <p><h3>Series</h3></p>
             <pre class="prettyprint lang-language">
 <code class="language-python">import numpy as np
-# Salam
 import pandas as pd
 tempArr = np.arange(0, 6)
 tempSeries = pd.Series(tempArr)
 tempSeries</code></pre>
-            <pre style="font-family: monospace; font-size: 16px;">0    0
+            <pre>0    0
 1    1
 2    2
 3    3
@@ -132,13 +131,13 @@ dtype: int64</pre>
 <code class="language-python">tempIndices = list('abcedf')
 tempSeries = pd.Series(tempArr, index=tempIndices)
 tempSeries.head(3)</code></pre>
-            <pre style="font-family: monospace; font-size: 16px;">a    0
+            <pre>a    0
 b    1
 c    2
 dtype: int64</pre>
             <pre class="prettyprint lang-language">
 <code class="language-python">tempSeries.tail()</code></pre>
-            <pre style="font-family: monospace; font-size: 16px;">b    1
+            <pre>b    1
 c    2
 d    3
 e    4
@@ -148,8 +147,8 @@ dtype: int64</pre>
             <p>The indices can also be assigned by modifying the index attribute:</code>:</p>
             <pre class="prettyprint lang-language">
 <code class="language-python">tempSeries.index = list('fedcba')
-print(tempSeries)</code></pre>
-            <pre style="font-family: monospace; font-size: 16px;">f    0
+tempSeries</code></pre>
+            <pre>f    0
 e    1
 d    2
 c    3
@@ -203,7 +202,7 @@ tempDataFrame</code></pre>
             <pre class="prettyprint lang-language">
 <code class="language-python">print(pd.DataFrame(tempArr).shape)
 print(pd.Series(tempArr).shape)</code></pre>
-        <pre style="font-family: monospace; font-size: 16px;">(6, 1)
+        <pre>(6, 1)
 (6,)</pre>
             <p>Column names and indices can be assigned to <code>Dataframes</code> in the same exact way as <code class="object">Series</code>:</p>
             <pre class="prettyprint lang-language">
