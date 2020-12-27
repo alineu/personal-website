@@ -228,7 +228,7 @@ df.head()</code></pre>
             <p><a class="header_arg" id="sep_"></a><code class="arg" style="font-weight: bolder;">sep</code>: Delimiter to use - the default value is ','</p>
             <pre class="prettyprint lang-language">
 <code class="language-python"># Not specifying the delimiter when reading a tsv file is problematic
-pd.read_csv(dataPath+'BostonHousing_min.tsv')</code></pre>
+pd.read_csv(dataPath+'BostonHousing_min.tsv').head()</code></pre>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -596,7 +596,7 @@ pd.read_csv(dataPath+'BostonHousing_min.csv',
                 </tr>
               </tbody>
             </table>
-            <p><strong>Note</strong>: <code class="arg">header=</code><code class="keyword">None</code> treats the first line of the file as data, and the column names will be assigned as a list of integers</p>
+            <p><strong>Note</strong>: <code class="arg">header=</code><code class="bool">None</code> treats the first line of the file as data, and the column names will be assigned as a list of integers</p>
             <pre class="prettyprint lang-language">
 <code class="language-python">pd.read_csv(dataPath+'BostonHousing_min.csv', 
             header=None).head()</code></pre>
@@ -934,7 +934,7 @@ pd.read_csv(dataPath+'BostonHousing_no-header_min.csv',
             </table>
             <p><a class="header_arg" id="skiprows_"></a><code class="arg" style="font-weight: bolder;">skiprows</code>: can be used as
               <ul>
-                <li>a <code class="builtin">list</code> to specify the line numbers to be skipped when reading a file, e.g. <code class="arg">skiprows</code>=[1, 5, 8]</li>
+                <li>a <code class="builtin">list</code> to specify the line numbers to be skipped when reading a file, e.g. <code class="arg">skiprows</code><code>=[1, 5, 8]</code></li>
                 <li>an <code class="builtin">int</code> that specifies where to start reading the file, e.g. <code class="arg">skiprows</code><code>=5</code>. <code class="arg">skiprows</code><code>=n</code> and <code class="arg">header</code><code>=n</code> produce the same effect.</li>
                 <li>a callable function which is evaluated against the row indices e.g. <code class="arg">skiprows</code><code>=</code><code class='bool'>lambda</code><code> x: x%3==2</code></li>
               </ul>
@@ -1402,8 +1402,8 @@ pd.read_csv(dataPath+'BostonHousing_min.csv',
             <p><a class="header_arg" id="dtype_"></a><code class="arg" style="font-weight: bolder;">dtype</code>: a <code class="builtin">dictionary</code> that enables the user to specify the data type. Otherwise pandas will automatically infer the data.</p>
             <pre class="prettyprint lang-language">
 <code class="language-python">df = pd.read_csv(dataPath+'BostonHousing_min.csv', 
-            usecols=['age', 'tax'])
-df.dtype()</code></pre>
+                 usecols=['age', 'tax'])
+df.dtypes</code></pre>
             <pre>age    float64
 tax      int64
 dtype: object</pre>
@@ -1446,15 +1446,16 @@ dtype: object</pre>
               </tbody>
             </table>
             <pre class="prettyprint lang-language">
-<code class="language-python">df = pd.read_csv(dataPath+'BostonHousing_min.csv',  
-            usecols=['age', 'tax'], 
-            dtype={'tax': float})
-df.dtype()</code></pre>
+<code class="language-python"># Change the "tax" column data type from int to float
+df = pd.read_csv(dataPath+'BostonHousing_min.csv',  
+                 usecols=['age', 'tax'], 
+                 dtype={'tax': float})
+df.dtypes</code></pre>
             <pre>age    float64
 tax      float64
 dtype: object</pre>
             <pre class="prettyprint lang-language">
-<code class="language-python"># Note the floating point in tax column
+<code class="language-python"># Note the floating point in the "tax" column
 df.head()</code></pre>
             <table class="table table-striped">
               <thead>
@@ -1492,6 +1493,13 @@ df.head()</code></pre>
                 </tr>
               </tbody>
             </table>
+            <div class="container">
+              <div class="row">
+                <div class="col text-center">
+                  <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/pandas/load_data.ipynb">Link to the <strong>ipython notebook</strong></a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

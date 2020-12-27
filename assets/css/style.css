@@ -39,40 +39,33 @@ pre.prettyprint{
     margin: 0.5rem 0rem 0rem;
 }
 
+
+code {
+  font-size: 1.0em;
+  font-family: Monaco,monospace;
+}
+
 code.method  {
-  font-weight: normal;
-  font-size: 1.1rem;
-  font-family: Menlo,monospace;
   color: #0099ff;
 }
 
 code.object  {
-  font-weight: normal;
-  font-size: 1.1rem;
-  font-family: Menlo,monospace;
   color: #862d59;
 }
 
 code.arg {
-  font-weight: normal;
-  font-size: 1.0em;
-  font-family: Monaco,monospace;
   color: #003399;
 }
 
 code.builtin {
-  font-weight: normal;
-  font-size: 1.0em;
-  font-family: Monaco,monospace;
   color: #009900;
 }
 
 code.bool {
   font-weight: bold;
-  font-size: 1.0em;
-  font-family: Monaco,monospace;
   color: #009900;
 }
+
 
 /*"Droid Sans Mono","Courier","Menlo","Consolas","Bitstream Vera Sans Mono",*/
 
@@ -1050,6 +1043,15 @@ section {
    margin: 1em 0em 2.0em;
 }
 
+
+.tutorials .notebook_link{
+
+   font-family: Roboto;
+   font-size: 0.9em;
+   width: fit-content;
+   margin: 1em 0em 2.0em;
+}
+
 .tutorials .blurb{
   margin-bottom: 1.5em;
 }
@@ -1445,6 +1447,30 @@ section {
   color: #FFF;
   background: rgba(46, 86, 107, 0.9);
   border: 2px solid rgba(46, 86, 107, 0.9);
+}
+
+/*--------------------------------------------------------------
+# notebook button
+--------------------------------------------------------------*/
+.btn-notebook {
+
+  font-size: 1.4em;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  color: rgba(30, 67, 86, 0.8);
+  letter-spacing: 1px;
+  line-height: 20px;
+  border: 2px solid rgba(30, 67, 86, 0.8);
+  border-radius: 0.6em;
+  background: #f3f8fa;
+  transition: all 0.3s ease 0s;
+  padding: 0.6em 0.6em 0.6em 0.6em;
+}
+
+.btn-notebook:hover {
+  color: #ebfafa;
+  background: rgba(41, 163, 163, 0.9);
+  border: 2px solid rgba(41, 163, 163, 0.9);
 }
 
 
