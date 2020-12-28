@@ -13,3 +13,4 @@ services.html
 letsencrypt
 pydsvenv/
 .env
+**/*.py
