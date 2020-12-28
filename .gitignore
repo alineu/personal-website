@@ -7,6 +7,9 @@ assets/img/later/*
 team.html
 portfolio-details.html
 projects-template.html
+index-2.html
 portfolio.html
 services.html
 letsencrypt
+pydsvenv/
+.env
