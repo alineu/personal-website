@@ -35,10 +35,6 @@ pre.prettyprint{
     margin: 0.5rem 0rem 0rem;
 }
 
-pre.prettyprint{
-    margin: 0.5rem 0rem 0rem;
-}
-
 
 code {
   font-size: 1.0em;
@@ -66,7 +62,15 @@ code.bool {
   color: #009900;
 }
 
+code.lang {
+  font-size: 1.1em;
+  font-family: "Times New Roman", Times, serif;
+  color: #224050;
+}
 
+code.library {
+  color: #29a3a3;
+}
 /*"Droid Sans Mono","Courier","Menlo","Consolas","Bitstream Vera Sans Mono",*/
 
 /*--------------------------------------------------------------
@@ -957,6 +961,15 @@ section {
   line-height: 1em;
 }
 
+.tutorials ul {
+  padding: 1em 0em 0.5em 1em;
+  margin: 0em 0em 0em 1em;
+}
+
+.tutorials ul li {
+  padding: 0em 0em 0.5em 0em;
+}
+
 .tutorials li a {
   color: #003399;
 }
@@ -985,33 +998,59 @@ section {
 
 .tutorials h2 {
   font-family: "Open Sans", sans-serif;
-  text-align: center;
-  font-size: 1.85em;
-  font-weight: 700;
+  text-align: left;
+  font-size: 1.8em;
+  font-weight: 750;
   margin: 20px 0px 20px 0px
 }
 
 .tutorials h3 {
-  font-size: 1.4em;
-  font-weight: 700;
+  font-size: 1.65em;
+  font-weight: 650;
+  margin: 1em 0em 1em 0em;
 }
 
 .tutorials h3.category_header {
-  background-color: #158BAE;
-  color: #fff;
+  display: block;
+  background-color: #fff0cc;/*ffbf2a;*/
+  color: #990000;
   letter-spacing: 1px;
-  padding: 10px 20px 10px 20px;
-  border: solid 1px #68A4C4;
-  margin-bottom: 20px;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  border: solid 0.2em #ffe099;
+  border-radius: 0.5em;
+  margin: 0em 0em 1em 0em;
 }
 
 .tutorials h4 {
-  font-size: 1.2em;
-  font-weight: normal;
+  font-size: 1.5em;
+  font-weight: 500;
+  margin: 0.75em 0em 0.75em 0em;
+}
+
+.tutorials h5 {
+  font-size: 1.4em;
+  font-weight: 450;
+  margin: 0.5em 0em 0.5em 0em;
+}
+
+.tutorials h6 {
+  font-size: 1.3em;
+  font-weight: 400;
+  margin: 0.5em 0em 0.5em 0em;
 }
 
 .tutorials p {
   font-size: 1.1em;
+}
+
+.tutorials div.note {
+  text-align: center;
+  font-style: italic;
+  background-color: #fff0cc;
+  border: solid 0.2em #ffe099;
+  border-radius: 0.5em;
+  margin: 0em 12em 0em 12em;
+  padding: 0.25em 0.25em 0.25em 0.25em;
 }
 
 .tutorials thead:nth-child(odd) {
@@ -1037,15 +1076,25 @@ section {
     }
 
 .tutorials .table{
-   font-family: Roboto;
-   font-size: 0.9em;
-   width: fit-content;
-   margin: 1em 0em 2.0em;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-family: Roboto;
+  font-size: 0.9em;
+  /*width: fit-content;*/
+  margin: 1em 0em 2.0em;
 }
 
 
-.tutorials .notebook_link{
+.tutorials span.latex_math {
+  font-size: 1.2em;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+}
 
+
+
+.tutorials .notebook_link{
    font-family: Roboto;
    font-size: 0.9em;
    width: fit-content;
@@ -1454,8 +1503,8 @@ section {
 --------------------------------------------------------------*/
 .btn-notebook {
 
-  font-size: 1.4em;
-  font-weight: 400;
+  font-size: 1.2em;
+  font-weight: 350;
   font-family: "Roboto", sans-serif;
   color: rgba(30, 67, 86, 0.8);
   letter-spacing: 1px;
@@ -1465,11 +1514,11 @@ section {
   background: #f3f8fa;
   transition: all 0.3s ease 0s;
   padding: 0.6em 0.6em 0.6em 0.6em;
+  margin: 1em 0em 1em 0em;
 }
-
 .btn-notebook:hover {
   color: #ebfafa;
-  background: rgba(41, 163, 163, 0.9);
+  background: rgba(30, 67, 86, 0.8);
   border: 2px solid rgba(41, 163, 163, 0.9);
 }
 

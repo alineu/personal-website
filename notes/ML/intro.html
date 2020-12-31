@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pandas - Intro</title>
+  <title>ML - Introduction</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -86,10 +86,10 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Pandas</h2>
+          <h2>ML</h2>
           <ol>
-            <li><a href="jupyter_notebook.html">Pandas</a></li>
-            <li>Intro</li>
+            <li><a href="jupyter_notebook.html">ML</a></li>
+            <li>Introduction</li>
           </ol>
         </div>
       </div>
@@ -100,159 +100,21 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <p><h3>Introduction</h3>
-            <b><code class="library">Pandas</code></b> is a fast, powerful, flexible, and easy to use open source data analysis and manipulation tool, built on top of Python. Pandas is best known for for the extensive set of features that it provides:
-      
-            <ul>
-              <li> Selecting, and filtering rows and columns</li>
-              <li> Proper handling of missing data</li>
-              <li> Applying operations across rows and columns</li>
-              <li> Merging data sets together</li>
-              <li> Grouping and applying aggregation functions</li>
-            </ul>
-      
-            <code class="library">Pandas</code> offers two classes <strong><code class="object">Dataframe</code></strong> and <strong><code class="object"> Series</code></strong> which are 1D and 2D arrays, respectively, capable of holding data of any type (string, float, python objects, etc.). A <code class="library">pandas</code> <code class="object">Series</code> can simply be thought of a 1-dimensional data where each values is associated with an index (label). The <code class="object">DataFrame</code> can be thought of as the extension of <code class="object">Series</code> to 2D, where each values has a corresponding column name and index. Simply put, a <code class="object">DataFrame</code> is a table similar to an <code class="language">Excel</code> spreadsheet.</p>
-            <p><h3>Series</h3></p>
-            <pre class="prettyprint lang-language">
-<code class="language-python">import numpy as np
-import pandas as pd
-tempArr = np.arange(0, 6)
-tempSeries = pd.Series(tempArr)
-tempSeries</code></pre>
-            <pre>0    0
-1    1
-2    2
-3    3
-4    4
-5    5
-dtype: int64</pre>
-            <p>The indices of a <code class="library">pandas</code> <code class="object">Series</code> can be specified when defining the  <code class="object">Series</code>:</p>
-            <pre class="prettyprint lang-language">
-<code class="language-python">tempIndices = list('abcedf')
-tempSeries = pd.Series(tempArr, index=tempIndices)
-tempSeries.head(3)</code></pre>
-            <pre>a    0
-b    1
-c    2
-dtype: int64</pre>
-            <pre class="prettyprint lang-language">
-<code class="language-python">tempSeries.tail()</code></pre>
-            <pre>b    1
-c    2
-d    3
-e    4
-f    5
-dtype: int64</pre>
-            <p><strong>Note</strong>: <code class="method">head(n)</code> shows the first <em>n</em> lines of a <code class="object">Series</code> or <code class="object">DataFrame</code> where the default value of <em>n</em> is 5. Similarly, <code class="method">tail()</code> shows the last 5 lines.<p>
-            <p>The indices can also be assigned by modifying the index attribute:</code>:</p>
-            <pre class="prettyprint lang-language">
-<code class="language-python">tempSeries.index = list('fedcba')
-tempSeries</code></pre>
-            <pre>f    0
-e    1
-d    2
-c    3
-b    4
-a    5
-dtype: int64</pre>
-            <p><h3>DataFrame</h3></p>
-            <pre class="prettyprint lang-language">
-<code class="language-python">tempArrEven = np.arange(0, 10, 2)
-tempArrOdd = np.arange(1, 11, 2)
-tempDataFrame = pd.DataFrame(np.array([tempArrEven, tempArrOdd]).T)
-tempDataFrame</code></pre>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>0</th>
-                  <th>1</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">0</th>
-                  <td>0</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>2</td>
-                  <td>3</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>4</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <th scope="row">4</th>
-                  <td>8</td>
-                  <td>9</td>
-                </tr>         
-              </tbody>
-            </table>
-              
-            <p><h4>Note</h4><code class="object">DataFrame</code> object must have a second dimension &GreaterEqual; 1. Similarly, <code class="object">Series</code> object is 1-dimensional. See the following example:</p>
-            <pre class="prettyprint lang-language">
-<code class="language-python">print(pd.DataFrame(tempArr).shape)
-print(pd.Series(tempArr).shape)</code></pre>
-        <pre>(6, 1)
-(6,)</pre>
-            <p>Column names and indices can be assigned to <code>Dataframes</code> in the same exact way as <code class="object">Series</code>:</p>
-            <pre class="prettyprint lang-language">
-<code class="language-python">tempDataFrame = pd.DataFrame(data=np.array([tempArrEven, tempArrOdd]).T, 
-                             columns=['even_numbers', 'odd_numbers'], 
-                             index=list('abcde'))
-tempDataFrame</code></pre>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>0</th>
-                  <th>1</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">a</th>
-                  <td>0</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <th scope="row">b</th>
-                  <td>2</td>
-                  <td>3</td>
-                </tr>
-                <tr>
-                  <th scope="row">c</th>
-                  <td>4</td>
-                  <td>5</td>
-                </tr>
-                <tr>
-                  <th scope="row">d</th>
-                  <td>6</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <th scope="row">e</th>
-                  <td>8</td>
-                  <td>9</td>
-                </tr>
-              </tbody>
-            </table>
+            <h2>Introduction</h2>
+            <h2>What Problems We Can Solve Using Machine Learning?</h2>
+            <h2>What Do We Need?</h2>
+            <h3>Model</h3>
+            <h3>Data</h3>
+            <h2>Categories of Machine Learning</h2>
+            <h3>Supervised Learning</h3>
+            <h3>Unsupervised Learning</h3>
           </div>
         </div>
       </div>
       <div class="container">
         <div class="row">
           <div class="col text-center">
-            <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/pandas/intro.ipynb">Link to the <strong>ipython notebook</strong></a>
+            <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/ML/intro.ipynb">Link to the <strong>ipython notebook</strong></a>
           </div>
         </div>
       </div>
@@ -290,7 +152,6 @@ tempDataFrame</code></pre>
               <li><i class="bx bx-chevron-right"></i> <a href="#">About Me</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Projects</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Tutorials</a></li>
-              <!-- <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li> -->
             </ul>
           </div>
 
@@ -350,6 +211,16 @@ tempDataFrame</code></pre>
   <!-- Template Main JS File -->
   <script src="../../assets/js/main.js"></script>
 
+  <!-- MathJax JS File -->
+  <script type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]],
+        processEscapes: true
+    }
+});
+</script>
+</script>
 </body>
 
 </html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>ML - Classification Metrics (Part 1)</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../../assets/img/web-icon.png" rel="icon">
+  <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="../../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../../assets/css/style.css" rel="stylesheet">
+  <link href="../../assets/css/prism.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="../../index.html"><span>pyDataScientist</span></a></h1>
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="../../projects.html">Projects</a></li>
+          <li class="active drop-down"><a href="../../notes.html">Tutorials</a>
+            <ul>
+              <li><a href="../../notes.html#Pandas">Pandas</a></li>
+              <li><a href="../../notes.html#Machine-Learning">Machine Learning</a></li>
+                <ul>
+                  <li><a href="../../notes.html">Linear Regression</a></li>
+                  <li><a href="../../notes.html">Support Vector Machines</a></li>
+                  <li><a href="../../notes.html">Naive Bayes</a></li>
+                  <li><a href="../../notes.html">Decision Trees</a></li>
+                  <li><a href="../../notes.html">Ensemble Methods</a></li>
+                </ul>
+              </li>
+              <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
+              <li><a href="../../notes.html#Visualization">Visualization</a></li>
+              <li><a href="../../notes.html#Jupyter-Notebook">Jupyter Notebook</a></li>
+              <li><a href="../../notes.html#Git">Git</a></li>
+              <li><a href="../../notes.html#Bash">Bash</a></li>
+              <li><a href="../../notes.html#Deep-Learning">Deep Learning</a></li>
+              <li><a href="../../notes.html#Conda">Conda</a></li>
+              <li><a href="../../notes.html#Numerical-Methods">Numerical Methods</a></li>
+              <li><a href="../../notes.html#Big-Data">Big Data</a></li>
+              <li><a href="../../notes.html#Classification">Classification</a></li>
+              <li><a href="../../notes.html#Pattern-Recognition">Pattern Recognition</a></li>
+              <li><a href="../../notes.html#SQL">SQL</a></li>
+            </ul>
+          </li>
+          <li><a href="../../about.html">About Me</a></li>
+          <li><a href="../../contact.html">Contact</a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= About Us Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>ML</h2>
+          <ol>
+            <li><a href="jupyter_notebook.html">ML</a></li>
+            <li>Classification Metrics</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- End Header -->
+    <section class="tutorials" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="1000">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2>Classification Metrics (Part 1)</h2>
+            <h3>Introduction</h3>
+            <p>
+              Once we train a machine learning model for a classification task, we can evaluate the models' performance by comparing the class predictions of the model with the expected class labels. Failing to choose the right method to compare the two (prediction and expectation) can cause a poor model or produce misleading conslusions regarding the model performance and the model parameters. In this tutorial, we introduce commonly used and explain their pros and cons, and use cases.
+            </p>	
+            <h4>Accuracy</h4>
+            <p>
+              Accuracy is the most common and natural way of assessing the performance of a model. 
+              It is simply defined as the ratio of <strong><em>the number correctly classified samples</em></strong> to <strong><em>the total number of observations</em></strong>
+            </p>
+$$
+\text{Accuracy}=\frac{\text{Number of Correct Predictions}}{\text{Number of Observations}}
+$$
+            <p>
+              Let's consider a cat-dog binary classification problem where class label 1 corresponds to cats and dogs are labeled 0:
+              <pre class="prettyprint lang-language">
+<code class="language-python">import numpy as np
+# Observations
+y_obs = np.array([1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0])</code></pre>
+              Let's also assume that after training the classifier, the following predictions are obtained:
+              <pre class="prettyprint lang-language">
+<code class="language-python"># Predictions  
+y_pred = np.array([1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0])</code></pre>
+              Accuracy can then be calculated as follows
+			  <pre class="prettyprint lang-language">
+<code class="language-python">accuracy = sum(y_pred==y_obs) / len(y_obs)
+print(f'{accuracy*100}%')</code></pre>
+              <pre>75%</pre>
+            </p>
+            <p>
+              9 out of the 12 predictions are True which gives the accuracy to be 75%.
+            </p>
+            <h3>Statistical measures of the performance</h3>
+            <p>
+              Eventhough accuracy is the most widely used metric in classification problems, using accuracy can sometimes produce misleading conclusions regarding the performance of the model. As we will see later, <a href="#imbalanced_classification"><b><em>imbalanced classification</em></b></a> problem is a well known case where using accuracy is prohibited. 
+            </p>
+            <p>
+              Let's take a closer look at the cat-dog classification example by creating a table that groups the predicted classes for each class into correct and incorrect:
+              <table class="table table-bordered" style="border-color:transparent; white-space: nowrap; float:left; margin:1em 0em 1em; padding: 0em; text-align:center; vertical-align: center;">
+                <tbody>
+            	  <tr style="height: 2em;">
+            	    <th style="background:white; border:none;" colspan="2" rowspan="2"></th>
+            	    <th colspan="2" style=" background: #f9f9f9;">Actual class</th>
+            	  </tr>
+            	  <tr style="background: #fbeaf9; height: 2em;">
+            	    <th>Cat</th>
+            	    <th style="background:#fcfbe8;">Dog</th>
+            	  </tr>
+            	  <tr style="line-height: 0.75em; background: #f9f9f9; height: 2em;">
+            	    <th rowspan="2" style=" padding: 0.2em; transform: rotate(-90deg);-webkit-transform:  rotate(-deg);vertical-align: middle;">
+            	  	<div>
+            	  	  Predicted<br><br>class
+            	  	</div>
+            	    </th>
+            	    <th style="background: #fbeaf9;">Cat</th>
+            	    <td style="background: #d8f3e3;"><b>4</b></td>
+            	    <td style="background: #ffccda;">1</td>
+            	  </tr>
+            	  <tr style="background:none; height: 2em;">
+            	    <th style="background:#fcfbe8;">Dog</th>
+            	    <td style="background: #ffccda;">2</td>
+            	    <td style="background: #d8f3e3;"><b>5</b></td>
+            	  </tr>
+                </tbody>
+              </table>
+            </p>
+            <p>
+              The table above is usually represented as a matrix called <em><a href="confusion_matrix.html">Confusion Matrix</a></em>.
+            </p>
+            <pre class="prettyprint lang-language">
+<code class="language-python">from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+cm = confusion_matrix(y_obs, y_pred)
+cm</code></pre>
+            <pre>array([[5, 1],
+       [2, 4]])</pre>
+            <pre class="prettyprint lang-language">
+<code class="language-python">cm_plot = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['dog', 'cat'])
+cm_plot.plot();</code></pre>     
+            <img src="conf_mat_1.png">
+            <p>
+              <div class="note"><span> <b>Confusion</b> matrix summarizes the results of testing the classifier by dividing the observations into correct and incorrect predictions, for each class (cats and dogs).</span></div>
+            </p>
+            <p>
+              Before we proceed further, it is instructive to introduce some definitions that describe the performance of a classifier, specifically in <em>binary classification</em>.
+            </p>
+            <h5><a class="header_arg" id="tpfn"></a>
+              <span style="color: #088E15;">True</span> Positive, <span style="color: #FF0D0D;">False</span> Positive, <span style="color: #FF0D0D;">False</span> Negative, and <span style="color: #088E15;">True</span> Negative
+            </h5>
+            <p>
+              In cat-dog classification example, let's define the class label 1, cats, to be the <em>positive</em> and the class label 0, dogs, to be the <em>negative</em> class. The positivity or negativity of a class in this cat-dog classification is just a convention (either dog or cat can be defined as the positive class). However, in cases such as classifying <b>fraudulent</b> and <b>valid</b> transactions or classifying <b>cancerous</b> and <b>benign</b> tumors, <b><em>the class with more importance to be recognized correctly is labeled as the positive class.</em></b> In other words, misclassifying the positive class is much more unfavorable than misclassifying the negative class.
+            </p>
+            <p>
+              For example, classifying a <b>cancerous</b> tumor as <b>benign</b> is much worse than classifying a <b>benign</b> tumor as <b>cancerous</b>, therefore, <b>cancerous</b> tumor is the positive class. For the same reason, <b>fradulent</b> transaction is the positive class. Positive and negative are specially importance in imbalanced classification problems and rare event
+            </p>
+            <p>
+              We have four scenarios in binary classification:
+              <ul>
+              	<li><span style="color: #088E15;">True</span> positive (TP): the observed label is positive and the model predicts it to be positive.</li>
+              	<li><span style="color: #FF0D0D;">False</span> positive (FP): the observed label is negative and the model <span style="color: #FF0D0D;">False</span>ly predicts it to be positive.</li>
+              	<li><span style="color: #FF0D0D;">False</span> negative (FN): the observed label is positive and the model <span style="color: #FF0D0D;">False</span>ly predicts it to be negative.</li>
+              	<li><span style="color: #088E15;">True</span> negative (TN): the observed label is negative and the model predicts the label to be negative.</li>
+              </ul>
+            </p>
+            <table class="table table-bordered" style="border-color:transparent; white-space: nowrap; float:left; margin:1em 0em 1em 0em; padding: 0em; text-align:center;">
+              <tbody>
+                <tr style="height: 2em;">
+                  <th style="background:white; border:none;" colspan="2" rowspan="2"></th>
+                  <th colspan="2" style="vertical-align: middle; height: 5em; background: #f9f9f9;">
+            	      Observed class
+                  </th>
+                  <th style="vertical-align: middle; border: none; background: white; width: 10em;"></th>
+                </tr>
+                <tr style="height: 2em;"> 
+                  <th style="vertical-align: middle; height: 5em; background: white; width: 10em;">
+            	      Positive
+                  </th>
+                  <th style="vertical-align: middle; background: white; width: 10em;">
+            	      Negative
+                  </th>
+                </tr>
+                <tr style=" background:none; line-height: 0.75em; background: #f9f9f9;">
+                  <th rowspan="2" style="padding: 0.2em; transform: rotate(-90deg);-webkit-transform:  rotate(-deg);vertical-align: middle;">
+            	  	<div>
+            	  	  Predicted<br><br>class
+            	  	</div>
+            	  </th>
+            	  <th style="vertical-align: middle;background: white; width: 10em;height: 5em;">
+            	      Positive
+            	  </th>
+            	  <td style="vertical-align: middle; background: #d8f3e3;">
+            	    <span class="latex_math">True Positive (TP)</span>
+            	  </td>
+            	  <td style="vertical-align: middle; background: #ffccda; font-family: ">
+            	    <span class="latex_math">False Positive (FP)</span>
+            	  </td>
+            	  <td style="vertical-align: middle; background: white;">
+            	      \[\hat{\text{N}}_{+}=\text{TP + FP}\]
+            	    </td>
+            	  </tr>
+            	  <tr style="background:none; height: 5em;">
+            	    <th style="vertical-align: middle;">
+            	      Negative
+            	    </th>
+            	  <td style="background: #ffccda; vertical-align: middle;">
+            	    <span class="latex_math">False Negative (FN)</span>
+            	  </td>
+            	  <td style="background: #d8f3e3; vertical-align: middle;">
+            	    <span class="latex_math">True Negative (TN)</span>
+            	  </td>
+            	  <td style="vertical-align: middle; background: white;">
+            	      \[\hat{\text{N}}_{-}=\text{FN + TN}\]
+            	  </td>
+            	</tr>
+            	<tr style=" line-height: 0.75em;">
+            	  <th style=" background: white; border: none;"></th>
+            	  <th style=" background: white; border: none;"></th>
+            	  <td style="vertical-align: middle; background: white;">
+            	    \[\text{N}_{+}=\text{TP + FN}\]
+            	  </td>
+            	  <td style="vertical-align: middle; background: white;">
+            	    \[\text{N}_{-}=\text{FP + TN}\]
+            	  </td>
+            	</tr>
+              </tbody>
+            </table>
+            <p>
+              <ul>
+              	<li>$\text{N}_{+}$ is the total number of positive observations</li>
+              	<li>$\text{N}_{-}$ is the total number of negative observations</li>
+              	<li>$\hat{\text{N}}_{+}$ is the total number of positive predictions</li>
+              	<li>$\hat{\text{N}}_{-}$ is the total number of negative predictions</li>
+              </ul>
+            </p>
+            <p>
+              Note that 
+              $$
+              \text{N}=\text{N}_{+}+\text{N}_{-}=\hat{\text{N}}_{+}+\hat{\text{N}}_{-}=\text{TP + FP + FN + TN}
+              $$ where $\text{N}$ is the total number of observations.
+            </p>
+            <p>
+              Using the terminolgy described in the previous section, we can now introduce different statistical measure of the performance in a binary classification task.
+            </p>
+            <h4>
+              Precision
+            </h4>
+            <p>
+              <b>Precision</b> or <b>Positive predictive value (PPV)</b> measures the proportion of positive predictions that were actually positive.
+$$
+\text{Precision} = \frac{\text{TP}}{\hat{\text{N}}_{+}} = 1 - \frac{\text{FP}}{\hat{\text{N}}_{+}}
+$$            
+            </p>
+            <h4>
+              Recall
+            </h4>
+            <p>
+              <b>Recall</b>, <b>sensitivity</b>, or <b>true positive rate (TPR)</b> measures the proportion of positive observations that were correctly predicted. It evaluates how good the model predicts the positive class.
+$$
+\text{Recall} = \frac{\text{TP}}{\text{N}_{+}} = 1 - \frac{\text{FN}}{\text{N}_{+}}
+$$            
+              Achieving a high recall is critical in the problems where correctly identifying the positive class is of vital importance, e.g. correctly identifying fradulent transactions or existence of a deadly disease.
+            </p>
+            <h4>
+              Fall-out
+            </h4>
+            <p>
+              <b>Fall-out</b>, <b>false alaram rate</b>, or <b>false positive rate (FPR)</b> is the ratio between the number of negative observation that falsely predicted to be positive (false positives) and the total number of negative observations. 
+$$
+\text{Fall-out} = \frac{\text{FP}}{\text{N}_{-}} = 1 - \frac{\text{FP}}{\text{N}_{-}}
+$$            
+            </p>
+            <h4>
+              Specificity
+            </h4>
+            <p>
+              <b>Specificity</b>, <b>Selectivity</b>, or <b>true negative rate (TNR)</b> measures the proportion of negative observations that were correctly predicted. It evaluates how good the negative class was predicted.
+$$
+\text{Specificity} = \frac{\text{TN}}{\text{N}_{-}} = 1 - \frac{\text{FP}}{\text{N}_{-}}
+$$            
+            </p>
+            <h3 id="imbalanced_classification">Imbalanced Classification</h3>
+            <p>
+              Imbalanced classification refers to the classification problems were the classes are disproportionately distributed in the population, i.e., one class (the majority class) has a significantly higher samples than the rest of the classes. In binary classification, the minority class is labeled as the positive class (labeled 1), and the majority class is denoted as the negative class (labeled 0). We have
+$$
+\text{N}_{-} >> \text{N}_{+}
+$$          </p>
+            <p>
+              As we briefly pointed out in the beginning, accuracy is not an appropriate metric to evaluate the performance of a classifier for imbalanced problems. The issue with accuracy is that the classifier can achieve a very high accuracy by predicting all the outcomes to be negative regardless of the input sample. This is called  a <b><em>no-skill classifier</em></b>. 
+            </p>
+            <p>
+              <div class="note"><span> <b>No-skill</b> or <b>Naive</b> classifier is a classifier that predicts the majority class (our case) or a random class.</span></div>
+            </p>
+            <p>
+              Because there are only a small proportion of positive classes in the population, this will lead to a very high accuracy. Let's go through an example to get a better understanding of the issue and figure out how we can address it. 
+            </p>
+
+            <pre class="prettyprint lang-language">
+<code class="language-python"># Credit card dummy data
+import numpy as np
+
+def random_binary_array(k, n):
+    """ returns a random distribution of k 1s and n-k 0s"""
+    arr = np.zeros(n)
+    arr[:k] = 1
+    np.random.shuffle(arr)
+    return arr
+
+# Create a dummy data of 10000 transaction outcomes (0:valid and 1:fraud) 
+# with 50 fraud transactions (50 1s and 9950 0s)
+# Observations
+y_obs = random_binary_array(25, 10000)
+y_pred = random_binary_array(25, 10000)
+# make sure we have some true negatives!
+shared_true_negatives_indices = np.random.randint(0, 10000, 25)
+y_pred[shared_true_negatives_indices] = 1
+y_obs[shared_true_negatives_indices] = 1
+# no-skill classifier - always predicts the majority class (0)
+y_no_skill = np.zeros(10000)
+print(f'no-skill classifier\'s accuracy is {sum(y_no_skill==y_obs)/len(y_obs)*100}%')</code></pre>
+            <pre>no-skill classifier's accuracy is 99.5%</pre>
+            <p>
+              As we can see, the no-skill classifier achieves a very high accuracy, however, <b>not a single correct prediction for the positive class (fraud) observations</b>.
+            </p>
+            <pre class="prettyprint lang-language">
+<code class="language-python">fig, ax = plt.subplots(1, 1, dpi=150)
+cm = confusion_matrix(y_obs, y_no_skill)
+cm_plot = ConfusionMatrixDisplay(confusion_matrix=cm, 
+                                 display_labels=['valid', 'fraud'])
+cm_plot.plot(ax=ax);</code></pre>
+            <img src="imbalanced_noskill.png">
+            <p>
+              The same holds true for the predictions; very high accuracy but half of the fraudulent transactions were misclassified as valid.
+            </p>
+            <img src="imbalanced_pred.png">
+            <p>
+              <code class="library">sklearn</code> offers a useful function, <code class="method">classification_report</code>, that summarizes some of the important classification metrics.
+            </p>            
+            <pre class="prettyprint lang-language">
+<code class="language-python">from sklearn.metrics import classification_report
+print(classification_report(y_obs, y_pred, digits=3))</code></pre>
+            <pre>              precision    recall  f1-score   support
+
+         0.0      0.997     0.997     0.997      9950
+         1.0      0.500     0.500     0.500        50
+
+    accuracy                          0.995     10000
+   macro avg      0.749     0.749     0.749     10000
+weighted avg      0.995     0.995     0.995     10000            	
+            </pre>
+            <p>
+              Note that unlike accuracy, precision and recall remain low ($50$%), denoting that the classifier has a poor performance when it comes to identifying the positive class. In classification metrics (2) we will continue this subject to get a better handle on the metrics that we can choose from in imbalanced classification problems.
+            </p>  
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/ML/classification_metrics.ipynb">Link to the <strong>ipython notebook</strong></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+      
+  <!-- ======= Footer ======= -->
+  
+  <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+    <div class="footer-newsletter">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h4>Newsletter</h4>
+            <p>Subscribe here to get notified when a new material is posted</p>
+          </div>
+          <div class="col-lg-6">
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">About Me</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Projects</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Tutorials</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-contact">
+            <h4>Contact</h4>
+            <p>
+              913 Boylston Street<br>
+              Boston, MA 02115<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 617 460 0555<br>
+              <strong>Email:</strong> alimehdirahim@gmail.com<br>
+            </p>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-info">
+            <h3>About Me</h3>
+            <p>A data science enthusiast! I love developing new machine learning algorithms to address real-world problems. I try to learn something new on a daily basis.</p>
+            <div class="social-links mt-3">
+              <a href="https://github.com/alineu" class="Github"><i class="bx bxl-github"></i></a>
+              <a href="https://www.linkedin.com/in/alimehdizadehrahimi/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              <a href="https://twitter.com/estoyali" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="https://instagram.com/aliexplores" class="instagram"><i class="bx bxl-instagram"></i></a>
+              </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright 2020 <strong><span>Ali Mehdizadeh</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+
+        Page design is adopted from <a href="https://bootstrapmade.com/">BootstrapMade</a>.<br>Page icons were taken from <a href="https://www.flaticon.com">flaticon.com</a>. 
+     
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="../../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../../assets/vendor/venobox/venobox.min.js"></script>
+  <script src="../../assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="../../assets/vendor/counterup/counterup.min.js"></script>
+  <script src="../../assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="../../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../../assets/vendor/prism/prism.js"></script>
+  <script src="../../assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../../assets/js/main.js"></script>
+
+  <!-- MathJax JS File -->
+  <script type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]],
+        processEscapes: true
+    }
+});
+</script>
+</script>
+</body>
+
+</html>
