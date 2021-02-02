@@ -3,6 +3,8 @@
 *.tex
 *.md
 *.pdf
+**/*.ppt
+**/*.pptx
 assets/img/later/*
 team.html
 portfolio-details.html

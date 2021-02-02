@@ -1,0 +1,62 @@
+Why Big Data Analytics? Fom the business point of view, to ultimately maximize the revenue of your company. A lot of large organizations such as banks, insurance companies, and telecommunication companies have a lot of data in their warehouses and every day/week/month, a huge amount of new data is being pushed to their warehouses. On the days that there is going to be a lot of data to process, the data engineering team will bring the data and place it into different servers that the maintains its data.
+
+How do you process 1 TB of data? Processing big data can be a real issue for organizations like banks that receive new data on a daily basis. They simply can't afford not processing the data rightaway.
+
+It can take a lot of time to process/analyze a large amount of data. The question is how to reduce the amount of time to process
+
+We will see how will a distributed cluster computing engine like Hadoop comes to the rescue.
+
+What are the problems?
+How they can solve these problems without Hadoop?
+How and to what extent can Hadoop mitigate these issues?
+
+
+Manual solution - What would you do if you don't have a framework that automatically handles big data?
+
+For example, assume that you work as a data engineer in a small bank and you have benn given 1 TB of customer data to process. You have 4 servers, each with 250GB capacity. You ideally would want to process the data in parallel to save some time. The following is a summary of the steps that you need to take if you have to manually process the customer data:
+
+<ol>
+<li>Divide and Distribute the data into the servers.</li>
+<li>You have some program(s) that you use to process/analyze the data. You need to copy all of them to every single server. This let's you run the program on each server in parallel. If processing the new data at the warehouse (Database, Data Lake etc.) previously took X hours, distributing it over n servers reduces that time to X/n. This is a big deal in real-world problems. You can save a lot of time for the company.</li>
+
+<li>Combine all the processed data from the servers into a single part/unit and send it to a downstream system, e.g., customer care or customer support to get insights from the data.</li>
+
+<li>Increasing the number of servers can save the company a lot of time but at the same time, it introduces more and more network errors so: Handling network errors is an important aspect that you need to somehow handle. Maintaining the servers and making sure that the customer data is not going to be lost can be very costly.</li>
+</ol>
+
+We need a framework that takes care of all these challenges automatically. Google was one of the first companies that intended to address these issues after facing a lot of problems due the large amount of data they had.
+
+Back in 2004, searching something in a search engine and getting the result used to take quite a while! The reason: Google was conducting the search process sequentially and not in parallel.
+
+This is what happens in the computers and laptops that use New Technology File System (NTFS) journaling which is the traditional storage system used by most Microsoft operating systems. Because they follow NTFS, when you copy a file to your laptop, it palces in a single disk only without distributing it. For the same reason, accessing the data will take much longer compare to the situation where the data is distributed.
+
+Google wanted to move away from the traditional storage system because the data was stored in a single location. At the time Google introduced Google File System (GFS). What it does is that it divides the data into smaller chunks which lets the user process the data in parallel which is the main goal. 
+
+Let's say you use a program, e.g. a Java application on a JDK (Java Development Kit) platform (or any other application server) that uses a NTFS storage system. What happens is that when you run the program, the application server connects to the database and copies the data that is going to be used by the application to the server. This concept is called code locality:
+<em>You have a processing node and a corresponding storage node. Any program in the processing node will connect to the storage node, load the data into the processing node, performs some operations sequentially and ultimately save the results into the storage node.</em> 
+
+This means that having a distributed storage system but a single processing node will not help with the processing time. The application server will still tend to copy the data from the distributed storage units into the application server and then sequentially process the data. We can see that not only the storage unit but also the application servers need to be distributed to resolve the big data problem. 
+
+We need a processing framework that instead of copying the data to the program, copies the program to the storage units and provide what is called "Data locality". All the programming languages such as Python, R, PHP etc. come with code locality because back when these languages were developed, the developers didn't think of the big data issue and the ability to process the data in parallel, e.g. multiple CPUs.
+To resolve this issue, Google created the first distributed processing engine called MapReduce (MR). 
+
+GFS is a distributed storage system, an infrastructure that can split data across multiple physical servers, and often across more than one data center.
+
+MR is a distributed processing engine (DPE), a programming model with an associated implementation for processing and generating big data sets with a parallel, distributed algorithm on a cluster. It provides an interface for programming entire clusters with implicit data parallelism and fault tolerance. It allows the use of more than one processor to perform the processing for an individual task
+
+Google also released a compressed, high performance, proprietary data storage system called Bigtable which is built on GFS. GFS stores unstructured files (byte streams), and Bigtable stores structured data (rows, columns). To understand the differences between a file system and a database think of a book; If the book doesnt have an index page, when you're looking for a topic in the book, you need to go through all the pages to find that topic. This is what happens in a file system.
+
+However, if the book does have an index page, you can check the index and directly jump to that topic. This is what happens in a database. It is essentially an indexed file system. 
+
+When Google introduced GFS + MR + Bigtable as their solution to big data problem, a guy called Doug Cutting was working on a web-crawling engine called Nutch and he was facing the same big data issues as Google. Doug couldn't use the high end servers that Google had access to so he created a new file system called Nutch Distributed File System (NDFS) that allowed him store and process the data on multiple commodity machines rather than high end machines. This was a much cheaper alternative to Google's approach and it was a great asset for smaller companies that wanted to process big data but simply couldn't afford high end servers. Yahoo hired Doug and later in 2008 released HADOOP as their distributed cluster computing engine. Hadoop has its own sotrage file system, Hadoop Distributed File System (HDFS), along with a MapReduce processing engine.
+
+
+
+
+
+
+
+
+
+
+

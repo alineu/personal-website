@@ -48,13 +48,13 @@
           <li class="active drop-down"><a href="../../notes.html">Tutorials</a>
             <ul>
               <li><a href="../../notes.html#Pandas">Pandas</a></li>
-              <li><a href="../../notes.html#Machine-Learning">Machine Learning</a></li>
+              <li class="drop-down"><a href="../../notes.html#Machine-Learning">Machine Learning</a>
                 <ul>
-                  <li><a href="../../notes.html">Linear Regression</a></li>
-                  <li><a href="../../notes.html">Support Vector Machines</a></li>
-                  <li><a href="../../notes.html">Naive Bayes</a></li>
-                  <li><a href="../../notes.html">Decision Trees</a></li>
-                  <li><a href="../../notes.html">Ensemble Methods</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Linear Regression</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Support Vector Machines</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Naive Bayes</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Decision Trees</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Ensemble Methods</a></li>
                 </ul>
               </li>
               <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
@@ -101,23 +101,91 @@
         <div class="row">
           <div class="col-12">
             <h2>Introduction</h2>
-            <h2>What Problems We Can Solve Using Machine Learning?</h2>
-            <h2>What Do We Need?</h2>
-            <h3>Model</h3>
-            <h3>Data</h3>
+            <p>
+              Machine learning is a branch of artificial intelligence that is about learning from data, i.e., extracting knowledge from data. It is an area of active research and roughly speaking, it stands at the intersection of statistics, artificial intelligence. 
+              <div class="note"><span> Arthur Samuel (1959): <b>"Machine Learning</b> gives computers the ability to learn without being explicitly programmed.”</span></div>
+            </p>
+            <h2>Daily Life Examples</h2>
+            <p>
+              Machine learning algorithms are being used in many aspects of our everyday life. Face detection (cellphone's camera), voice recognition (Amazon Alexa, Siri), spam-detection (email app), fraud detection (credit card company), weather predictions (weather app), music recommendations (Spotify) etc. to name only a few.   
+            </p>
             <h2>Categories of Machine Learning</h2>
-            <h3>Supervised Learning</h3>
+            <p>
+              In a broad perspective, machine learning algorithms fall into two main categories: <b>supervised learning</b> and <b>unsupervised learning</b>.
+            </p>
+            <h3>Spervised Learning</h3>
+            <p>
+              Machine learning algorithms that make predictions by generalizing what they've learned from a given dataset of both <b>inputs</b> and <b>outcomes (labels)</b> are called supervised learning algorithms. The $i$th record in the dataset has featueres $x_{i,1},\,x_{i,2},\, \dots,\,x_{i,n}$ which form the input, and a corresponding outcome $y_i$. The relation ship between the input data and outcome can be descibed using a function $f$ where
+$$
+f([x_{i,1},\,x_{i,2},\, \dots,\,x_{i,n}])=f(X_i)=y_i
+$$
+              For example, when building a <b>house price prediction model</b>, your dataset with $n$ records might have 5 feature columns <b><em>area</em></b>, <b><em>build year (age)</em></b>, <b><em>zipcode</em></b>, <b><em>city</em></b>, <b><em>state</em></b>, <b><em>crime rate</em></b>, and a column $y$ denoting the outcome, the house <b><em>price</em></b>.<br><br>
+$$
+X=\left[
+\begin{array}{c}
+X_{1}\\[1ex]
+X_{2}\\
+\vdots\\
+X_{n}\\[1ex]
+\end{array}\right]=\left[
+\begin{array}{c|c|c|c|c}
+\strut\smash{\overbrace{x_{1,1}}^{\text{age}}} &
+\strut\smash{\overbrace{x_{1,2}}^{\text{zipcode}}} &
+\strut\smash{\overbrace{x_{1,3}}^{\text{crime}}} &
+\strut\smash{\overbrace{x_{1,4}}^{\text{city}}} &
+\strut\smash{\overbrace{x_{1,5}}^{\text{state}}}
+\\
+x_{2,1}&x_{2,2} &x_{2,3} &x_{2,4} &x_{2,5}
+\\
+\vdots & \vdots & \vdots & \vdots & \vdots 
+\\
+x_{n,1}&x_{n,2} &x_{n,3} &x_{n,4} &x_{n,5}
+\end{array}\right]
+    \begin{matrix}
+        \leftarrow \text{record } 1 \\[1ex]
+        \leftarrow \text{record } 2 \\
+        \\[0.5ex]
+        \leftarrow \text{record } n
+    \end{matrix}
+$$
+$$
+{f}(X) = y,
+$$ 
+
+
+              The goal is to train a model $\widehat{f}$ using these features and outcomes so that
+$$
+\widehat{f}(X) \approx y,
+$$ 
+            </p>
             <h3>Unsupervised Learning</h3>
+            <p>
+              Unsupervised learning algorithms differ from supervised algorithms in that the outcomes are no longer available, i.e., the data is not labeled. Our goal is no longer making predictions using the inputs simply because there is no label to predict! Instead, we focus on task such as
+              <ul>
+                <li>
+                  <b><em>Clustering</b></em> the input into groups that share similar features
+                </li>
+                <li>
+                  Finding the most important features of the given input data known as <b><em>Principal Component Analysis (PCA)</b></em>
+                </li>
+                <li>
+                  Finding those records in the dataset that significantly differ in one or more features from the rest of the dataset (<b><em>anomaly detection</b></em>)
+                </li>
+              </ul>
+$$
+\widehat{f}(X_i) \approx y_i
+$$
+            </p>
           </div>
         </div>
       </div>
-      <div class="container">
+<!--       <div class="container">
         <div class="row">
           <div class="col text-center">
             <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/ML/intro.ipynb">Link to the <strong>ipython notebook</strong></a>
           </div>
         </div>
-      </div>
+      </div> -->
     </section>
   </main>
       

@@ -48,13 +48,13 @@
           <li class="active drop-down"><a href="../../notes.html">Tutorials</a>
             <ul>
               <li><a href="../../notes.html#Pandas">Pandas</a></li>
-              <li><a href="../../notes.html#Machine-Learning">Machine Learning</a></li>
+              <li class="drop-down"><a href="notes.html#Machine-Learning">Machine Learning</a>
                 <ul>
-                  <li><a href="../../notes.html">Linear Regression</a></li>
-                  <li><a href="../../notes.html">Support Vector Machines</a></li>
-                  <li><a href="../../notes.html">Naive Bayes</a></li>
-                  <li><a href="../../notes.html">Decision Trees</a></li>
-                  <li><a href="../../notes.html">Ensemble Methods</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Linear Regression</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Support Vector Machines</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Naive Bayes</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Decision Trees</a></li>
+                  <li><a href="../../notes/ML/linear_regression.html">Ensemble Methods</a></li>
                 </ul>
               </li>
               <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
@@ -88,7 +88,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>ML</h2>
           <ol>
-            <li><a href="jupyter_notebook.html">ML</a></li>
+            <li><a href="#">ML</a></li>
             <li>Classification Metrics</li>
           </ol>
         </div>
@@ -134,7 +134,7 @@ print(f'{accuracy*100}%')</code></pre>
             </p>
             <h3>Statistical measures of the performance</h3>
             <p>
-              Eventhough accuracy is the most widely used metric in classification problems, using accuracy can sometimes produce misleading conclusions regarding the performance of the model. As we will see later, <a href="#imbalanced_classification"><b><em>imbalanced classification</em></b></a> problem is a well known case where using accuracy is prohibited. 
+              Even though accuracy is the most widely used metric in classification problems, using accuracy can sometimes produce misleading conclusions regarding the performance of the model. As we will see later, <a href="#imbalanced_classification"><b><em>imbalanced classification</em></b></a> problem is a well known case where using accuracy is prohibited. 
             </p>
             <p>
               Let's take a closer look at the cat-dog classification example by creating a table that groups the predicted classes for each class into correct and incorrect:
@@ -502,7 +502,6 @@ MathJax.Hub.Config({
         processEscapes: true
     }
 });
-</script>
 </script>
 </body>
 
