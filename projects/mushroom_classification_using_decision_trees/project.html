@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Projects - Poisonous Mushroom Detection Using Decision Classifiers</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="../../assets/img/web-icon.png" rel="icon">
+    <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/venobox/venobox.css" rel="stylesheet">
+    <link href="../../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="../../assets/css/prism.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top ">
+      <div class="container">
+        <div class="logo float-left">
+          <h1 class="text-light"><a href="../../index.html"><span>pyDataScientist</span></a></h1>
+        </div>
+        <nav class="nav-menu float-right d-none d-lg-block">
+          <ul>
+            <li><a href="../../index.html">Home</a></li>
+            <li><a href="../../projects.html">Projects</a></li>
+            <li class="active drop-down"><a href="../../notes.html">Tutorials</a>
+            <ul>
+              <li><a href="../../notes.html#Pandas">Pandas</a></li>
+              <li class="drop-down"><a href="../../notes.html#Machine-Learning">Machine Learning</a>
+              <ul>
+                <li><a href="linear_regression.html">Linear Regression</a></li>
+                <li><a href="linear_regression.html">Support Vector Machines</a></li>
+                <li><a href="linear_regression.html">Naive Bayes</a></li>
+                <li><a href="linear_regression.html">Decision Trees</a></li>
+                <li><a href="linear_regression.html">Ensemble Methods</a></li>
+              </ul>
+            </li>
+            <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
+            <li><a href="../../notes.html#Visualization">Visualization</a></li>
+            <li><a href="../../notes.html#Jupyter-Notebook">Jupyter Notebook</a></li>
+            <li><a href="../../notes.html#Git">Git</a></li>
+            <li><a href="../../notes.html#Bash">Bash</a></li>
+            <li><a href="../../notes.html#Deep-Learning">Deep Learning</a></li>
+            <li><a href="../../notes.html#Conda">Conda</a></li>
+            <li><a href="../../notes.html#Numerical-Methods">Numerical Methods</a></li>
+            <li><a href="../../notes.html#Big-Data">Big Data</a></li>
+            <li><a href="../../notes.html#Classification">Classification</a></li>
+            <li><a href="../../notes.html#Pattern-Recognition">Pattern Recognition</a></li>
+            <li><a href="../../notes.html#SQL">SQL</a></li>
+          </ul>
+        </li>
+        <li><a href="../../about.html">About Me</a></li>
+        <li><a href="../../contact.html">Contact</a></li>
+      </ul>
+      </nav><!-- .nav-menu -->
+    </div>
+    </header><!-- End Header -->
+    <main id="main">
+      <!-- ======= About Us Section ======= -->
+      <section class="breadcrumbs">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Projects</h2>
+            <ol>
+              <li><a href="../../projectss.html">Projects</a></li>
+              <li>Poisonous Mushroom Detection Using Decision Classifiers</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+      <!-- End Header -->
+      <section class="tutorials" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="1000">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h3>Poisonous Mushroom Detection Using Decision Classifiers</h3>
+              <p>
+                This project demonstrates the application of <strong>decision tree algorithms</strong> to classify mushrooms into poisonous and edible according to thier characteristics. The dataset is obtained from the <a href="https://archive.ics.uci.edu/ml/datasets/mushroom">machine learning repository of University of California Irvine (UCI)</a>.<br>
+                The Guide in the original dataset states that there is no simple rule for determining the edibility of a mushroom; This makes finding a model that can accurately differentiate poisonous mushrooms from edibles very valuable.
+                Data in csv format (zipped) is available in this <a href="https://github.com/alineu/pyDataScintist-Notebooks/tree/main/data/mushrooms.csv.zip">link</a>.
+              </p>
+              <h4>Data Metadata</h4>
+              <p>
+                The following describes the values that each column in the dataframe represents:
+                <ul>
+                  <li><strong>cap-shape</strong>: bell, conical, convex, flat, knobbed, sunken</li>
+                  <li><strong>cap-surface</strong>: fibrous, grooves, scaly, smooth</li>
+                  <li><strong>cap-color</strong>: brown, buff, cinnamon, gray, green, pink, purple, red, white, yellow</li>
+                  <li><strong>bruises?</strong>: bruises, no</li>
+                  <li><strong>odor</strong>: almond, anise, creosote, fishy, foul, musty, none, pungent, spicy</li>
+                  <li><strong>gill-attachment</strong>: attached, descending, free, notched</li>
+                  <li><strong>gill-spacing</strong>: close, crowded, distant</li>
+                  <li><strong>gill-size</strong>: broad, narrow</li>
+                  <li><strong>gill-color</strong>: black, brown, buff, chocolate, gray, green, orange, pink, purple, red, white, yellow</li>
+                  <li><strong>stalk-shape</strong>: enlarging, tapering</li>
+                  <li><strong>stalk-root</strong>: bulbous, club, cup, equal, rhizomorphs, rooted, missing</li>
+                  <li><strong>stalk-surface-above-ring</strong>: fibrous, scaly, silky, smooth</li>
+                  <li><strong>stalk-surface-below-ring</strong>: fibrous, scaly, silky, smooth</li>
+                  <li><strong>stalk-color-above-ring</strong>: brown, buff, cinnamon, gray, orange, pink, red, white, yellow</li>
+                  <li><strong>stalk-color-below-ring</strong>: brown, buff, cinnamon, gray, orange, pink, red, white, yellow</li>
+                  <li><strong>veil-type</strong>: partial, universal</li>
+                  <li><strong>veil-color</strong>: brown, orange, white, yellow</li>
+                  <li><strong>ring-number</strong>: none, one, two</li>
+                  <li><strong>ring-type</strong>: cobwebby, evanescent, flaring, large, none, pendant, sheathing, zone</li>
+                  <li><strong>spore-print-color</strong>: black, brown, buff, chocolate, green, orange, purple, white, yellow</li>
+                  <li><strong>population</strong>: abundant, clustered, numerous, scattered, several, solitary</li>
+                  <li><strong>habitat</strong>: grasses, leaves, meadows, paths, urban, waste, woods</li>
+                </ul>
+              </p>
+              <p>
+                The <strong>target</strong> column is the outcome (<strong>edible | poisonous</strong>) that we would like our model to predict.
+              </p>
+              <p>
+                The image below is provided as a visual aid for the reader to recognize different features of a mushroom.
+              </p>
+              <p class="text-align: center;">
+                <img src="mushroom_anatomy.png" style="width: 40%; display: block; margin: 40px auto 40px;"/>
+              </p>
+              <h4>Loading the libraries</h4>
+                            <pre class="prettyprint lang-language">
+<code class="language-python">import numpy as np
+import pandas as pd
+pd.set_option('display.float_format', lambda x: '%.5f' % x)
+import matplotlib.pyplot as plt
+%matplotlib inline</code></pre>
+              <h4>Loading the Data</h4>
+                            <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df = pd.read_csv('mushrooms.csv')</code></pre>
+              <h4>Data Exploration</h4>
+              <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df.iloc[:5,:13]</code></pre>
+              <table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+                    <th></th>
+                    <th>target</th>
+                    <th>cap-shape</th>
+                    <th>cap-surface</th>
+                    <th>cap-color</th>
+                    <th>bruises</th>
+                    <th>odor</th>
+                    <th>gill-attachment</th>
+                    <th>gill-spacing</th>
+                    <th>gill-size</th>
+                    <th>gill-color</th>
+                    <th>stalk-shape</th>
+                    <th>stalk-root</th>
+                    <th>stalk-surface-above-ring</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">0</th>
+                    <td>edible</td>
+                    <td>convex</td>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>bruises</td>
+                    <td>almond</td>
+                    <td>free</td>
+                    <td>crowded</td>
+                    <td>narrow</td>
+                    <td>white</td>
+                    <td>tapering</td>
+                    <td>bulbous</td>
+                    <td>smooth</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>edible</td>
+                    <td>convex</td>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>bruises</td>
+                    <td>almond</td>
+                    <td>free</td>
+                    <td>crowded</td>
+                    <td>narrow</td>
+                    <td>white</td>
+                    <td>tapering</td>
+                    <td>bulbous</td>
+                    <td>smooth</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>edible</td>
+                    <td>convex</td>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>bruises</td>
+                    <td>almond</td>
+                    <td>free</td>
+                    <td>crowded</td>
+                    <td>narrow</td>
+                    <td>pink</td>
+                    <td>tapering</td>
+                    <td>bulbous</td>
+                    <td>smooth</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>edible</td>
+                    <td>convex</td>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>bruises</td>
+                    <td>almond</td>
+                    <td>free</td>
+                    <td>crowded</td>
+                    <td>narrow</td>
+                    <td>pink</td>
+                    <td>tapering</td>
+                    <td>bulbous</td>
+                    <td>smooth</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>edible</td>
+                    <td>convex</td>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>bruises</td>
+                    <td>almond</td>
+                    <td>free</td>
+                    <td>crowded</td>
+                    <td>narrow</td>
+                    <td>brown</td>
+                    <td>tapering</td>
+                    <td>bulbous</td>
+                    <td>smooth</td>
+                  </tr>
+                </tbody>
+              </table>
+              <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df.iloc&#91;:5,13:&#93;</code></pre>
+              <table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+                    <th></th>
+                    <th>stalk-surface-below-ring</th>
+                    <th>stalk-color-above-ring</th>
+                    <th>stalk-color-below-ring</th>
+                    <th>veil-type</th>
+                    <th>veil-color</th>
+                    <th>ring-number</th>
+                    <th>ring-type</th>
+                    <th>spore-print-color</th>
+                    <th>population</th>
+                    <th>habitat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">0</th>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>white</td>
+                    <td>partial</td>
+                    <td>white</td>
+                    <td>one</td>
+                    <td>pendant</td>
+                    <td>purple</td>
+                    <td>several</td>
+                    <td>woods</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>white</td>
+                    <td>partial</td>
+                    <td>white</td>
+                    <td>one</td>
+                    <td>pendant</td>
+                    <td>brown</td>
+                    <td>several</td>
+                    <td>woods</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>white</td>
+                    <td>partial</td>
+                    <td>white</td>
+                    <td>one</td>
+                    <td>pendant</td>
+                    <td>purple</td>
+                    <td>several</td>
+                    <td>woods</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>white</td>
+                    <td>partial</td>
+                    <td>white</td>
+                    <td>one</td>
+                    <td>pendant</td>
+                    <td>brown</td>
+                    <td>several</td>
+                    <td>woods</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>smooth</td>
+                    <td>white</td>
+                    <td>white</td>
+                    <td>partial</td>
+                    <td>white</td>
+                    <td>one</td>
+                    <td>pendant</td>
+                    <td>purple</td>
+                    <td>several</td>
+                    <td>woods</td>
+                  </tr>
+                </tbody>
+              </table>
+              <pre class="prettyprint lang-language">
+<code class="language-python">print(mushroom_df.info());</code></pre>
+              <pre>RangeIndex: 8416 entries, 0 to 8415
+Data columns (total 23 columns):
+#   Column                    Non-Null Count  Dtype
+---  ------                    --------------  -----
+0   target                    8416 non-null   category
+1   cap-shape                 8416 non-null   category
+2   cap-surface               8416 non-null   category
+3   cap-color                 8416 non-null   category
+4   bruises                   8416 non-null   category
+5   odor                      8416 non-null   category
+6   gill-attachment           8416 non-null   category
+7   gill-spacing              8416 non-null   category
+8   gill-size                 8416 non-null   category
+9   gill-color                8416 non-null   category
+10  stalk-shape               8416 non-null   category
+11  stalk-root                8416 non-null   category
+12  stalk-surface-above-ring  8416 non-null   category
+13  stalk-surface-below-ring  8416 non-null   category
+14  stalk-color-above-ring    8416 non-null   category
+15  stalk-color-below-ring    8416 non-null   category
+16  veil-type                 8416 non-null   category
+17  veil-color                8416 non-null   category
+18  ring-number               8416 non-null   category
+19  ring-type                 8416 non-null   category
+20  spore-print-color         8416 non-null   category
+21  population                8416 non-null   category
+22  habitat                   8416 non-null   category
+dtypes: category(23)
+memory usage: 194.1 KB</pre>
+              <p>
+                We start by looking at the datatypes of the feature and output variables.
+                <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df.dtypes</code></pre>
+                <pre>target                      object
+cap-shape                   object
+cap-surface                 object
+cap-color                   object
+bruises                     object
+odor                        object
+gill-attachment             object
+gill-spacing                object
+gill-size                   object
+gill-color                  object
+stalk-shape                 object
+stalk-root                  object
+stalk-surface-above-ring    object
+stalk-surface-below-ring    object
+stalk-color-above-ring      object
+stalk-color-below-ring      object
+veil-type                   object
+veil-color                  object
+ring-number                 object
+ring-type                   object
+spore-print-color           object
+population                  object
+habitat                     object
+dtype: object</pre>
+                <p>
+                We first change the type of all columns from <code>object</code> to <code>category</code>.</p>
+                <pre class="prettyprint lang-language">
+<code class="language-python">from pandas.api.types import CategoricalDtype
+                mushroom_df = mushroom_df.astype("category")</code></pre>
+                <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df.dtypes</code></pre>
+                <pre>target                      category
+cap-shape                   category
+cap-surface                 category
+cap-color                   category
+bruises                     category
+odor                        category
+gill-attachment             category
+gill-spacing                category
+gill-size                   category
+gill-color                  category
+stalk-shape                 category
+stalk-root                  category
+stalk-surface-above-ring    category
+stalk-surface-below-ring    category
+stalk-color-above-ring      category
+stalk-color-below-ring      category
+veil-type                   category
+veil-color                  category
+ring-number                 category
+ring-type                   category
+spore-print-color           category
+population                  category
+habitat                     category
+dtype: object</pre>
+                <p>
+                  <code>target</code> is the output column and the rest are the features of mushroom.
+                </p>
+                <pre class="prettyprint lang-language">
+<code class="language-python">features = list(mushroom_df.columns[mushroom_df.columns!='target'])
+print(features)</code></pre>
+              <pre>['cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor', 'gill-attachment', 'gill-spacing', 'gill-size', 
+'gill-color', 'stalk-shape', 'stalk-root', 'stalk-surface-above-ring', 'stalk-surface-below-ring', 
+'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number', 'ring-type', 
+'spore-print-color', 'population', 'habitat']</pre>
+              <p>
+                Next, we divide the data into the feature matrix $X$ and outcome vector $y$.
+              </p>
+              <pre class="prettyprint lang-language">
+<code class="language-python">X = mushroom_df[features].values #features
+y = mushroom_df['target'].values #target class</code></pre>
+              <h4>Encoding the categorical features</h4>
+              <p>As we noticed, all the features in this dataset are categorical features but machine learning models require all input and output variables to be numeric. There are multiple aproaches to convert categorical variables into numerics such as Ordinal Encoding, One-Hot Encoding, and Dummy Varibale Encoding. For machine-learning applications, it's almost always safer to handle categorical data using One-Hot encoding. We use <code>sklearn</code>'s <code>OneHotEncoder</code> in this project.
+              </p>
+              <p>
+                Let's briefly overview what happens when we One-Hot encode a categorical feature. Let's assume we have a feature column <em><strong>color</strong></em> with colors <em>yellow</em>, <em>blue</em>, and <em>purple</em>.
+              </p>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>index</th>
+                    <th>color</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">0</th>
+                    <td>blue</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>purple</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>blue</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>blue</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>blue</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>yellow</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>blue</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>blue</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">8</th>
+                    <td>yellow</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>blue</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">10</th>
+                    <td>purple</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">11</th>
+                    <td>purple</td>
+                  </tr>
+                </tbody>
+              </table>
+              One-Hot encoder encodes each color using using a unique vector length $n$ with $n-1$ $0$s and one $1$ where $n$ is the number of unique colors. The position of $1$ in the vector depends on the color. For example the One-Hot encoded representation of the above example will look like:
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>index</th>
+                    <th>color_blue</th>
+                    <th>color_purple</th>
+                    <th>color_yellow</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">0</th>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">8</th>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">10</th>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">11</th>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+              Now that we have a basic understanding about encoding the categorical variables into numerics, we can define a function to transform categorical features to One-Hot encoded features.</p>
+              <pre class="prettyprint lang-language">
+<code class="language-python">from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+from sklearn.model_selection import train_test_split
+# encode the input data
+def prepare_inputs(X_train, X_test):
+# Set "handle_unknown" argument to "ignore". This is useful in case the model encounters a
+# new feature level. Foe example, you train a model with unique colors "blue", "purple", and "yellow"
+# and there is a color "red" appearing in the test data.
+oh_encoder = OneHotEncoder(handle_unknown="ignore")
+oh_encoder.fit(X_train)
+X_train_enc = oh_encoder.transform(X_train)
+X_test_enc = oh_encoder.transform(X_test)
+return X_train_enc, X_test_enc</code></pre>
+              <pre class="prettyprint lang-language">
+<code class="language-python"># encode the target
+def prepare_targets(y_train, y_test):
+# LableEncoder is pretty much the same as One-Hot encoder but is used for the target variable (labels)
+le = LabelEncoder()
+le.fit(y_train)
+y_train_enc = le.transform(y_train)
+y_test_enc = le.transform(y_test)
+return y_train_enc, y_test_enc</code></pre>
+              <h4>Splitting the dataset to training (80%) and test data (20%)</h4>
+              <pre class="prettyprint lang-language">
+<code class="language-python">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)</code></pre>
+              <pre class="prettyprint lang-language">
+<code class="language-python">X_train_enc, X_test_enc = prepare_inputs(X_train, X_test)
+y_train_enc, y_test_enc = prepare_targets(y_train, y_test)</code></pre>
+              The One-Hot encoded features can be obtained using <code>get_feature_names</code> method of the encoder:
+              <pre class="prettyprint lang-language">
+<code class="language-python">oh_encoder_all = OneHotEncoder()
+oh_encoder_all.fit(X)
+encoded_features = oh_encoder_all.get_feature_names(features)
+print(encoded_features)</code></pre>
+              <pre>['cap-shape_bell' 'cap-shape_conical' 'cap-shape_convex' 'cap-shape_flat'
+'cap-shape_knobbed' 'cap-shape_sunken' 'cap-surface_fibrous'
+'cap-surface_grooves' 'cap-surface_scaly' 'cap-surface_smooth'
+'cap-color_brown' 'cap-color_buff' 'cap-color_cinnamon' 'cap-color_gray'
+'cap-color_green' 'cap-color_pink' 'cap-color_purple' 'cap-color_red'
+'cap-color_white' 'cap-color_yellow' 'bruises_bruises' 'bruises_no'
+'odor_almond' 'odor_anise' 'odor_creosote' 'odor_fishy' 'odor_foul'
+'odor_musty' 'odor_none' 'odor_pungent' 'odor_spicy'
+'gill-attachment_attached' 'gill-attachment_free' 'gill-spacing_close'
+'gill-spacing_crowded' 'gill-size_broad' 'gill-size_narrow'
+'gill-color_black' 'gill-color_brown' 'gill-color_buff'
+'gill-color_chocolate' 'gill-color_gray' 'gill-color_green'
+'gill-color_orange' 'gill-color_pink' 'gill-color_purple'
+'gill-color_red' 'gill-color_white' 'gill-color_yellow'
+'stalk-shape_enlarging' 'stalk-shape_tapering' 'stalk-root_?'
+'stalk-root_bulbous' 'stalk-root_club' 'stalk-root_equal'
+'stalk-root_rooted' 'stalk-surface-above-ring_fibrous'
+'stalk-surface-above-ring_scaly' 'stalk-surface-above-ring_silky'
+'stalk-surface-above-ring_smooth' 'stalk-surface-below-ring_fibrous'
+'stalk-surface-below-ring_scaly' 'stalk-surface-below-ring_silky'
+'stalk-surface-below-ring_smooth' 'stalk-color-above-ring_brown'
+'stalk-color-above-ring_buff' 'stalk-color-above-ring_cinnamon'
+'stalk-color-above-ring_gray' 'stalk-color-above-ring_orange'
+'stalk-color-above-ring_pink' 'stalk-color-above-ring_red'
+'stalk-color-above-ring_white' 'stalk-color-above-ring_yellow'
+'stalk-color-below-ring_brown' 'stalk-color-below-ring_buff'
+'stalk-color-below-ring_cinnamon' 'stalk-color-below-ring_gray'
+'stalk-color-below-ring_orange' 'stalk-color-below-ring_pink'
+'stalk-color-below-ring_red' 'stalk-color-below-ring_white'
+'stalk-color-below-ring_yellow' 'veil-type_partial' 'veil-color_brown'
+'veil-color_orange' 'veil-color_white' 'veil-color_yellow'
+'ring-number_none' 'ring-number_one' 'ring-number_two'
+'ring-type_evanescent' 'ring-type_flaring' 'ring-type_large'
+'ring-type_none' 'ring-type_pendant' 'spore-print-color_black'
+'spore-print-color_brown' 'spore-print-color_buff'
+'spore-print-color_chocolate' 'spore-print-color_green'
+'spore-print-color_orange' 'spore-print-color_purple'
+'spore-print-color_white' 'spore-print-color_yellow'
+'population_abundant' 'population_clustered' 'population_numerous'
+'population_scattered' 'population_several' 'population_solitary'
+'habitat_grasses' 'habitat_leaves' 'habitat_meadows' 'habitat_paths'
+'habitat_urban' 'habitat_waste' 'habitat_woods']</pre>
+              <pre class="prettyprint lang-language">
+<code class="language-python">print(f'The dataset has {X.shape[1]} features and {len(encoded_features)} One-Hot encoded features')</code></pre>
+            <pre>The dataset has 22 features and 117 One-Hot encoded features.</pre>
+            <h4>Baseline Classifier</h4>
+            <p>
+              We start off with a baseline solution and train a logistic regression classifier. Later, we compare the performance of the decision tree model with the baseline solution and see if we can come up with a decision tree model that surpasses the performance of the baseline solution.
+            </p>
+            <pre class="prettyprint lang-language">
+<code class="language-python">clf_logreg = LogisticRegression(solver='lbfgs')
+clf_logreg.fit(X_train_enc, y_train_enc)
+y_pred = clf_logreg.predict(X_test_enc)</code></pre>
+            <p>
+              We can use different metrics to assess the performance of the logistic regression classifier.
+            </p>
+            <pre class="prettyprint lang-language">
+<code class="language-python">from sklearn.metrics import accuracy_score, classification_report
+print(classification_report(y_test_enc, y_pred, digits=3))</code></pre>
+            <pre>              precision    recall  f1-score   support
+           0      1.000     1.000     1.000      1317
+           1      1.000     1.000     1.000      1208
+    accuracy                          1.000      2525
+   macro avg      1.000     1.000     1.000      2525
+weighted avg      1.000     1.000     1.000      2525</pre>
+            <pre class="prettyprint lang-language">
+<code class="language-python">accuracy = accuracy_score(y_test_enc, y_pred)
+print('Accuracy: %.2f' % (accuracy*100))</code></pre>
+          <pre>Accuracy: 100.00</pre>
+          <p>
+            The baseline classifier reaches perfect accuracy with 100% accuracy! This makes making a more complex solution pointless as the baseline solution is flawless! Let's reduce the number of training samples to make the problem a bit harder for our baseline classifier!
+          </p>
+          <h4>Using a smaller training set: splitting the dataset to training (10%) and test data (90%)!</h4>
+          <pre class="prettyprint lang-language">
+<code class="language-python"># We are going to use indices later!
+indices = np.arange(len(mushroom_df))
+X_train, X_test, y_train, y_test, tr_ids, test_ids = train_test_split(X, y, indices, test_size=0.9, random_state=10)</code></pre>
+          <pre class="prettyprint lang-language">
+<code class="language-python">X_train_enc, X_test_enc = prepare_inputs(X_train, X_test)
+y_train_enc, y_test_enc = prepare_targets(y_train, y_test)
+clf_logreg = LogisticRegression(solver='lbfgs')
+clf_logreg.fit(X_train_enc, y_train_enc)
+y_pred = clf_logreg.predict(X_test_enc)
+print(classification_report(y_test_enc, y_pred, digits=3))</code></pre>
+            <pre>              precision    recall  f1-score   support
+           0      0.996     1.000     0.998      4052
+           1      1.000     0.995     0.998      3523
+    accuracy                          0.998      7575
+   macro avg      0.998     0.998     0.998      7575
+weighted avg      0.998     0.998     0.998      7575</pre>
+          <pre class="prettyprint lang-language">
+<code class="language-python">from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+cm = confusion_matrix(y_test_enc, y_pred)
+cm</code></pre>
+          <pre>array([[4052,    0],
+          [  16, 3507]])</pre>
+          <pre class="prettyprint lang-language">
+<code class="language-python">fig, ax = plt.subplots(1, 1, dpi=120)
+cm_plot = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['edible', 'poisonous'])
+ax.set_title('Logistic regression consfusion matrix')
+cm_plot.plot(ax=ax);</code></pre>
+          <p class="text-align: center;">
+            <img src="logreg_cm_0.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+          </p>
+          <p>
+          Even though we really pushed the limits of the logistic regression classifier by reducing the number of training data, the classifier still does a great job of predicting the correct class. There are, however, 16 instances that the classifier demonstrates type II error by labeling poisonous mushrooms as edible. This is something concerning because in reality this can cause harch consequences. We can now start building the decision tree classifier and see if we can improve the accuracy of the model in identifying poisonous mushrooms compared to the baseline model.</p>
+          <h4>Decision Tree Classifier</h4>
+          <p>
+            In this section we train two decision tree classifiers with the same exact properties except the criterion to assess the quality of a split. One model uses the <em><strong>Gini impurity index</strong></em> whereas the other uses <em><strong>entropy</strong></em> AKA <em><strong>information gain</strong></em>
+          </p>
+          <pre class="prettyprint lang-language">
+<code class="language-python">from sklearn.tree import DecisionTreeClassifier, export_graphviz
+import graphviz
+# Create Decision Tree classifer object
+clf_gini = DecisionTreeClassifier(criterion="gini", random_state=10, max_depth=5, max_leaf_nodes=10)
+clf_entropy = DecisionTreeClassifier(criterion="entropy", random_state=10, max_depth=5, max_leaf_nodes=10)
+# Train Decision Tree Classifer
+clf_gini = clf_gini.fit(X_train_enc,y_train_enc)
+clf_entropy = clf_entropy.fit(X_train_enc,y_train_enc)
+# Predict the response for test dataset
+y_pred_gini = clf_gini.predict(X_test_enc)
+y_pred_entropy = clf_entropy.predict(X_test_enc)</code></pre>
+          <pre class="prettyprint lang-language">
+y_pred_gini, digits=3))</code></pre>
+            <pre>              precision    recall  f1-score   support
+           0      0.996     0.994     0.995      4052
+           1      0.993     0.995     0.994      3523
+    accuracy                          0.995      7575
+   macro avg      0.995     0.995     0.995      7575
+weighted avg      0.995     0.995     0.995      7575</pre>
+          <pre class="prettyprint lang-language">
+<code class="language-python">print(classification_report(y_test_enc, y_pred_entropy, digits=3))</code></pre>
+            <pre>              precision    recall  f1-score   support
+           0      0.998     1.000     0.999      4052
+           1      1.000     0.998     0.999      3523
+    accuracy                          0.999      7575
+   macro avg      0.999     0.999     0.999      7575
+weighted avg      0.999     0.999     0.999      7575</pre>
+          <pre class="prettyprint lang-language">
+<code class="language-python">fig, ax = plt.subplots(1, 1, dpi=120)
+cm = confusion_matrix(y_test_enc, y_pred_gini)
+cm_plot = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['edible', 'poisonous'])
+ax.set_title('Decision tree consfusion matrix')
+cm_plot.plot(ax=ax);</code></pre>
+          <p class="text-align: center;">
+            <img src="tree_gini_cm_0.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+          </p>
+          <pre class="prettyprint lang-language">
+<code class="language-python">fig, ax = plt.subplots(1, 1, dpi=120)
+cm = confusion_matrix(y_test_enc, y_pred_entropy)
+cm_plot = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['edible', 'poisonous'])
+ax.set_title('Decision tree consfusion matrix')
+cm_plot.plot(ax=ax);</code></pre>
+          <p class="text-align: center;">
+            <img src="tree_entropy_cm_0.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+          </p>
+          <p>
+            We note that the decision tree with the entropy criterion reaches a higher accuracy than the other tree as well as the baseline classifier. We can generate a plot of the decision tree and look at the rules that the tree has used to defines each split.
+          </p>
+          <pre class="prettyprint lang-language">
+<code class="language-python">from sklearn.tree import export_graphviz
+from io import StringIO
+from IPython.display import Image
+from pydot import graph_from_dot_data
+import pydotplus
+dot_data = StringIO()
+# Training feature names
+oh_encoder_tr = OneHotEncoder(handle_unknown="ignore")
+oh_encoder_tr.fit(X_train)
+encoded_tr_features = oh_encoder_tr.get_feature_names(features)
+# Export the tree
+export_graphviz(clf_entropy, out_file=dot_data,
+filled=True, rounded=True,
+special_characters=False,
+feature_names = encoded_tr_features,
+class_names=['edible', 'poisonous'])
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+Image(graph.create_png(), width=800, height=400)</code></pre>
+          <p class="text-align: center;">
+            <img src="mushroom_tree.png" style="width: 90%; display: block; margin: 10px auto 20px;"/>
+          </p>
+          <p>
+            Another simple yet useful way to present the decision tree result is using the <code>tree.export_text</code> method of <code>sklearn</code>
+            <pre class="prettyprint lang-language">
+<code class="language-python">from sklearn.tree import export_text
+tree_text = export_text(clf_entropy, feature_names = list(encoded_tr_features))
+print(tree_text)</code></pre>
+            <pre>|--- odor_none <= 0.50
+|   |--- bruises_bruises <= 0.50
+|   |   |--- class: 1
+|   |--- bruises_bruises >  0.50
+|   |   |--- stalk-root_club <= 0.50
+|   |   |   |--- stalk-root_rooted <= 0.50
+|   |   |   |   |--- gill-spacing_crowded <= 0.50
+|   |   |   |   |   |--- class: 1
+|   |   |   |   |--- gill-spacing_crowded >  0.50
+|   |   |   |   |   |--- class: 0
+|   |   |   |--- stalk-root_rooted >  0.50
+|   |   |   |   |--- class: 0
+|   |   |--- stalk-root_club >  0.50
+|   |   |   |--- class: 0
+|--- odor_none >  0.50
+|   |--- spore-print-color_green <= 0.50
+|   |   |--- stalk-surface-below-ring_scaly <= 0.50
+|   |   |   |--- class: 0
+|   |   |--- stalk-surface-below-ring_scaly >  0.50
+|   |   |   |--- ring-type_evanescent <= 0.50
+|   |   |   |   |--- class: 0
+|   |   |   |--- ring-type_evanescent >  0.50
+|   |   |   |   |--- class: 1
+|   |--- spore-print-color_green >  0.50
+|   |   |--- class: 1</pre>
+            <h4>Model diagnosis</h4>
+            <p>
+              One critical step before attempting to improve the accuracy of any model is to figure out what is going wrong. In our case, we would like to see if we can figure out what causes the model giving wrong predictions. First we take a look at the features that are used to train the model and see if there are any features in the test cases that the model has not seen before. This is a common case when dealing with decison tree classifiers with categorical features.
+            </p>
+            <pre class="prettyprint lang-language">
+<code class="language-python">oh_encoder = OneHotEncoder()
+oh_encoder.fit(X_test)
+encoded_test_features = oh_encoder.get_feature_names(features)
+len(encoded_test_features), len(encoded_tr_features)</code></pre>
+            <pre>(117, 113)</pre>
+            <p>
+              We can take a look at the difference between the two lists:
+            </p>
+            <pre class="prettyprint lang-language">
+list(encoded_tr_features)))</code></pre>
+            <pre>['cap-shape_conical',
+'cap-surface_grooves',
+'stalk-color-above-ring_yellow',
+'veil-color_yellow']</pre>
+            <p>
+              The model has not seen these features in the training phase. Next, we take a look at the records that have at least one of the above features.
+            </p>
+            <pre class="prettyprint lang-language">
+<code class="language-python">unseen_data = mushroom_df[
+    (mushroom_df['cap-shape']=='conical')
+  | (mushroom_df['cap-surface']=='grooves')
+  | (mushroom_df['veil-color']=='yellow')
+  | (mushroom_df['stalk-color-above-ring']=='yellow')
+]
+unseen_data</code></pre>
+            <table class="table table-striped">
+              <thead>
+                <tr style="text-align: right;">
+                  <th></th>
+                  <th>target</th>
+                  <th>cap-shape</th>
+                  <th>cap-surface</th>
+                  <th>cap-color</th>
+                  <th>bruises</th>
+                  <th>odor</th>
+                  <th>gill-attachment</th>
+                  <th>gill-spacing</th>
+                  <th>gill-size</th>
+                  <th>gill-color</th>
+                  <th>...</th>
+                  <th>stalk-surface-below-ring</th>
+                  <th>stalk-color-above-ring</th>
+                  <th>stalk-color-below-ring</th>
+                  <th>veil-type</th>
+                  <th>veil-color</th>
+                  <th>ring-number</th>
+                  <th>ring-type</th>
+                  <th>spore-print-color</th>
+                  <th>population</th>
+                  <th>habitat</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">6064</th>
+                  <td>poisonous</td>
+                  <td>bell</td>
+                  <td>grooves</td>
+                  <td>white</td>
+                  <td>bruises</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>smooth</td>
+                  <td>white</td>
+                  <td>white</td>
+                  <td>partial</td>
+                  <td>white</td>
+                  <td>one</td>
+                  <td>pendant</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">6066</th>
+                  <td>poisonous</td>
+                  <td>conical</td>
+                  <td>grooves</td>
+                  <td>white</td>
+                  <td>bruises</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>smooth</td>
+                  <td>white</td>
+                  <td>white</td>
+                  <td>partial</td>
+                  <td>white</td>
+                  <td>one</td>
+                  <td>pendant</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">6067</th>
+                  <td>poisonous</td>
+                  <td>conical</td>
+                  <td>scaly</td>
+                  <td>white</td>
+                  <td>bruises</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>smooth</td>
+                  <td>white</td>
+                  <td>white</td>
+                  <td>partial</td>
+                  <td>white</td>
+                  <td>one</td>
+                  <td>pendant</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">6068</th>
+                  <td>poisonous</td>
+                  <td>flat</td>
+                  <td>grooves</td>
+                  <td>white</td>
+                  <td>bruises</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>smooth</td>
+                  <td>white</td>
+                  <td>white</td>
+                  <td>partial</td>
+                  <td>white</td>
+                  <td>one</td>
+                  <td>pendant</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">6070</th>
+                  <td>poisonous</td>
+                  <td>knobbed</td>
+                  <td>grooves</td>
+                  <td>white</td>
+                  <td>bruises</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>smooth</td>
+                  <td>white</td>
+                  <td>white</td>
+                  <td>partial</td>
+                  <td>white</td>
+                  <td>one</td>
+                  <td>pendant</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">7880</th>
+                  <td>poisonous</td>
+                  <td>bell</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>no</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>yellow</td>
+                  <td>...</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>yellow</td>
+                  <td>partial</td>
+                  <td>yellow</td>
+                  <td>one</td>
+                  <td>evanescent</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">7881</th>
+                  <td>poisonous</td>
+                  <td>bell</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>no</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>yellow</td>
+                  <td>partial</td>
+                  <td>yellow</td>
+                  <td>one</td>
+                  <td>evanescent</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">7882</th>
+                  <td>poisonous</td>
+                  <td>conical</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>no</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>yellow</td>
+                  <td>...</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>yellow</td>
+                  <td>partial</td>
+                  <td>yellow</td>
+                  <td>one</td>
+                  <td>evanescent</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">7883</th>
+                  <td>poisonous</td>
+                  <td>conical</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>no</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>yellow</td>
+                  <td>partial</td>
+                  <td>yellow</td>
+                  <td>one</td>
+                  <td>evanescent</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">7884</th>
+                  <td>poisonous</td>
+                  <td>flat</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>no</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>yellow</td>
+                  <td>...</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>yellow</td>
+                  <td>partial</td>
+                  <td>yellow</td>
+                  <td>one</td>
+                  <td>evanescent</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">7885</th>
+                  <td>poisonous</td>
+                  <td>flat</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>no</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>yellow</td>
+                  <td>partial</td>
+                  <td>yellow</td>
+                  <td>one</td>
+                  <td>evanescent</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">7886</th>
+                  <td>poisonous</td>
+                  <td>knobbed</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>no</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>yellow</td>
+                  <td>...</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>yellow</td>
+                  <td>partial</td>
+                  <td>yellow</td>
+                  <td>one</td>
+                  <td>evanescent</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+                <tr>
+                  <th scope="row">7887</th>
+                  <td>poisonous</td>
+                  <td>knobbed</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>no</td>
+                  <td>none</td>
+                  <td>free</td>
+                  <td>crowded</td>
+                  <td>narrow</td>
+                  <td>white</td>
+                  <td>...</td>
+                  <td>scaly</td>
+                  <td>yellow</td>
+                  <td>yellow</td>
+                  <td>partial</td>
+                  <td>yellow</td>
+                  <td>one</td>
+                  <td>evanescent</td>
+                  <td>white</td>
+                  <td>clustered</td>
+                  <td>leaves</td>
+                </tr>
+              </tbody>
+            </table>
+            <pre>13 rows × 23 columns</pre>
+            <pre class="prettyprint lang-language">
+features].values
+__, X_test_unseen_enc = prepare_inputs(X_train, X_test_unseen)
+y_pred_unseen = clf_entropy.predict(X_test_unseen_enc)
+y_pred_unseen</code></pre>
+          <pre>array([0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1])</pre>
+          <p>
+            We notice that 5 out of the 8 wrong predictoins belong to the instances with features that the model has not seen during the training phase. All the wrong predictions can be found using:
+          </p>
+          <pre class="prettyprint lang-language">
+y_test_enc!=y_pred_entropy)
+false_predictions</code></pre>
+        <pre>(array([3535, 4237, 4628, 4734, 5692, 6063, 7159, 7283]),)</pre>
+        <pre class="prettyprint lang-language">
+<code class="language-python">np.sort(test_ids[false_predictions])</code></pre>
+      <pre>array([6064, 6065, 6066, 6067, 6068, 6069, 6070, 6071])</pre>
+      <p>
+        Now we can take a closer look at the recoreds that were misclassified by the tree:
+      </p>
+      <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df.iloc[np.sort(test_ids[false_predictions]), :12]</code></pre>
+      <table class="table table-striped">
+        <thead>
+          <tr style="text-align: right;">
+            <th></th>
+            <th>target</th>
+            <th>cap-shape</th>
+            <th>cap-surface</th>
+            <th>cap-color</th>
+            <th>bruises</th>
+            <th>odor</th>
+            <th>gill-attachment</th>
+            <th>gill-spacing</th>
+            <th>gill-size</th>
+            <th>gill-color</th>
+            <th>stalk-shape</th>
+            <th>stalk-root</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">6064</th>
+            <td>poisonous</td>
+            <td>bell</td>
+            <td>grooves</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>enlarging</td>
+            <td>bulbous</td>
+          </tr>
+          <tr>
+            <th scope="row">6065</th>
+            <td>poisonous</td>
+            <td>bell</td>
+            <td>scaly</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>enlarging</td>
+            <td>bulbous</td>
+          </tr>
+          <tr>
+            <th scope="row">6066</th>
+            <td>poisonous</td>
+            <td>conical</td>
+            <td>grooves</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>enlarging</td>
+            <td>bulbous</td>
+          </tr>
+          <tr>
+            <th scope="row">6067</th>
+            <td>poisonous</td>
+            <td>conical</td>
+            <td>scaly</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>enlarging</td>
+            <td>bulbous</td>
+          </tr>
+          <tr>
+            <th scope="row">6068</th>
+            <td>poisonous</td>
+            <td>flat</td>
+            <td>grooves</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>enlarging</td>
+            <td>bulbous</td>
+          </tr>
+          <tr>
+            <th scope="row">6069</th>
+            <td>poisonous</td>
+            <td>flat</td>
+            <td>scaly</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>enlarging</td>
+            <td>bulbous</td>
+          </tr>
+          <tr>
+            <th scope="row">6070</th>
+            <td>poisonous</td>
+            <td>knobbed</td>
+            <td>grooves</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>enlarging</td>
+            <td>bulbous</td>
+          </tr>
+          <tr>
+            <th scope="row">6071</th>
+            <td>poisonous</td>
+            <td>knobbed</td>
+            <td>scaly</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>enlarging</td>
+            <td>bulbous</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Interestingly, a little bit of investigation shows that the misclassified instances can be found using the following rules:
+      </p>
+      <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df[
+    (mushroom_df['cap-color']=='white') 
+  & (mushroom_df['bruises']=='bruises')
+  & (mushroom_df['odor']=='none')
+  & (mushroom_df['gill-spacing']=='crowded')
+]</code></pre>
+      <table class="table table-striped">
+        <thead>
+          <tr style="text-align: right;">
+            <th></th>
+            <th>target</th>
+            <th>cap-shape</th>
+            <th>cap-surface</th>
+            <th>cap-color</th>
+            <th>bruises</th>
+            <th>odor</th>
+            <th>gill-attachment</th>
+            <th>gill-spacing</th>
+            <th>gill-size</th>
+            <th>gill-color</th>
+            <th>...</th>
+            <th>stalk-surface-below-ring</th>
+            <th>stalk-color-above-ring</th>
+            <th>stalk-color-below-ring</th>
+            <th>veil-type</th>
+            <th>veil-color</th>
+            <th>ring-number</th>
+            <th>ring-type</th>
+            <th>spore-print-color</th>
+            <th>population</th>
+            <th>habitat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">6064</th>
+            <td>poisonous</td>
+            <td>bell</td>
+            <td>grooves</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>...</td>
+            <td>smooth</td>
+            <td>white</td>
+            <td>white</td>
+            <td>partial</td>
+            <td>white</td>
+            <td>one</td>
+            <td>pendant</td>
+            <td>white</td>
+            <td>clustered</td>
+            <td>leaves</td>
+          </tr>
+          <tr>
+            <th scope="row">6065</th>
+            <td>poisonous</td>
+            <td>bell</td>
+            <td>scaly</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>...</td>
+            <td>smooth</td>
+            <td>white</td>
+            <td>white</td>
+            <td>partial</td>
+            <td>white</td>
+            <td>one</td>
+            <td>pendant</td>
+            <td>white</td>
+            <td>clustered</td>
+            <td>leaves</td>
+          </tr>
+          <tr>
+            <th scope="row">6066</th>
+            <td>poisonous</td>
+            <td>conical</td>
+            <td>grooves</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>...</td>
+            <td>smooth</td>
+            <td>white</td>
+            <td>white</td>
+            <td>partial</td>
+            <td>white</td>
+            <td>one</td>
+            <td>pendant</td>
+            <td>white</td>
+            <td>clustered</td>
+            <td>leaves</td>
+          </tr>
+          <tr>
+            <th scope="row">6067</th>
+            <td>poisonous</td>
+            <td>conical</td>
+            <td>scaly</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>...</td>
+            <td>smooth</td>
+            <td>white</td>
+            <td>white</td>
+            <td>partial</td>
+            <td>white</td>
+            <td>one</td>
+            <td>pendant</td>
+            <td>white</td>
+            <td>clustered</td>
+            <td>leaves</td>
+          </tr>
+          <tr>
+            <th scope="row">6068</th>
+            <td>poisonous</td>
+            <td>flat</td>
+            <td>grooves</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>...</td>
+            <td>smooth</td>
+            <td>white</td>
+            <td>white</td>
+            <td>partial</td>
+            <td>white</td>
+            <td>one</td>
+            <td>pendant</td>
+            <td>white</td>
+            <td>clustered</td>
+            <td>leaves</td>
+          </tr>
+          <tr>
+            <th scope="row">6069</th>
+            <td>poisonous</td>
+            <td>flat</td>
+            <td>scaly</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>...</td>
+            <td>smooth</td>
+            <td>white</td>
+            <td>white</td>
+            <td>partial</td>
+            <td>white</td>
+            <td>one</td>
+            <td>pendant</td>
+            <td>white</td>
+            <td>clustered</td>
+            <td>leaves</td>
+          </tr>
+          <tr>
+            <th scope="row">6070</th>
+            <td>poisonous</td>
+            <td>knobbed</td>
+            <td>grooves</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>...</td>
+            <td>smooth</td>
+            <td>white</td>
+            <td>white</td>
+            <td>partial</td>
+            <td>white</td>
+            <td>one</td>
+            <td>pendant</td>
+            <td>white</td>
+            <td>clustered</td>
+            <td>leaves</td>
+          </tr>
+          <tr>
+            <th scope="row">6071</th>
+            <td>poisonous</td>
+            <td>knobbed</td>
+            <td>scaly</td>
+            <td>white</td>
+            <td>bruises</td>
+            <td>none</td>
+            <td>free</td>
+            <td>crowded</td>
+            <td>narrow</td>
+            <td>white</td>
+            <td>...</td>
+            <td>smooth</td>
+            <td>white</td>
+            <td>white</td>
+            <td>partial</td>
+            <td>white</td>
+            <td>one</td>
+            <td>pendant</td>
+            <td>white</td>
+            <td>clustered</td>
+            <td>leaves</td>
+          </tr>
+        </tbody>
+      </table>
+      <pre>8 rows × 23 columns</pre>
+      <p>
+        But the model has not encountered this situation during the training as seen below:
+      </p>
+      <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df_tr = mushroom_df.iloc[np.sort(tr_ids), :]</code></pre>
+      <pre class="prettyprint lang-language">
+<code class="language-python">mushroom_df_tr[
+    (mushroom_df_tr['cap-color']=='white') 
+  & (mushroom_df_tr['bruises']=='bruises') 
+  & (mushroom_df_tr['odor']=='none') 
+  & (mushroom_df_tr['gill-spacing']=='crowded')
+]</code></pre>
+      <table class="table table-striped">
+        <thead>
+          <tr style="text-align: right;">
+            <th></th>
+            <th>target</th>
+            <th>cap-shape</th>
+            <th>cap-surface</th>
+            <th>cap-color</th>
+            <th>bruises</th>
+            <th>odor</th>
+            <th>gill-attachment</th>
+            <th>gill-spacing</th>
+            <th>gill-size</th>
+            <th>gill-color</th>
+            <th>...</th>
+            <th>stalk-surface-below-ring</th>
+            <th>stalk-color-above-ring</th>
+            <th>stalk-color-below-ring</th>
+            <th>veil-type</th>
+            <th>veil-color</th>
+            <th>ring-number</th>
+            <th>ring-type</th>
+            <th>spore-print-color</th>
+            <th>population</th>
+            <th>habitat</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <pre>0 rows × 23 columns</pre>
+      <p>
+        We can investigate what caused these wrong predictions by considering the featutes that are common between the misclassified instances and walk down the tree to see at which split the misclassification occurs.
+        odor=none, meaning that odor_none$\leq$0.5 is False (because odor_none=1) so in the first split on the tree we move to the right)
+        spore-print-color=white, meaning that spore-print-color_green$\leq$0.5 is True so in the next split on the tree we move to the left
+        stalk-surface-below-ring=smooth, meaning that stalk-surface-below-ring_scaly$\leq$0.5 is True so in the next split on the tree we move to the left.
+        At this point, we have reached a leaf that according to the trained model gives the output for the misclassifies instances to be edible.
+        The process is shown using a purple arrow in the figure below.
+      </p>
+      <p class="text-align: center;">
+        <img src="mushroom_tree_misclassified.png" style="width: 90%; display: block; margin: 10px auto 20px;"/>
+      </p>
+      <p>
+        Note that what this means is no matter how much we change the tree structure (increase the tree depth, leaf nodes, etc.), the misclassified instances will remain misclassified! In other words, increasing the complexity of the tree is not a solution. We can, however, find a tree with the same exact strucure as the current tree by traying different training-set samplings. We would also test the baseline estimator on these instances for the sake of comparison.
+      </p>
+      <h4> Cross-validation</h4>
+      <p>
+        Here we use cross-validation by re-sampling the training-data 10 times while conserving the size of training set.
+      </p>
+      <pre class="prettyprint lang-language">
+<code class="language-python">num_val_tests = 20
+best_tree_model = clf_entropy
+best_tree_score = best_tree_model.score(X_test_enc, y_test_enc)
+best_logreg_model = clf_logreg
+best_logreg_score = best_logreg_model.score(X_test_enc, y_test_enc)
+for i in range(num_val_tests):
+    seed = np.random.randint(1000)
+    # train/test split
+    X_train, X_test, y_train, y_test, tr_ids, test_ids = train_test_split(
+        X, y, indices, test_size=0.9, random_state=seed
+    )
+    # instantiate the DecisionTreeClassifier and the 
+    clf_tree_tmp = DecisionTreeClassifier(
+        criterion="entropy", random_state=10, max_depth=5, max_leaf_nodes=10
+    )
+    clf_logreg_tmp = LogisticRegression(solver='lbfgs')
+    # encode train/test
+    X_train_enc, X_test_enc = prepare_inputs(X_train, X_test)
+    y_train_enc, y_test_enc = prepare_targets(y_train, y_test)
+    # fit
+    clf_tree_tmp = clf_tree_tmp.fit(X_train_enc,y_train_enc)
+    clf_logreg_tmp = clf_logreg_tmp.fit(X_train_enc,y_train_enc)
+    # evaluate
+    tree_score = clf_tree_tmp.score(X_test_enc, y_test_enc)
+    logreg_score = clf_logreg_tmp.score(X_test_enc, y_test_enc)
+    # compare with the best tree model so far
+    if tree_score > best_tree_score:
+        best_tree_score = tree_score
+        best_tree_model = clf_tree_tmp
+        X_enc_best_tree = X_test_enc
+        y_enc_best_tree = y_test_enc
+        seed_best_tree = seed
+    # repeat for the logistic regression model
+    if logreg_score > best_logreg_score:
+        best_logreg_score = logreg_score
+        best_logreg_model = clf_logreg_tmp
+        X_enc_best_logreg = X_test_enc
+        y_enc_best_logreg = y_test_enc
+        seed_best_logreg = seed</code></pre>
+      <pre class="prettyprint lang-language">
+<code class="language-python">print(f"best decision tree model reaches the accuracy {np.round(best_tree_score*100, 3)}%")
+print(f"best logistic regression model reaches the accuracy {np.round(best_logreg_score*100, 3)}%")</code></pre>
+      <pre>best decision tree model reaches the accuracy 100.0%
+      best logistic regression model reaches the accuracy 99.908%</pre>
+      <p>
+        We note that without having to increase the complexity of the model, we were able to find a perfect model.
+      </p>
+      <pre class="prettyprint lang-language">
+<code class="language-python">y_pred_tree = best_tree_model.predict(X_enc_best_tree)
+y_pred_logreg = best_logreg_model.predict(X_enc_best_logreg)</code></pre>
+      <pre class="prettyprint lang-language">
+<code class="language-python">print(classification_report(y_enc_best_tree, y_pred_tree, digits=3))</code></pre>
+            <pre>              precision    recall  f1-score   support
+           0      1.000     1.000     1.000      4015
+           1      1.000     1.000     1.000      3560
+    accuracy                          1.000      7575
+   macro avg      1.000     1.000     1.000      7575
+weighted avg      1.000     1.000     1.000      7575</pre>
+      <pre class="prettyprint lang-language">
+<code class="language-python">fig, ax = plt.subplots(1, 1, dpi=120)
+cm = confusion_matrix(y_enc_best_tree, y_pred_tree)
+cm_plot = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['edible', 'poisonous'])
+ax.set_title('Decision tree consfusion matrix')
+cm_plot.plot(ax=ax);</code></pre>
+      <p class="text-align: center;">
+        <img src="tree_entropy_cm_1.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+      </p>
+      <pre class="prettyprint lang-language">
+<code class="language-python">print(classification_report(y_enc_best_logreg, y_pred_logreg, digits=3))</code></pre>
+            <pre>              precision    recall  f1-score   support
+           0      0.999     1.000     0.999      4084
+           1      1.000     0.998     0.999      3491
+    accuracy                          0.999      7575
+   macro avg      0.999     0.999     0.999      7575
+weighted avg      0.999     0.999     0.999      7575</pre>
+      <pre class="prettyprint lang-language">
+<code class="language-python">fig, ax = plt.subplots(1, 1, dpi=120)
+cm = confusion_matrix(y_enc_best_logreg, y_pred_logreg)
+cm_plot = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['edible', 'poisonous'])
+ax.set_title('Logistic regression consfusion matrix')
+cm_plot.plot(ax=ax);</code></pre>
+      <p class="text-align: center;">
+        <img src="logreg_cm_1.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+      </p>
+      <h4> Visualizing the best tree</h4>
+      <pre class="prettyprint lang-language">
+<code class="language-python">dot_data = StringIO()
+# Training feature names
+oh_encoder_tr = OneHotEncoder(handle_unknown="ignore") 
+X_train, X_test, y_train, y_test, tr_ids, test_ids = train_test_split(
+    X, y, indices, test_size=0.9, random_state=seed_best_tree
+)
+oh_encoder_tr.fit(X_train)
+encoded_tr_features = oh_encoder_tr.get_feature_names(features)
+# Export the tree
+export_graphviz(best_tree_model, out_file=dot_data,  
+                filled=True, rounded=True,
+                special_characters=False,
+                feature_names = encoded_tr_features,
+                class_names=['edible', 'poisonous'])
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+Image(graph.create_png(), width=800, height=400)</code></pre>
+      <p class="text-align: center;">
+            <img src="mushroom_tree_best.png" style="width: 90%; display: block; margin: 10px auto 20px;"/>
+      </p>
+      <p>
+        Note that the features that the best tree is using to split on are very different from the ones that were used previously as they depend on the training set that is used to train the tree.
+      </p>
+      <h4> Conslusion</h4>
+      <ul>
+        <li>In this post we applied a decision tree classifier to detect poisonous mushrooms in a mushroom dataset with 8416 records.</li>
+        <li>We learned that decision tree classifiers can handle unknown features in the test set but these unknown features are likely to be misclassified</li>
+        <li>We lobserved that there are certain situations that the error is due to lack of training data and the only way to resolve the misclassified instances is to train the model using new data. We achieved this by cross-validation.</li>
+        <li>Cross-validation is a great asset to keep the model simple and prevent overfitting.</li>
+        <li>We noticed that diagnosing the model before attempting to increase the complexity of the model can sometimes be beneficial and lead to a model with a better accuracy without necessarily adding to the complexity of the model</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/miniprojects/mushrooms_dt.ipynb">Link to the <strong>ipython notebook</strong></a>
+    </div>
+  </div>
+</div>
+</section>
+</main>
+
+<!-- ======= Footer ======= -->
+
+<footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+<div class="footer-newsletter">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <h4>Newsletter</h4>
+      <p>Subscribe here to get notified when a new material is posted</p>
+    </div>
+    <div class="col-lg-6">
+      <form action="" method="post">
+        <input type="email" name="email"><input type="submit" value="Subscribe">
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer-top">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 footer-links">
+      <h4>Useful Links</h4>
+      <ul>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">About Me</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">Projects</a></li>
+        <li><i class="bx bx-chevron-right"></i> <a href="#">Tutorials</a></li>
+      </ul>
+    </div>
+    <div class="col-lg-4 col-md-6 footer-contact">
+      <h4>Contact</h4>
+      <p>
+        913 Boylston Street<br>
+        Boston, MA 02115<br>
+        United States <br><br>
+        <strong>Phone:</strong> +1 617 460 0555<br>
+        <strong>Email:</strong> alimehdirahim@gmail.com<br>
+      </p>
+    </div>
+    <div class="col-lg-4 col-md-6 footer-info">
+      <h3>About Me</h3>
+      <p>A data science enthusiast! I love developing new machine learning algorithms to address real-world problems. I try to learn something new on a daily basis.</p>
+      <div class="social-links mt-3">
+        <a href="https://github.com/alineu" class="Github"><i class="bx bxl-github"></i></a>
+        <a href="https://www.linkedin.com/in/alimehdizadehrahimi/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        <a href="https://twitter.com/estoyali" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="https://instagram.com/aliexplores" class="instagram"><i class="bx bxl-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="container">
+<div class="copyright">
+  &copy; Copyright 2020 <strong><span>Ali Mehdizadeh</span></strong>. All Rights Reserved
+</div>
+<div class="credits">
+  Page design is adopted from <a href="https://bootstrapmade.com/">BootstrapMade</a>.<br>Page icons were taken from <a href="https://www.flaticon.com">flaticon.com</a>.
+  
+</div>
+</div>
+</footer><!-- End Footer -->
+<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+<!-- Vendor JS Files -->
+<script src="../../assets/vendor/jquery/jquery.min.js"></script>
+<script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+<script src="../../assets/vendor/php-email-form/validate.js"></script>
+<script src="../../assets/vendor/venobox/venobox.min.js"></script>
+<script src="../../assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+<script src="../../assets/vendor/counterup/counterup.min.js"></script>
+<script src="../../assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+<script src="../../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="../../assets/vendor/prism/prism.js"></script>
+<script src="../../assets/vendor/aos/aos.js"></script>
+<!-- Template Main JS File -->
+<script src="../../assets/js/main.js"></script>
+<!-- MathJax JS File -->
+<script type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+MathJax.Hub.Config({
+tex2jax: {
+inlineMath: [["$", "$"], ["\\(", "\\)"]],
+processEscapes: true
+}
+});
+</script>
+</script>
+</body>
+</html>

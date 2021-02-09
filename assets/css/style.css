@@ -11,6 +11,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   color: #444;
+/*  background-color: #D8EEFF;#87B4CB;*/
 }
 
 a {
@@ -277,6 +278,16 @@ code.library {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.mobile-nav div.quote {
+  width: 200px;
+  font-style: italic;
+  background-color: #fff0cc;
+  border: solid 0.05em #ffe099;
+  border-radius: 0.1em;
+  margin: 0em 6em 0em 6em;
+  padding: 0.1em 0.1em 0.1em 0.1em;
 }
 
 .mobile-nav a {
@@ -1043,7 +1054,7 @@ section {
   font-size: 1.1em;
 }
 
-.tutorials div.note {
+.tutorials div.quote {
   text-align: center;
   font-style: italic;
   background-color: #fff0cc;

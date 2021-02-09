@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>ML - Introduction</title>
+  <title>ML - Linear Regression</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -89,7 +89,7 @@
           <h2>ML</h2>
           <ol>
             <li><a href="../../notes.html#Machine-Learning">ML</a></li>
-            <li>Introduction</li>
+            <li>Linear Regression - Introduction</li>
           </ol>
         </div>
       </div>
@@ -100,95 +100,37 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2>Introduction</h2>
+            <h2>Linear Regression</h2>
+            <h3>Introduction</h3>
             <p>
-              Machine learning is a branch of artificial intelligence that is about learning from data, i.e., extracting knowledge from data. It is an area of active research and roughly speaking, it stands at the intersection of statistics, artificial intelligence. 
-              <div class="quote"><span> Arthur Samuel (1959): <b>"Machine Learning</b> gives computers the ability to learn without being explicitly programmed.”</span></div>
+              <strong>Linear Regression</strong> and more generally, Regression analysis, is one of the most fundamental and commonly used methods in machine learning. It is a <strong>supervised learning</strong> technique where both input features and output labels are required to train the model.
+            </p>	
+            <p>
+              Imagine you want to <strong>buy a bike</strong> (avid biker here!) and you want to estimate the bike price using different features of the bike such as weight, brand, type (road, city, mountain etc.), condition (new, mint, used etc.), mileage, material (carbon, aluminum, steel etc.), and so on. Linear regression is a possible method. By plotting the bike price vs. every individual feature you can use regression to determine how each of the bike features correlate with the price. The regression function $f$ can be represented as
+$$
+Y=f(X),
+$$              
+              where $f$ is a linear function, $Y$ is the bike price, and $X$ is the input features (or a subset of input features) we discusesd earlier. the variable $Y$ (bike price in this case) is called <em><strong>dependent variable</strong></em> because we're making the assumption that it's value depends on the <em><strong>independent variable(s)</strong></em> that are the bike features. In other words, our goal is to <em>use the independent vriables to understand the behavior of the dependent variable</em>. Linear regression function $f$ can be further expanded in terms of the independent variables as:
+$$
+Y=f(X)=\theta_0+\theta_1x_1+\theta_2x_1+\dots+\theta_nx_n.
+$$                      
+              This equation is a general expression for a linear regression model with $n$ features (independent variables). Here, $x_i$ represents the feature $i$ and $\theta_i$ is the corresponding coefficient. $\theta_0$ is called <strong>bias</strong> or <strong>intercept</strong>. From mathmatical perspective, bias can be defined as the mean of the dependent variable if we set all the independent variables to zero but more on that in another post!
             </p>
-            <h2>Daily Life Examples</h2>
+<!--             <h3>Simple Linear Regiression</h3>
             <p>
-              Machine learning algorithms are being used in many aspects of our everyday life. Face detection (cellphone's camera), voice recognition (Amazon Alexa, Siri), spam-detection (email app), fraud detection (credit card company), weather predictions (weather app), music recommendations (Spotify) etc. to name only a few.   
-            </p>
-            <h2>Categories of Machine Learning</h2>
-            <p>
-              In a broad perspective, machine learning algorithms fall into two main categories: <b>supervised learning</b> and <b>unsupervised learning</b>.
-            </p>
-            <h3>Spervised Learning</h3>
-            <p>
-              Machine learning algorithms that make predictions by generalizing what they've learned from a given dataset of both <b>inputs</b> and <b>outcomes (labels)</b> are called supervised learning algorithms. The $i$th record in the dataset has featueres $x_{i,1},\,x_{i,2},\, \dots,\,x_{i,n}$ which form the input, and a corresponding outcome $y_i$. The relationship between the input data and outcome can be descibed using a function $f$ where
-$$
-f([x_{i,1},\,x_{i,2},\, \dots,\,x_{i,n}])=f(X_i)=y_i
-$$
-              For example, when building a <b>house price prediction model</b>, your dataset with $n$ records might have 5 feature columns <b><em>area</em></b>, <b><em>build year (age)</em></b>, <b><em>zipcode</em></b>, <b><em>city</em></b>, <b><em>state</em></b>, <b><em>crime rate</em></b>, and a column $y$ denoting the outcome, the house <b><em>price</em></b>.<br><br>
-$$
-X=\left[
-\begin{array}{c}
-X_{1}\\[1ex]
-X_{2}\\
-\vdots\\
-X_{n}\\[1ex]
-\end{array}\right]=\left[
-\begin{array}{c|c|c|c|c}
-\strut\smash{\overbrace{x_{1,1}}^{\text{age}}} &
-\strut\smash{\overbrace{x_{1,2}}^{\text{zipcode}}} &
-\strut\smash{\overbrace{x_{1,3}}^{\text{crime}}} &
-\strut\smash{\overbrace{x_{1,4}}^{\text{city}}} &
-\strut\smash{\overbrace{x_{1,5}}^{\text{state}}}
-\\
-x_{2,1}&x_{2,2} &x_{2,3} &x_{2,4} &x_{2,5}
-\\
-\vdots & \vdots & \vdots & \vdots & \vdots 
-\\
-x_{n,1}&x_{n,2} &x_{n,3} &x_{n,4} &x_{n,5}
-\end{array}\right]
-    \begin{matrix}
-        \leftarrow \text{record } 1 \\[1ex]
-        \leftarrow \text{record } 2 \\
-        \\[0.5ex]
-        \leftarrow \text{record } n
-    \end{matrix}
-$$
-$$
-{f}(X) = y,
-$$ 
+              Simple linear regression refers to the simplest form of linear regression where we have only one independent variable. Let's take a look at a car dataset example to see how we can use simple linear regression to predict car prices
 
-
-              The goal is to train a model $\hat{f}$ using these features and outcomes so that
-$$
-\hat{f}(X) = \hat{y} \approx y.
-$$           
-            </p>
-            <p>
-              In other words, we are trying to find a <strong>model/function/map</strong> that best maps the input variables to the outcome. The difference between machine learning algorithm lies in the strategy that they use to find this function.
-            </p>
-            <h3>Unsupervised Learning</h3>
-            <p>
-              Unsupervised learning algorithms differ from supervised algorithms in that the outcomes are no longer available, i.e., the data is not labeled. Our goal is no longer making predictions using the inputs simply because there is no label to predict! Instead, we focus on task such as
-              <ul>
-                <li>
-                  <b><em>Clustering</b></em> the input into groups that share similar features
-                </li>
-                <li>
-                  Finding the most important features of the given input data known as <b><em>Principal Component Analysis (PCA)</b></em>
-                </li>
-                <li>
-                  Finding those records in the dataset that significantly differ in one or more features from the rest of the dataset (<b><em>anomaly detection</b></em>)
-                </li>
-              </ul>
-
-            </p>
-            <h3>Goal</h3>
-            <p>
-              As we saw earlier, the goal of machine learning algorithms, be it supervised or unsupervised, is to <strong>accurately predict the outcome $y$ for new data $X$</strong> that the model has not seen before. <strong>The difference between these models is in the assumptions that they make about the mapping function $\hat{f}$</strong>; Is it linear or nonlinear, continous or discrete, differentiable or not, and so on.
-            </p>
-            <h3>Machine Learning vs. Statistical Inference</h3>
-            <p>
-              Both machine learning and statistical models can be used to make predictions. The main purpose of using statistical models, however, is to <strong>understand the relationship between the variables.</strong> Even though the statistical models can be used to make predictions, that is not the reason they have been developed. The same holds true for machine learning algorithms. We can gain some insights between the input/output variables if the machine learning algorithm is not too complex, e.g., simple linear regression. But <strong>as the degree of complexity of a model increases, interpretation of the relationship between the input and outcome variables becomes harder and harder</strong>. In other words, these algorithms <strong>sacrifice interpretability for predictive power</strong>.
-            </p>
-
+            </p>  
           </div>
         </div>
       </div>
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/ML/classification_metrics.ipynb">Link to the <strong>ipython notebook</strong></a>
+          </div>
+        </div>
+      </div> -->
     </section>
   </main>
       
@@ -278,6 +220,7 @@ $$
   <script src="../../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="../../assets/vendor/prism/prism.js"></script>
   <script src="../../assets/vendor/aos/aos.js"></script>
+  <script src="../../assets/vendor/iconify/iconify.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="../../assets/js/main.js"></script>
@@ -290,7 +233,6 @@ MathJax.Hub.Config({
         processEscapes: true
     }
 });
-</script>
 </script>
 </body>
 
