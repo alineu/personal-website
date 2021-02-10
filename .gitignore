@@ -2,7 +2,9 @@
 **/*.ipynb
 *.tex
 *.md
+!Readme.md
 *.pdf
+**/*.txt
 **/*.ppt
 **/*.pptx
 assets/img/later/*
@@ -12,6 +14,7 @@ projects-template.html
 index-2.html
 portfolio.html
 services.html
+runtime.txt
 letsencrypt
 pydsvenv/
 .env
