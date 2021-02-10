@@ -40,8 +40,8 @@ code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-select
 
 pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
 code[class*="language-"]::selection, code[class*="language-"] ::selection {
-	text-shadow: none;
-	background: #0febb3;
+	text-shadow: #001a4d;
+	background: #ffffb3;
 }
 
 @media print {
@@ -73,90 +73,90 @@ pre[class*="language-"] {
 
 .token.prolog,
 .token.doctype,
+.token.deleted,
+.token.constant,
+.token.symbol,
+.token.selector,
+.token.attr-name,
+.token.char,
+.token.inserted,
+.token.entity,
+.token.atrule,
+.token.attr-value, 
+.token.important,
+.token.property,
+.token.tag,
 .token.cdata {
 	color: slategray;
 }
 
-/*	dots parenthese etc. */
+/*	dots parenthese etc.  */
 .token.punctuation {
-	color: #fae100;/*#00cc66;*/
+	color: #fae100;
 }
 
-/*Comments*/
+/*  comments  */
 .token.comment{
-	color: #ffffff;/*#ffa31a;*/
-	}
-/*keyword, e.g. import, print*/
-.token.keyword {
-	color: #EE7700;/*#00aaff;*/
-}
-.token.builtin{
-	color: #EE7700;/*#bb99ff;*/
-	/* list */
-}
-.token.string{
-	color: #c8ff85;/*#b3b300;*/
+	color: #ffffff;
 }
 
+/*  keyword, e.g. import, print  */
+.token.keyword {
+	color: #EE7700;
+}
+
+/*  builtins, e.g. list  */
+.token.builtin{
+	color: #EE7700;
+}
+
+/*  string  */
+.token.string{
+	color: #c8ff85;
+}
+
+/*  functions  */
 .token.function{
 	color: #dbfffd;
 }
 
+/*  urls  */
 .token.url{
-	/* url and equal sign */
-	color: #EE776E;/*#ff9999;*/
-}
-.language-css .token.string,
-.style .token.string {
-	color: #009999;
-	background: #f3f8fa;
-}
-.token.namespace {
-	opacity: .7;
+	color: #EE776E;
 }
 
 /*	bool */
-.token.property,
-.token.tag,
 .token.boolean{
 	color: #00BC00;
 }
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-	/*  numbers */
-	color: #ffb8f4;/*#cc2900;*/
+
+/*  numbers */
+.token.number {
+	color: #ffb8f4;
 }
 
-.token.selector,
-.token.attr-name,
-.token.char,
-.token.inserted, 
-.token.operator,
-.token.entity,
-
-.token.atrule,
-.token.attr-value,
-
+/*  + - * / = */
+.token.operator {
+	color: #ffb399;
+	font-weight: bold;
+}
 
 .token.class-name {
 	color: #DD4A68;
 }
 
-.token.regex{
+.token.regex {
 	color: #8cd98c;
 }
 
-.token.important,
 .token.variable {
 	color: #e90;
 }
 
-.token.important,
 .token.bold {
 	font-weight: bold;
 }
+
 .token.italic {
 	font-style: italic;
 }
@@ -164,4 +164,15 @@ pre[class*="language-"] {
 .token.entity {
 	cursor: help;
 }
+
+.token.namespace {
+	opacity: .7;
+}
+
+.language-css .token.string,
+.style .token.string {
+	color: #009999;
+	background: #f3f8fa;
+}
+
 
