@@ -84,6 +84,15 @@
         <div class="container">
           <div class="row">
           <div class="col-12">
+            <h3>What is a Virtual Environment?</h3>
+            <p>
+               <em>"A <strong>virtual environment</strong> is a Python environment such that the Python interpreter, libraries and scripts installed into it are isolated from those installed in other virtual environments, and (by default) any libraries installed in a “system” Python, i.e., one which is installed as part of your operating system."</em>(<a href="https://docs.python.org/3/library/venv.html#venv-def">source</a>)
+            </p>
+            <h3>Why Using a Virtual Environment Anyways?</h3>
+            <p>
+              <strong>Common scenario</strong>: you use this Python library called CommonLibrary very frequenty in your MS/PhD research. You also took this machine learning course this semester and most of the assignments require using this same library. You realize that you need to upgrade the library from version 2.1 to version 2.2 to be able to use this cool feature that was released lately. After the upgrade, you realize some of your research codes no longer work as expected, due to the upgrade. Downgrading the library means your course assignments can't benefit from the newly released feature so what do you do? You use a virtual environment to isolate the two work!
+            </p>
+            
             <h3>Installing Anaconda or Miniconda</h3>
             <p>You can find the build that fits your OS for installing <a href="https://repo.anaconda.com/archive/">Anaconda</a> or <a href="https://repo.anaconda.com/miniconda/">Miniconda</a> from <strong>Anaconda</strong> repositories. The script below shows an example for <code>MacOS x86_64</code> installation of Miniconda using <code>wget</code></p>
 <pre class="prettyprint lang-language">
