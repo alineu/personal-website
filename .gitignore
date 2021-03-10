@@ -16,6 +16,7 @@ portfolio.html
 services.html
 runtime.txt
 letsencrypt
+scripts
 pydsvenv/
 .env
 **/*.py
