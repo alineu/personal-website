@@ -58,6 +58,10 @@ code.builtin {
   color: #009900;
 }
 
+code.module {
+  font-weight: bold;
+  color: #ff8000;
+}
 code.bool {
   font-weight: bold;
   color: #009900;
@@ -150,7 +154,6 @@ code.library {
 #main {
   margin-top: 80px;
 }
-
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -656,6 +659,7 @@ Notes cards
 .notes .icon-box-tetraeight:hover {
   border-color: #b3006b;
 }
+
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
@@ -871,6 +875,12 @@ section {
   padding: 60px 0;
 }
 
+/*.table td, .table th {
+    padding: .75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}*/
+
 .section-bg {
   background-color: #f3f8fa;
 }
@@ -997,6 +1007,12 @@ section {
     visibility: hidden;
 }
 
+.tutorials a.definition {
+    top: -60px;
+    visibility: hidden;
+    position: relative;
+}
+
 .tutorials h1 .major_line{
   font-size: 0.9em;
   font-weight: 700;
@@ -1115,6 +1131,54 @@ section {
 .tutorials .blurb{
   margin-bottom: 1.5em;
 }
+
+.tutorials .btn-primary {
+    color: #fff;
+    background-color: #32627b;
+    /*border: 3px solid  #68a4c4;*/
+}
+.tutorials .btn-primary:hover {
+    color: #fff;
+    background-color: #32627b;
+    /*border: 3px solid  #68a4c4;*/
+}
+
+.plus-minus-code:after,
+.plus-minus-code.collapsed:after {
+  display: inline;
+  width: 1em;
+  font-family: arial;
+  /*font-weight: bold;*/
+  text-align: center;
+  position: relative;
+}
+.plus-minus-code:after {
+  content:"Hide Code -";
+  top: -1px;
+}
+.plus-minus-code.collapsed:after {
+  content:"See Code +";
+  top: 0;
+}
+
+.plus-minus-output:after,
+.plus-minus-output.collapsed:after {
+  display: inline;
+  width: 1em;
+  font-family: arial;
+  /*font-weight: bold;*/
+  text-align: center;
+  position: relative;
+}
+.plus-minus-output:after {
+  content:"Hide Output -";
+  top: -1px;
+}
+.plus-minus-output.collapsed:after {
+  content:"See Output +";
+  top: 0;
+}
+
 /*--------------------------------------------------------------
 # fontawesome
 --------------------------------------------------------------*/
@@ -1489,6 +1553,8 @@ section {
 /*--------------------------------------------------------------
 # proceed button
 --------------------------------------------------------------*/
+
+
 .btn-proceed {
 
   font-size: 18px;
@@ -2321,10 +2387,12 @@ section {
   padding: 40px 0 20px 0;
 }
 
+
 .projects .entry {
+  background-color: rgba(219, 234, 240, 0.5); 
   padding: 30px;
   margin-bottom: 60px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(104, 164, 196, 0.4);
 }
 
 .projects .entry .entry-img {
@@ -2334,8 +2402,8 @@ section {
 }
 
 .projects .entry .entry-img-small {
-  max-height: 400px;
-  margin: -30px -30px 20px -30px;
+  max-height: fit-content;
+  margin: 0px 0px 20px 0px;
   overflow: hidden;
 }
 
@@ -2344,6 +2412,13 @@ section {
   font-weight: bold;
   padding: 0;
   margin: 0 0 20px 0;
+}
+
+.projects a.header_arg {
+    display: block;
+    position: relative;
+    top: -60px;
+    visibility: hidden;
 }
 
 .projects .entry .entry-title a {
@@ -2357,8 +2432,10 @@ section {
 
 .projects .entry .entry-meta {
   margin-bottom: 15px;
-  color: #dddddd;
+  color: #2f6988;
 }
+
+
 
 .projects .entry .entry-meta ul {
   display: flex;
@@ -2378,13 +2455,15 @@ section {
 }
 
 .projects .entry .entry-meta a {
-  color: #aaaaaa;
+  color: #2d80ad;
   font-size: 14px;
   display: inline-block;
 }
 
 .projects .entry .entry-content p {
   line-height: 24px;
+  font-weight: 600;
+  color: #306886;
 }
 
 .projects .entry .entry-content .read-more {
@@ -2701,9 +2780,11 @@ section {
 }
 
 .projects .sidebar {
+  background-color: rgba(219, 234, 240, 0.5); 
   padding: 30px;
   margin: 0 0 60px 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(104, 164, 196, 0.4);
+  font: Helvetica;
 }
 
 .projects .sidebar .sidebar-title {
@@ -2721,7 +2802,7 @@ section {
 
 .projects .sidebar .search-form form {
   background: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #32627b9c;
   padding: 3px 10px;
   position: relative;
 }
@@ -2761,21 +2842,33 @@ section {
 }
 
 .projects .sidebar .categories ul a {
-  color: #3f8db5;
+  color: #68A4C4;/*#3f8db5;*/
 }
 
 .projects .sidebar .categories ul a:hover {
-  color: #68A4C4;
+  color: #135373;
 }
 
 .projects .sidebar .categories ul a span {
   padding-left: 5px;
-  color: #bedae8;
+  color: #73aac5;
   font-size: 14px;
 }
 
-.projects .sidebar .recent-posts .post-item + .post-item {
+.projects .sidebar .recent-posts .post-item {
   margin-top: 15px;
+  padding-bottom: 3px;
+  border-radius: 6px;
+  padding-top: 5px;
+  border: 3px solid #32627b9c;
+  border-radius: 6px;
+  background-color: white;
+  
+}
+
+.projects .sidebar .recent-posts .post-item:hover {
+  border: 3px solid #a2cce3b3;
+  background: #32627b;
 }
 
 .projects .sidebar .recent-posts img {
@@ -2790,15 +2883,23 @@ section {
 }
 
 .projects .sidebar .recent-posts h4 a {
-  color: #0d2735;
+  color: #68A4C4;/*#0d2735;*/
   transition: 0.3s;
 }
 
 .projects .sidebar .recent-posts h4 a:hover {
-  color: #68A4C4;
+  color: #fff;/*#68A4C4;*/
+
 }
 
 .projects .sidebar .recent-posts time {
+  display: block;
+  margin-left: 95px;
+  font-style: italic;
+  font-size: 14px;
+  color: #72afce;
+}
+.projects .sidebar .recent-posts time:hover {
   display: block;
   margin-left: 95px;
   font-style: italic;
@@ -2824,14 +2925,16 @@ section {
   font-size: 14px;
   padding: 6px 14px;
   margin: 0 6px 8px 0;
-  border: 1px solid #e4eff5;
+  border: 3px solid #32627b9c;
+  border-radius: 6px;
+  background-color: white;
   display: inline-block;
   transition: 0.3s;
 }
 
 .projects .sidebar .tags ul a:hover {
   color: #fff;
-  border: 1px solid #32627b;
+  border: 3px solid  #a2cce3b3;
   background: #32627b;
 }
 

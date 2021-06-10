@@ -1,0 +1,3923 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Projects - Credit Card Transactions Data Analysis - How can Machine Learning Help with Fraud Detection? (Part 1)</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="../../assets/img/web-icon.png" rel="icon">
+    <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/venobox/venobox.css" rel="stylesheet">
+    <link href="../../assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/aos/aos.css" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link href="../../assets/css/prism.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top ">
+      <div class="container">
+        <div class="logo float-left">
+          <h1 class="text-light"><a href="../../index.html"><span>pyDataScientist</span></a></h1>
+        </div>
+        <nav class="nav-menu float-right d-none d-lg-block">
+          <ul>
+            <li><a href="../../index.html">Home</a></li>
+            <li class="active"><a href="../../projects.html">Projects</a></li>
+            <li class="drop-down"><a href="../../notes.html">Tutorials</a>
+            <ul>
+              <li><a href="../../notes.html#Pandas">Pandas</a></li>
+              <li class="drop-down"><a href="../../notes.html#Machine-Learning">Machine Learning</a>
+              <ul>
+                <li><a href="linear_regression.html">Linear Regression</a></li>
+                <li><a href="linear_regression.html">Support Vector Machines</a></li>
+                <li><a href="linear_regression.html">Naive Bayes</a></li>
+                <li><a href="linear_regression.html">Decision Trees</a></li>
+                <li><a href="linear_regression.html">Ensemble Methods</a></li>
+              </ul>
+              </li>
+              <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
+              <li><a href="../../notes.html#Visualization">Visualization</a></li>
+              <li><a href="../../notes.html#Jupyter-Notebook">Jupyter Notebook</a></li>
+              <li><a href="../../notes.html#Git">Git</a></li>
+              <li><a href="../../notes.html#Bash">Bash</a></li>
+              <li><a href="../../notes.html#Deep-Learning">Deep Learning</a></li>
+              <li><a href="../../notes.html#Conda">Conda</a></li>
+              <li><a href="../../notes.html#Numerical-Methods">Numerical Methods</a></li>
+              <li><a href="../../notes.html#Big-Data">Big Data</a></li>
+              <li><a href="../../notes.html#Classification">Classification</a></li>
+              <li><a href="../../notes.html#Pattern-Recognition">Pattern Recognition</a></li>
+              <li><a href="../../notes.html#SQL">SQL</a></li>
+            </ul>
+            </li>
+            <li><a href="../../about.html">About Me</a></li>
+            <li><a href="../../contact.html">Contact</a></li>
+          </ul>
+        </nav><!-- .nav-menu -->
+      </div>
+    </header><!-- End Header -->
+    <main id="main">
+      <!-- ======= About Us Section ======= -->
+      <section class="breadcrumbs">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Projects</h2>
+            <ol>
+              <li><a href="../../projects.html">Projects</a></li>
+              <li>Credit Card Transactions Data Analysis - How can Machine Learning Help with Fraud Detection? (Part 1)</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+      <!-- End Header -->
+      <section class="tutorials" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="1000">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h3>Table of contents</h3>
+              <ul>
+                <li><a href="#intro">Introduction</a></li>
+                <li><a href="#summary">Project Summary</li>
+                <!-- <li><a href="#part1">Part 1</li>  -->
+                <li><a href="#data_collection">Data Collection and Metadata</a></li>
+                <li><a href="#data_prep">Data preparation</a></li>
+                <ul>
+                <li><a href="#load_libs">Loading the libraries</a></li>
+                <li><a href="#load_data">Loading data</a></li>
+                <li><a href="#normalization">Normalizing the features</a></li>
+                </ul>
+                <li><a href="#eda">Exploratory data analysis</a></li>
+                <ul>
+                <li><a href="#correlation">Correlation plot</a></li>
+                <li><a href="#feature_importance">Feature importance</a></li>
+                <li><a href="#class_dists">Class distributions for the 5 most important fatures</a></li>
+                </ul>
+                <li><a href="#model_sel">Model Selection</a></li>
+                <ul>
+                <li><a href="#notes_on_model_sel">Notes regarding model selection process</a></li>
+                <li><a href="#modelselection">Comparing the model performances to find the winner model</a></li>
+                </ul>
+                <li><a href="#xgb_tuning">Hyperparameter tuning of the XGBoost model</a></li>
+                <ul>
+                <li><a href="#data_prep_cv">Data preparation for CV</a></li>
+                <li><a href="#helper_funcs">Helper functions for CV</a></li>
+                <li><a href="#hyper_param_groups">Dividing the hyperparameters into orthogonal groups</a></li>
+                <li><a href="#gs1">Gridsearch for parameter group 1</a></li>
+                <li><a href="#gs2">Gridsearch for parameter group 2</a></li>
+                <li><a href="#gs3">Gridsearch for parameter group 3</a></li>
+                <li><a href="#gs4">Gridsearch for parameter group 4</a></li>
+                <ul>
+                <li><a href="#gs4_notes">Important note regarding overfitting and the <em><a href="#acceptance_threshold">acceptance threshold</a></em></a></li>
+                </ul>
+                <li><a href="#gs5">Gridsearch for parameter group 5</a></li>
+                </ul>
+                <li><a href="#conclusion">Summary and Conclusion</a></li>
+                </ul>
+              <h3><a class="header_arg" id="intro"></a>Introduction</h3>
+              <p>
+                Credit card fraud comes in different forms; phishing, skimming and identity theft to name a few. This project focuses on developing a supervised machine learning model that will provide the best results in revealing and preventing fraudulent transactions. Part 1 of the project compares the accuracy of different
+              </p>
+              <h3><a class="header_arg" id="summary"></a>Project Summary</h3>
+
+              <h4>Part 1: Find the best predictive model among the common ML algorithms</h4>
+              <ul>
+                <li>Data collection and metadata</li>
+                <li>Data preparation</li>
+                <li>Model selection</li>
+                <li>Choosing the right performance metric</li>
+                <li>Train and evaluate the models</li>
+                <li>Comparing the model performances to find the winner model</li>
+                <li>Hypertune the winner model's parameters</li>
+              </ul>
+              
+              <h4><a class="header_arg" id="part2"></a>Part 2: Compare the accuracy of the winner of Part 1 with other algorithms that are specialized for rare-event analysis</h4>
+              <ul>
+                <li>Models for rare-event classification</li>
+                  <ul>
+                    <li>SMOTE</li>
+                    <li>Autoencoders</li>
+                  </ul>
+                <li>Train and evaluate the models</li>
+                <li>Compare the model performances and find the winner model</li>
+                <li>Make predictions</li>
+                <li>Conclusion</li>
+              </ul>
+              
+              <h3><a class="header_arg" id="part1"></a>Part 1</h3> 
+              
+              <h3><a class="header_arg" id="data_collection"></a>Data Collection and Metadata</h3>
+              About this data set:
+              
+              <ul>
+              <li>The dataset contains <strong>transactions made by credit cards in September 2013 by European cardholders</strong>.</li>
+              <li>The dataset presents transactions that occurred in two days, where we have <strong>492 fraud transactions among 284,807 transactions</strong>.</li>
+              <li>The dataset is <strong>extremely imbalanced</strong> with the positive class (frauds) account for only <strong>0.172%</strong> of all transactions.</li>
+              <li>The dataset contains <strong>only numerical input variables which are the result of a PCA transformation</strong>. </li>
+              <li><strong>Due to confidentiality</strong>, the original features and <strong>more background information about the data is not provided</strong>. </li>
+              <li>The dataset has 30 features, $\{V_1, V_2, ... V_{28}\}$ from PCA and two features which have not been transformed with PCA that are <strong>Time</strong> and <strong>Amount</strong>. </li>
+              <li><strong>Time</strong> shows the time elapsed (in seconds) between each transaction and the first transaction in the dataset and <strong>Amount</strong> is the transaction amount.</li>
+              <li>Finally,<strong>Class</strong> is the <strong>response variable</strong> and it takes value <strong>1 in case of fraud and 0 otherwise</strong>.</li>
+              </ul>
+              <table class="table table-bordered" style="display: contents;">
+                <thead>
+                  <tr style="text-align: center;">
+                    <th style="background-color: #ffebe6;"></th>
+                    <th>Category</th>
+                    <th style="background-color: #ffebe6;">Type</th>
+                    <th>Method</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td rowspan="8" style="background-color: white; vertical-align:  middle;">Supervised Learning</td>
+                    <td rowspan="8" style="background-color: #ffebe6; vertical-align: middle;">Classification</td>
+                    <td>Logistic Regression (LR)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Support Vector Machines (SVM)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>K-Nearest Neighbours (KNN)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Naive Bayes (NB)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>Artificial Neural Networks (ANN)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>Random Forests (RF)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>Decision Trees (DT)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">8</th>
+                    <td>XGBoost (XGB)</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3><a class="header_arg" id="load_prep"></a>Data preparation</h3>
+              
+              <h4><a class="header_arg" id="load_libs"></a>Loading the libraries</h4>
+              
+              
+<pre class="prettyprint lang-language"><code class="language-python">import warnings
+import matplotlib
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from collections import Counter
+import matplotlib.pyplot as plt
+from matplotlib import cm as cm
+warnings.filterwarnings('ignore')
+from IPython.display import Image
+from matplotlib import rc, rcParams
+from IPython.core.display import HTML
+matplotlib.rcParams['font.family'] = 'serif'
+rc('font',**{'family':'serif','serif':['Times']})
+rc('text', usetex=False)
+rc('text.latex', preamble=r'\usepackage{underscore}')
+pd.set_option('display.float_format', lambda x: '%.2f' % x)
+sns.set(rc={"figure.dpi":100})
+sns.set_style('white')</code></pre>
+              <h4><a class="header_arg" id="load_data"></a>Loading data</h4>
+<pre class="prettyprint lang-language"><code class="language-python">df = pd.read_csv("creditcard.csv")df.head()</code></pre>
+              
+
+              <table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+                    <th></th>
+                    <th>Time</th>
+                    <th>V1</th>
+                    <th>V2</th>
+                    <th>V3</th>
+                    <th>V4</th>
+                    <th>V5</th>
+                    <th>V6</th>
+                    <th>V7</th>
+                    <th>V8</th>
+                    <th>V9</th>
+                    <th>...</th>
+                    <th>V21</th>
+                    <th>V22</th>
+                    <th>V23</th>
+                    <th>V24</th>
+                    <th>V25</th>
+                    <th>V26</th>
+                    <th>V27</th>
+                    <th>V28</th>
+                    <th>Amount</th>
+                    <th>Class</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">0</th>
+                    <td>0.00</td>
+                    <td>-1.36</td>
+                    <td>-0.07</td>
+                    <td>2.54</td>
+                    <td>1.38</td>
+                    <td>-0.34</td>
+                    <td>0.46</td>
+                    <td>0.24</td>
+                    <td>0.10</td>
+                    <td>0.36</td>
+                    <td>...</td>
+                    <td>-0.02</td>
+                    <td>0.28</td>
+                    <td>-0.11</td>
+                    <td>0.07</td>
+                    <td>0.13</td>
+                    <td>-0.19</td>
+                    <td>0.13</td>
+                    <td>-0.02</td>
+                    <td>149.62</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>0.00</td>
+                    <td>1.19</td>
+                    <td>0.27</td>
+                    <td>0.17</td>
+                    <td>0.45</td>
+                    <td>0.06</td>
+                    <td>-0.08</td>
+                    <td>-0.08</td>
+                    <td>0.09</td>
+                    <td>-0.26</td>
+                    <td>...</td>
+                    <td>-0.23</td>
+                    <td>-0.64</td>
+                    <td>0.10</td>
+                    <td>-0.34</td>
+                    <td>0.17</td>
+                    <td>0.13</td>
+                    <td>-0.01</td>
+                    <td>0.01</td>
+                    <td>2.69</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>1.00</td>
+                    <td>-1.36</td>
+                    <td>-1.34</td>
+                    <td>1.77</td>
+                    <td>0.38</td>
+                    <td>-0.50</td>
+                    <td>1.80</td>
+                    <td>0.79</td>
+                    <td>0.25</td>
+                    <td>-1.51</td>
+                    <td>...</td>
+                    <td>0.25</td>
+                    <td>0.77</td>
+                    <td>0.91</td>
+                    <td>-0.69</td>
+                    <td>-0.33</td>
+                    <td>-0.14</td>
+                    <td>-0.06</td>
+                    <td>-0.06</td>
+                    <td>378.66</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>1.00</td>
+                    <td>-0.97</td>
+                    <td>-0.19</td>
+                    <td>1.79</td>
+                    <td>-0.86</td>
+                    <td>-0.01</td>
+                    <td>1.25</td>
+                    <td>0.24</td>
+                    <td>0.38</td>
+                    <td>-1.39</td>
+                    <td>...</td>
+                    <td>-0.11</td>
+                    <td>0.01</td>
+                    <td>-0.19</td>
+                    <td>-1.18</td>
+                    <td>0.65</td>
+                    <td>-0.22</td>
+                    <td>0.06</td>
+                    <td>0.06</td>
+                    <td>123.50</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>2.00</td>
+                    <td>-1.16</td>
+                    <td>0.88</td>
+                    <td>1.55</td>
+                    <td>0.40</td>
+                    <td>-0.41</td>
+                    <td>0.10</td>
+                    <td>0.59</td>
+                    <td>-0.27</td>
+                    <td>0.82</td>
+                    <td>...</td>
+                    <td>-0.01</td>
+                    <td>0.80</td>
+                    <td>-0.14</td>
+                    <td>0.14</td>
+                    <td>-0.21</td>
+                    <td>0.50</td>
+                    <td>0.22</td>
+                    <td>0.22</td>
+                    <td>69.99</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>5 rows × 31 columns</p>
+<pre class="prettyprint lang-language"><code class="language-python">df.columns</code></pre>
+<pre>Index(['Time', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10',
+       'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20',
+       'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'Amount',
+       'Class'],
+       dtype='object')</pre>      
+<pre class="prettyprint lang-language"><code class="language-python">counter = Counter(df['Class'])
+print(f'Class distribution of the response variable: {counter}')
+print(f'Minority class corresponds to {100*counter[1]/(counter[0]+counter[1]):.3f}% of the data')</code></pre>
+<pre>Class distribution of the response variable: Counter({0: 284315, 1: 492})
+Minority class corresponds to 0.173% of the data</pre>
+<pre class="prettyprint lang-language"><code class="language-python">df.describe()</code></pre>
+              <table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+                    <th></th>
+                    <th>Time</th>
+                    <th>V1</th>
+                    <th>V2</th>
+                    <th>V3</th>
+                    <th>V4</th>
+                    <th>V5</th>
+                    <th>V6</th>
+                    <th>V7</th>
+                    <th>V8</th>
+                    <th>V9</th>
+                    <th>...</th>
+                    <th>V21</th>
+                    <th>V22</th>
+                    <th>V23</th>
+                    <th>V24</th>
+                    <th>V25</th>
+                    <th>V26</th>
+                    <th>V27</th>
+                    <th>V28</th>
+                    <th>Amount</th>
+                    <th>Class</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">count</th>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>...</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">mean</th>
+                    <td>94813.86</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>-0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>-0.00</td>
+                    <td>0.00</td>
+                    <td>-0.00</td>
+                    <td>...</td>
+                    <td>0.00</td>
+                    <td>-0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>-0.00</td>
+                    <td>-0.00</td>
+                    <td>88.35</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">std</th>
+                    <td>47488.15</td>
+                    <td>1.96</td>
+                    <td>1.65</td>
+                    <td>1.52</td>
+                    <td>1.42</td>
+                    <td>1.38</td>
+                    <td>1.33</td>
+                    <td>1.24</td>
+                    <td>1.19</td>
+                    <td>1.10</td>
+                    <td>...</td>
+                    <td>0.73</td>
+                    <td>0.73</td>
+                    <td>0.62</td>
+                    <td>0.61</td>
+                    <td>0.52</td>
+                    <td>0.48</td>
+                    <td>0.40</td>
+                    <td>0.33</td>
+                    <td>250.12</td>
+                    <td>0.04</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">min</th>
+                    <td>0.00</td>
+                    <td>-56.41</td>
+                    <td>-72.72</td>
+                    <td>-48.33</td>
+                    <td>-5.68</td>
+                    <td>-113.74</td>
+                    <td>-26.16</td>
+                    <td>-43.56</td>
+                    <td>-73.22</td>
+                    <td>-13.43</td>
+                    <td>...</td>
+                    <td>-34.83</td>
+                    <td>-10.93</td>
+                    <td>-44.81</td>
+                    <td>-2.84</td>
+                    <td>-10.30</td>
+                    <td>-2.60</td>
+                    <td>-22.57</td>
+                    <td>-15.43</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">25%</th>
+                    <td>54201.50</td>
+                    <td>-0.92</td>
+                    <td>-0.60</td>
+                    <td>-0.89</td>
+                    <td>-0.85</td>
+                    <td>-0.69</td>
+                    <td>-0.77</td>
+                    <td>-0.55</td>
+                    <td>-0.21</td>
+                    <td>-0.64</td>
+                    <td>...</td>
+                    <td>-0.23</td>
+                    <td>-0.54</td>
+                    <td>-0.16</td>
+                    <td>-0.35</td>
+                    <td>-0.32</td>
+                    <td>-0.33</td>
+                    <td>-0.07</td>
+                    <td>-0.05</td>
+                    <td>5.60</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">50%</th>
+                    <td>84692.00</td>
+                    <td>0.02</td>
+                    <td>0.07</td>
+                    <td>0.18</td>
+                    <td>-0.02</td>
+                    <td>-0.05</td>
+                    <td>-0.27</td>
+                    <td>0.04</td>
+                    <td>0.02</td>
+                    <td>-0.05</td>
+                    <td>...</td>
+                    <td>-0.03</td>
+                    <td>0.01</td>
+                    <td>-0.01</td>
+                    <td>0.04</td>
+                    <td>0.02</td>
+                    <td>-0.05</td>
+                    <td>0.00</td>
+                    <td>0.01</td>
+                    <td>22.00</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">75%</th>
+                    <td>139320.50</td>
+                    <td>1.32</td>
+                    <td>0.80</td>
+                    <td>1.03</td>
+                    <td>0.74</td>
+                    <td>0.61</td>
+                    <td>0.40</td>
+                    <td>0.57</td>
+                    <td>0.33</td>
+                    <td>0.60</td>
+                    <td>...</td>
+                    <td>0.19</td>
+                    <td>0.53</td>
+                    <td>0.15</td>
+                    <td>0.44</td>
+                    <td>0.35</td>
+                    <td>0.24</td>
+                    <td>0.09</td>
+                    <td>0.08</td>
+                    <td>77.16</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">max</th>
+                    <td>172792.00</td>
+                    <td>2.45</td>
+                    <td>22.06</td>
+                    <td>9.38</td>
+                    <td>16.88</td>
+                    <td>34.80</td>
+                    <td>73.30</td>
+                    <td>120.59</td>
+                    <td>20.01</td>
+                    <td>15.59</td>
+                    <td>...</td>
+                    <td>27.20</td>
+                    <td>10.50</td>
+                    <td>22.53</td>
+                    <td>4.58</td>
+                    <td>7.52</td>
+                    <td>3.52</td>
+                    <td>31.61</td>
+                    <td>33.85</td>
+                    <td>25691.16</td>
+                    <td>1.00</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>8 rows × 31 columns</p>
+
+              <h3><a class="header_arg" id="normalization"></a>Normalizing the features</h3>
+              <p>
+                I use <a href="https://en.wikipedia.org/wiki/Feature_scaling#Rescaling_(min-max_normalization)">Re-scaling (min-max normalization)</a> to normalize the features. Re-scaling transforms all the numerical features to the range $[-1,\,1]$
+              </p>
+              
+$$
+\text{min-max normalization: }x \rightarrow -1 + \frac{2(x-min(x))}{max(x)-min(x)}
+$$
+              <pre class="prettyprint lang-language"><code class="language-python">df.iloc[:,:30] = -1 + (df.iloc[:,:30] - df.iloc[:,:30].min())*2 / (df.iloc[:,:30].max() - df.iloc[:,:30].min())</code></pre>
+              <pre class="prettyprint lang-language"><code class="language-python">df.describe()</code></pre>
+              <table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+                    <th></th>
+                    <th>Time</th>
+                    <th>V1</th>
+                    <th>V2</th>
+                    <th>V3</th>
+                    <th>V4</th>
+                    <th>V5</th>
+                    <th>V6</th>
+                    <th>V7</th>
+                    <th>V8</th>
+                    <th>V9</th>
+                    <th>...</th>
+                    <th>V21</th>
+                    <th>V22</th>
+                    <th>V23</th>
+                    <th>V24</th>
+                    <th>V25</th>
+                    <th>V26</th>
+                    <th>V27</th>
+                    <th>V28</th>
+                    <th>Amount</th>
+                    <th>Class</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">count</th>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>...</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                    <td>284807.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">mean</th>
+                    <td>0.10</td>
+                    <td>0.92</td>
+                    <td>0.53</td>
+                    <td>0.67</td>
+                    <td>-0.50</td>
+                    <td>0.53</td>
+                    <td>-0.47</td>
+                    <td>-0.47</td>
+                    <td>0.57</td>
+                    <td>-0.07</td>
+                    <td>...</td>
+                    <td>0.12</td>
+                    <td>0.02</td>
+                    <td>0.33</td>
+                    <td>-0.24</td>
+                    <td>0.16</td>
+                    <td>-0.15</td>
+                    <td>-0.17</td>
+                    <td>-0.37</td>
+                    <td>-0.99</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">std</th>
+                    <td>0.55</td>
+                    <td>0.07</td>
+                    <td>0.03</td>
+                    <td>0.05</td>
+                    <td>0.13</td>
+                    <td>0.02</td>
+                    <td>0.03</td>
+                    <td>0.02</td>
+                    <td>0.03</td>
+                    <td>0.08</td>
+                    <td>...</td>
+                    <td>0.02</td>
+                    <td>0.07</td>
+                    <td>0.02</td>
+                    <td>0.16</td>
+                    <td>0.06</td>
+                    <td>0.16</td>
+                    <td>0.01</td>
+                    <td>0.01</td>
+                    <td>0.02</td>
+                    <td>0.04</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">min</th>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>...</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>-1.00</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">25%</th>
+                    <td>-0.37</td>
+                    <td>0.89</td>
+                    <td>0.52</td>
+                    <td>0.64</td>
+                    <td>-0.57</td>
+                    <td>0.52</td>
+                    <td>-0.49</td>
+                    <td>-0.48</td>
+                    <td>0.57</td>
+                    <td>-0.12</td>
+                    <td>...</td>
+                    <td>0.12</td>
+                    <td>-0.03</td>
+                    <td>0.33</td>
+                    <td>-0.33</td>
+                    <td>0.12</td>
+                    <td>-0.26</td>
+                    <td>-0.17</td>
+                    <td>-0.38</td>
+                    <td>-1.00</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">50%</th>
+                    <td>-0.02</td>
+                    <td>0.92</td>
+                    <td>0.54</td>
+                    <td>0.68</td>
+                    <td>-0.50</td>
+                    <td>0.53</td>
+                    <td>-0.48</td>
+                    <td>-0.47</td>
+                    <td>0.57</td>
+                    <td>-0.08</td>
+                    <td>...</td>
+                    <td>0.12</td>
+                    <td>0.02</td>
+                    <td>0.33</td>
+                    <td>-0.22</td>
+                    <td>0.16</td>
+                    <td>-0.17</td>
+                    <td>-0.17</td>
+                    <td>-0.37</td>
+                    <td>-1.00</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">75%</th>
+                    <td>0.61</td>
+                    <td>0.96</td>
+                    <td>0.55</td>
+                    <td>0.71</td>
+                    <td>-0.43</td>
+                    <td>0.54</td>
+                    <td>-0.47</td>
+                    <td>-0.46</td>
+                    <td>0.58</td>
+                    <td>-0.03</td>
+                    <td>...</td>
+                    <td>0.13</td>
+                    <td>0.07</td>
+                    <td>0.34</td>
+                    <td>-0.12</td>
+                    <td>0.20</td>
+                    <td>-0.07</td>
+                    <td>-0.16</td>
+                    <td>-0.37</td>
+                    <td>-0.99</td>
+                    <td>0.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">max</th>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>...</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                    <td>1.00</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>8 rows × 31 columns</p>
+              <h3><a class="header_arg" id="eda"></a>Exploratory data analysis</h3>
+              <h4><a class="header_arg" id="correlation"></a>Correlation plot</h4>
+              <pre class="prettyprint lang-language"><code class="language-python">fig, ax = plt.subplots(1, 1, figsize=(14,14))
+corr = df.corr()
+ax_ = sns.heatmap(
+    corr, 
+    vmin=-1, vmax=1, center=0,
+    cmap=sns.diverging_palette(20, 220, n=200),
+    square=True,
+    ax=ax,
+    cbar_kws={'shrink': 0.82}
+)
+ax_.set_xticklabels(
+    ax.get_xticklabels(),
+    rotation=45,
+    horizontalalignment='right'
+)
+ax.set_title('Correlation between principal components of the credit card dataset', fontsize=18, y=1.02);</code></pre>
+              <a class="definition" id="fig1"></a>
+              <p class="text-align: center;">
+                <img src="output_1.png" style="width: 90%; display: block; margin: 10px auto 20px;"/>
+              </p>              
+              <p>
+                As we can see in <a href="#fig1">Figure 1</a>, most of the data features are not correlated. This is because before publishing, most of the features have been transformed using Principal Component Analysis (PCA). The importance of these features, however, could be assessed using the <code class="module">RandomForestClassifier.feature_importances_</code> of <code class="module">sklearn.ensemble</code> which requires training a classification tree on the data or <code class="method">SelectKbest</code> method from <code class="module">sklearn.feature_selection</code> for a general model.
+              </p>
+              <h4><a class="header_arg" id="feature_importance"></a>Feature importance</h4>
+              <pre class="prettyprint lang-language"><code class="language-python">from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import f_classif
+
+def get_feature_importance_Kbest(X, y, feature_names, n_features_to_plot=30):
+    kbest = SelectKBest(score_func=f_classif, k=n_features_to_plot)
+    fit = kbest.fit(X, y)
+    feature_ids_sorted = np.argsort(fit.scores_)[::-1]
+    features_sorted_by_importance = np.array(feature_names)[feature_ids_sorted]
+    try:
+        feature_importance_array = np.vstack((
+        features_sorted_by_importance[:n_features_to_plot], 
+        np.array(sorted(fit.scores_)[::-1][:n_features_to_plot])
+    )).T
+    except:
+        feature_importance_array = np.vstack((
+        features_sorted_by_importance[:], 
+        np.array(sorted(fit.scores_)[::-1][:])
+    )).T
+            
+    feature_importance_data = pd.DataFrame(feature_importance_array, columns=['feature', 'score'])
+    feature_importance_data['score'] = feature_importance_data['score'].astype(float)
+    return feature_importance_data
+
+# Using RF feature_importances_
+def get_feature_importance_RF(X, y, feature_names, n_features_to_plot=30):
+    RF = RandomForestClassifier(random_state=0)
+    RF.fit(X, y)
+    importances_RF = RF.feature_importances_
+    feature_ids_sorted = np.argsort(importances_RF)[::-1]
+    features_sorted_by_importance = np.array(feature_names)[feature_ids_sorted]
+    try:
+        feature_importance_array = np.vstack((
+        features_sorted_by_importance[:n_features_to_plot], 
+        np.array(sorted(importances_RF)[::-1][:n_features_to_plot])
+    )).T
+    except:
+        feature_importance_array = np.vstack((
+        features_sorted_by_importance[:], 
+        np.array(sorted(importances_RF)[::-1][:])
+    )).T
+    feature_importance_data = pd.DataFrame(feature_importance_array, columns=['feature', 'score'])
+    feature_importance_data['score'] = feature_importance_data['score'].astype(float)
+    return feature_importance_data
+
+# Features and response variable
+X = df.iloc[:,:30].values
+y = df.iloc[:,30].values
+feature_names = list(df.columns.values[:30])
+
+# Using KBest
+importances_KBest = get_feature_importance_Kbest(X, y, feature_names)
+
+# Using RF
+importances_RF = get_feature_importance_RF(X, y, feature_names)</code></pre>
+                    
+<pre class="prettyprint lang-language"><code class="language-python">pd.concat([importances_RF,importances_KBest],axis=1)</code></pre>
+              
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th style="background-color: #ffebe6;"></th>
+                    <th colspan="2" style="background-color: #FFCABD;">RF</th>
+                    <th colspan="2" style="background-color: #ffebe6;">KBest</th>
+                  </tr>
+                  <tr style="text-align: right;">
+                    <th></th>
+                    <th>feature</th>
+                    <th>score</th>
+                    <th>feature</th>
+                    <th>score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">0</th>
+                    <td>V14</td>
+                    <td>0.14</td>
+                    <td>V17</td>
+                    <td>33979.17</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>V17</td>
+                    <td>0.14</td>
+                    <td>V14</td>
+                    <td>28695.55</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>V12</td>
+                    <td>0.13</td>
+                    <td>V12</td>
+                    <td>20749.82</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>V10</td>
+                    <td>0.09</td>
+                    <td>V10</td>
+                    <td>14057.98</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>V16</td>
+                    <td>0.08</td>
+                    <td>V16</td>
+                    <td>11443.35</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>V11</td>
+                    <td>0.06</td>
+                    <td>V3</td>
+                    <td>11014.51</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>V9</td>
+                    <td>0.04</td>
+                    <td>V7</td>
+                    <td>10349.61</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">7</th>
+                    <td>V18</td>
+                    <td>0.03</td>
+                    <td>V11</td>
+                    <td>6999.36</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">8</th>
+                    <td>V7</td>
+                    <td>0.02</td>
+                    <td>V4</td>
+                    <td>5163.83</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">9</th>
+                    <td>V4</td>
+                    <td>0.02</td>
+                    <td>V18</td>
+                    <td>3584.38</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">10</th>
+                    <td>V26</td>
+                    <td>0.02</td>
+                    <td>V1</td>
+                    <td>2955.67</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">11</th>
+                    <td>V21</td>
+                    <td>0.02</td>
+                    <td>V9</td>
+                    <td>2746.60</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">12</th>
+                    <td>V1</td>
+                    <td>0.01</td>
+                    <td>V5</td>
+                    <td>2592.36</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">13</th>
+                    <td>V6</td>
+                    <td>0.01</td>
+                    <td>V2</td>
+                    <td>2393.40</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">14</th>
+                    <td>V3</td>
+                    <td>0.01</td>
+                    <td>V6</td>
+                    <td>543.51</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">15</th>
+                    <td>V8</td>
+                    <td>0.01</td>
+                    <td>V21</td>
+                    <td>465.92</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">16</th>
+                    <td>Time</td>
+                    <td>0.01</td>
+                    <td>V19</td>
+                    <td>344.99</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">17</th>
+                    <td>V5</td>
+                    <td>0.01</td>
+                    <td>V20</td>
+                    <td>115.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">18</th>
+                    <td>V2</td>
+                    <td>0.01</td>
+                    <td>V8</td>
+                    <td>112.55</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">19</th>
+                    <td>V20</td>
+                    <td>0.01</td>
+                    <td>V27</td>
+                    <td>88.05</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">20</th>
+                    <td>V19</td>
+                    <td>0.01</td>
+                    <td>Time</td>
+                    <td>43.25</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">21</th>
+                    <td>V27</td>
+                    <td>0.01</td>
+                    <td>V28</td>
+                    <td>25.90</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">22</th>
+                    <td>V22</td>
+                    <td>0.01</td>
+                    <td>V24</td>
+                    <td>14.85</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">23</th>
+                    <td>Amount</td>
+                    <td>0.01</td>
+                    <td>Amount</td>
+                    <td>9.03</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">24</th>
+                    <td>V13</td>
+                    <td>0.01</td>
+                    <td>V13</td>
+                    <td>5.95</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">25</th>
+                    <td>V15</td>
+                    <td>0.01</td>
+                    <td>V26</td>
+                    <td>5.65</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">26</th>
+                    <td>V24</td>
+                    <td>0.01</td>
+                    <td>V15</td>
+                    <td>5.08</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">27</th>
+                    <td>V28</td>
+                    <td>0.01</td>
+                    <td>V25</td>
+                    <td>3.12</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">28</th>
+                    <td>V25</td>
+                    <td>0.01</td>
+                    <td>V23</td>
+                    <td>2.05</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">29</th>
+                    <td>V23</td>
+                    <td>0.01</td>
+                    <td>V22</td>
+                    <td>0.18</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              
+              <p>
+                Note that the two methods rank the features similarly in terms of importance. 
+              </p>
+              
+              <h4><a class="header_arg" id="class_dists"></a>Class distributions for the 5 most important fatures</h4>
+              
+              
+<pre class="prettyprint lang-language"><code class="language-python">cols = ["#009900", "#ffcc00", "#0099cc", "#cc0066", "#666699"]
+fig = plt.figure(figsize=(8,8), dpi=100)
+important_features = ['V14','V17','V12','V10','V16']
+theta=2*np.pi/5
+offset = np.pi/2 - theta
+radius = 0.3
+pentagon_vertices = [[0.5+radius*(np.cos(x*theta+offset)), 
+                      0.5+radius*(np.sin(x*theta+offset))] 
+                     for x in range(5)]
+for i, col in enumerate(important_features):
+    tmp_ax =fig.add_axes([pentagon_vertices[i][0],
+                          pentagon_vertices[i][1],
+                          .25,
+                          .25])
+    sns.kdeplot(df[df['Class']==0][col], shade=True, color=cols[i], ax=tmp_ax)
+    sns.kdeplot(df[df['Class']==1][col], shade=False, color=cols[i], ax=tmp_ax, linestyle="--")
+    tmp_ax.set_xticklabels([])
+    tmp_ax.set_yticklabels([])
+    tmp_ax.set_title(important_features[i], fontsize=14)
+    if i==len(important_features)-1:
+        leg = tmp_ax.get_legend()
+        leg.legendHandles[0].set_color('k')
+        leg.legendHandles[1].set_color('k')
+    plt.legend([], [], frameon=False)
+fig.legend(leg.legendHandles, ['valid','fraud'], loc='center')
+sns.despine(left=True)
+plt.suptitle('Kernel Density Estimate (KDE) plot of class distributions for \n 5 most important features', x=0.64, y=1.15);</code></pre>
+              <a class="definition" id="fig2"></a>
+              <p class="text-align: center;">
+                <img src="output_2.png" style="width: 70%; display: block; margin: 10px auto 20px;"/>
+              </p>
+              <h3><a class="header_arg" id="model_sel"></a>Model Selection</h3>
+              
+              <p>
+                This part explains the model selection process. We use the <code class="library">sklearn</code> implementation of the candidate models except for the <strong>XGBoost</strong> classifier where we use the <code class="library"><a href="https://xgboost.readthedocs.io/">xgboost</a></code> library. 
+              </p>
+              
+              <h4><a class="header_arg" id="notes_on_model_sel"></a>Notes regarding the model selection process</h4>
+              <ul>
+                <li>
+                  Due to the extreme class imbalance in the dataset, we take advantage of the <code class="library">sklearn</code>'s <strong>Stratified K-Folds cross-validator</strong> (<code class="method">StratifiedKFold</code>) to ensure that the observations are distributed with a similar class ratio $\bigg(\dfrac{\text{positive class count}}{\text{negative class count}}\bigg)$ across the folds.
+                </li>
+                <li>
+                  We choose <code class="arg">scoring='average_precision'</code> as the model evaluation criteria. Ideally we'd want to use <strong>Precision-Recall Area Under Curve (PR-AUC)</strong> as the criteria but since it is not provided by <code class="library">sklearn</code>, we use <code class="arg">average_precision</code> (<strong>AP</strong>) which <em>summarizes a precision-recall curve as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight</em>:
+                </li>
+              $$
+              \text{AP} = \sum_n (R_n - R_{n-1}) P_n,
+              $$
+                <p>
+                  where $P_n$ and $R_n$ are the precision and recall, respectively, at the $n$-th threshold [<a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html">ref</a>].
+                </p>
+              </ul>
+              
+              
+<pre class="prettyprint lang-language"><code class="language-python"># A whole host of Scikit-learn models
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from xgboost import XGBClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import StratifiedKFold
+import time
+
+# We use StratifiedKFold to guarantee similar distribution in train and test data
+# We set the train:test ratio to 4:1 - The train set will ultimately be split
+# into train and validation sets itself, with the same ratio! See below
+
+#              X
+#  ___________/\___________
+# /                        \
+#  x_1, x_2, x_3, ... , x_n
+
+#       X_train       X_test
+#  _______/\_______   __/\__
+# /                \ /     \
+
+# X_test will be unseen until the very last step!
+
+#       X_train     
+#  _______/\_______ 
+# /                \
+#         ||
+#         ||
+#         \/
+#
+#     X_tr     X_val 
+#  ____/\____  _/\_ 
+# /          \/    \ 
+
+num_splits = 5
+skf = StratifiedKFold(n_splits=num_splits, random_state=1, shuffle=True)
+
+# Features and response variable
+X = df.iloc[:,:30].values
+y = df.iloc[:,30].values
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
+
+model_dict = {'CT':[DecisionTreeClassifier()], 
+              'GB':[GradientBoostingClassifier()], 
+              'KNN':[KNeighborsClassifier()],
+              'LR':[LogisticRegression()], 
+              'NB':[GaussianNB()], 
+              'RF':[RandomForestClassifier()], 
+              'SVC':[SVC()], 
+              'XGB':[XGBClassifier()]}</code></pre>
+
+              <h3><a class="header_arg" id="modelselection"></a>Comparing the model performances to find the winner model</h3>
+              
+              
+              <pre class="prettyprint lang-language"><code class="language-python">for model_name, model in model_dict.items():
+                  
+    # train the model
+    t_start = time.time()
+    cv_results = cross_val_score(model[0], 
+                                 X_train, 
+                                 y_train, 
+                                 cv=skf, 
+                                 scoring='average_precision', 
+                                 verbose=10, 
+                                 n_jobs=-1) 
+    
+    # save the results
+    calc_time = time.time() - t_start
+    model_dict[model_name].append(cv_results)
+    model_dict[model_name].append(calc_time)
+    print(("{0} model gives an AP of {1:.2f}% with a standard deviation "
+           "{2:.2f} (took {3:.1f} seconds)").format(model_name, 
+                                                    100*cv_results.mean(), 
+                                                    100*cv_results.std(), 
+                                                    calc_time)
+         )</code></pre>
+<pre>        [Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+        [Parallel(n_jobs=-1)]: Done   2 out of   5 | elapsed:   15.6s remaining:   23.4s
+        [Parallel(n_jobs=-1)]: Done   3 out of   5 | elapsed:   15.8s remaining:   10.5s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:   16.9s remaining:    0.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:   16.9s finished
+        [Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+    
+        CT model gives an AP of 53.17% with a standard deviation 3.44 (took 17.1 seconds)
+    
+        [Parallel(n_jobs=-1)]: Done   2 out of   5 | elapsed:  4.6min remaining:  6.9min
+        [Parallel(n_jobs=-1)]: Done   3 out of   5 | elapsed:  4.6min remaining:  3.1min
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:  4.7min remaining:    0.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:  4.7min finished
+        [Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+    
+        GB model gives an AP of 59.87% with a standard deviation 4.48 (took 279.6 seconds)
+    
+        [Parallel(n_jobs=-1)]: Done   2 out of   5 | elapsed:  1.8min remaining:  2.7min
+        [Parallel(n_jobs=-1)]: Done   3 out of   5 | elapsed:  2.0min remaining:  1.3min
+    
+        KNN model gives an AP of 78.70% with a standard deviation 3.31 (took 131.1 seconds)
+    
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:  2.2min remaining:    0.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:  2.2min finished
+        [Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+        [Parallel(n_jobs=-1)]: Done   2 out of   5 | elapsed:    2.9s remaining:    4.3s
+        [Parallel(n_jobs=-1)]: Done   3 out of   5 | elapsed:    2.9s remaining:    1.9s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:    3.1s remaining:    0.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:    3.1s finished
+        [Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+    
+        LR model gives an AP of 72.42% with a standard deviation 2.56 (took 3.3 seconds)
+    
+        [Parallel(n_jobs=-1)]: Done   2 out of   5 | elapsed:    0.5s remaining:    0.8s
+        [Parallel(n_jobs=-1)]: Done   3 out of   5 | elapsed:    0.5s remaining:    0.4s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:    0.5s remaining:    0.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:    0.5s finished
+        [Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+    
+        NB model gives an AP of 8.54% with a standard deviation 0.50 (took 0.7 seconds)
+    
+        [Parallel(n_jobs=-1)]: Done   2 out of   5 | elapsed:  2.7min remaining:  4.0min
+        [Parallel(n_jobs=-1)]: Done   3 out of   5 | elapsed:  2.7min remaining:  1.8min
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:  3.0min remaining:    0.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:  3.0min finished
+        [Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+    
+        RF model gives an AP of 84.02% with a standard deviation 3.00 (took 180.4 seconds)
+    
+        [Parallel(n_jobs=-1)]: Done   2 out of   5 | elapsed:   10.4s remaining:   15.6s
+        [Parallel(n_jobs=-1)]: Done   3 out of   5 | elapsed:   10.5s remaining:    7.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:   10.7s remaining:    0.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:   10.7s finished
+        [Parallel(n_jobs=-1)]: Using backend LokyBackend with 24 concurrent workers.
+    
+        SVC model gives an AP of 75.22% with a standard deviation 3.54 (took 10.8 seconds)
+    
+        [Parallel(n_jobs=-1)]: Done   2 out of   5 | elapsed:  1.6min remaining:  2.4min
+        [Parallel(n_jobs=-1)]: Done   3 out of   5 | elapsed:  1.6min remaining:  1.1min
+    
+        XGB model gives an AP of 84.89% with a standard deviation 2.92 (took 98.1 seconds)
+    
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:  1.6min remaining:    0.0s
+        [Parallel(n_jobs=-1)]: Done   5 out of   5 | elapsed:  1.6min finished</pre>
+              <p>
+                <code class="method">XGB</code> and <code class="method">RF</code> outperform the other algorithms with <code class="method">XGB</code> being slightly more accurate than the random forest classifier so as we said previously, we choose <code class="library">XGB</code> as the winner. In the next part, we will go through the process of tuning the model.
+              </p>
+              <h3><a class="header_arg" id="xgb_tuning"></a>Hyperparameter tuning of the XGBoost model</h3>
+              
+              <p>
+                In this part, we'd like to find the set of model parameters that work best on our credit card fraud detection problem. How can we configure the model so that we get the best model performance for the dataset we have and the evaluation metric that we specify?
+              </p>
+              <p>
+                We are aiming to achieve this while ensuring that the resulted parameters don't cause overfitting. We use <code class="method">XGBClassifier()</code> with the default parameters as the baseline classifier. The following describes a summary of the steps and <strong>some important notes regarding the model parameters and cross-validation methodology</strong>:
+              </p>
+              <ul>
+                <li>
+                  We split the data into training and test splits while maintaining the class ratio (exactly what we did in the <a href="#modelselection">model selection</a>)
+                </li>
+                <li>
+                  Model performance on the test data <code>(X_test, y_test)</code> is not going to be assessed until the final model evaluation where both the baseline classifier and the tuned model are going to be tested against the <em>so-far-unseen</em> test data
+                </li>
+                <li>
+                  We use <code class="method"><a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold()</a></code> which repeats the <code class="method"><a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html">StratifiedKFold()</a></code> $n_{\mathrm{repeats}}$ times ($3\leq n_{\mathrm{repeats}} \leq 10$) and outputs the model performance-metric (PR-AUC in this case) as the mean across all folds and all repeats. This improves the estimate of the mean model performance-metric with the downside of increased model-evaluation cost. We use $n_{\mathrm{repeats}}=5$ in this work.
+                </li>
+                <li>
+                  <strong>early stopping</strong> is one way to reduce overfitting of training data. Here's a brief summary of how it works:
+                </li>
+                <ul>
+                  <li>
+                    The user specifies an <em>evaluation metric</em> (<strong><code class="arg">eval_metric</code></strong>) and a <em>validation set</em> (<strong><code class="arg">eval_set</code></strong>) to be monitored during the training process.
+                  </li>
+                  <li>
+                    The evaluation metric for the <code class="arg">eval_set</code> needs to <em>"improve"</em> at least once every <strong><code class="arg">early_stopping_rounds</code></strong> of boosting rounds so that the training continues.
+                  </li>
+                  <li>
+                    <strong>Early stopping terminates the training process when the number of boosting rounds with no improvement in evaluation-metric for the <code class="arg">eval_set</code> reaches <code class="arg">early_stopping_rounds</code></strong>.
+                  </li>
+                  <li>
+                    <code class="library">XGBoost</code> offers a wide range of evaluation metrics (see <a href="https://xgboost.readthedocs.io/en/latest/parameter.html">here</a> for the full list) that are either minimized (RMSE, log loss, etc.) or maximized (MAP, NDCG, AUC) during the training process. We use <code>aucpr</code> for this classification problem for the reasons discussed earlier.
+                  </li>
+                </ul>
+                <li>
+                  Normally, we would use <code class="library">sklearn</code>`s <code clas="method"><a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">GridsearchCV()</a></code> to find the hyperparameters of the model. This works great, especially if the model is a <em>native</em> sklearn model. Infact, most sklearn models come with their CV version, e.g., <code class="method">LogisticRegressionCV()</code>, which performs grid search over the user-defined hyperparameter dictionary. However, as we mentioned, when we try to use <code class="library">XGBoost</code>'s <strong>early stopping</strong>, we need to specify an <code class="arg">eval_set</code> to compare the evaluation-metric performance on it with that of the training data. Now if we use <code class="method">GridSearchCV()</code>, ideally we would want <code class="library">XGBoost</code> to use the held-out fold as the evaluation set to determine the optimal number of boosting rounds, however, that doesn't seem to be possible when using <code class="method">GridSearchCV()</code>. One way is to use a static held-out set for XGBoost but that doesn't make sense as it defeats the purpose of cross validation. To address this issue, I defined a custom cross-validation function that for each hyperparameter-set candidate:</li>
+                <ol>
+                  <li>
+                    For each fold, finds the <strong>optimal number of boosting rounds</strong>, the number of rounds where the <code class="arg">eval_metric</code> reached its best value (<code class="arg">best_score</code>) for the <code class="arg">eval_set</code>.
+                  </li>
+                  <li>
+                    Reports the mean and standard deviation of the <code class="arg">eval_metric</code> (for both training and evaluation data) and <strong>best number of rounds</strong> by averaging over the folds.</li>
+                  <li>
+                    Finally, returns the optimal combination of hyperparameters that gave the best <code class="arg">eval_metric</code>.</li>
+                </ol>
+                <li>
+                  <strong>Note</strong>: <code class="arg">xgboost.best_ntree_limit</code> 
+                  you do best_nrounds = int(best_nrounds / 0.8) you consider that your validation set was 20% of your whole training data (another way of saying that you performed a 5-fold cross-validation).
+
+The rule can then be generalized as:
+
+n_folds = 5
+best_nrounds = int((res.shape[0] - estop) / (1 - 1 / n_folds))
+                </li>
+                <li>
+                  Because <code class="method">XGBClassifier()</code> accepts <strong>a lot of hyperparameters</strong>, it would be computationally inefficient and extremely time-consuming to iterate over the enormous number of hyperparameter combinations. What we can do instead is to divide the parameters into a few independent or weakly-interacting groups and find the best hyperparameter combination for each group. The optimal set of parameters can ultimately be determined as the union of the best hyperparameter groups. The following is the hyperparameter groups and the order that we optimize them (<a href="https://towardsdatascience.com/              beyond-grid-search-hypercharge-hyperparameter-tuning-for-xgboost-7c78f7a2929d">reference</a>):
+                </li>
+                  <ol>
+                    <li><code class="arg">max_depth</code>, <code class="arg">min_child_weight</code></li>
+                    <li><code class="arg">colsample_bytree</code>, <code class="arg">colsample_bylevel</code>, <code class="arg">subsample</code></li>
+                    <li><code class="arg">alpha</code>, <code class="arg">gamma</code></li>
+                    <li><code class="arg">scale_pos_weight</code></li>
+                    <li><code class="arg">learning_rate</code></li>
+                  </ol>
+                
+                <li>
+                  To <strong>ensure that the model hyperparameters don't cause overfitting</strong>, we save the model's <code class="arg">eval_metric</code> results for both training and validation data. At the end, we throw out the set of hyperparameters where the model exhibits a better performance for the training data than the validation data.
+                </li>
+                <li>
+                  Because we are using <strong>early stopping</strong>, the model throws out the optimal number of trees (<code class="arg">n_estimators</code>) for each fold. For each parameter group, the best number of boosting trees is returned as the mean over the folds. 
+                </li>
+                <li>
+                  Our efforts to reduce overfitting are in accordance with <a href="https://xgboost.readthedocs.io/en/latest/tutorials/param_tuning.html">XGBoost's Notes on Parameter Tuning</a>.
+                </li>
+              </ul>
+            </li>
+            <h4><a class="header_arg" id="data_prep_cv"></a>Data preparation for CV</h4>
+              
+              
+              
+<pre class="prettyprint lang-language"><code class="language-python">import xgboost as xgb
+from sklearn.model_selection import RepeatedStratifiedKFold
+from sklearn.model_selection import train_test_split
+
+# load data
+X = df.iloc[:,:30].values
+y = df.iloc[:,30].values
+all_features = list(df.columns.values[:30])
+
+# train-test stratified split; stratify=y is used to ensure
+# that the two splits have similar class distribution
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
+
+model = XGBClassifier(tree_method='gpu_hist', 
+                      objective='binary:logistic')
+    
+# fold parameters
+num_splits = 4
+num_reps = 5
+rand_state = 123
+rskf = RepeatedStratifiedKFold(n_splits=num_splits,
+                               n_repeats=num_reps, 
+                               random_state=rand_state)</code></pre>
+              <h4><a class="header_arg" id="helper_funcs"></a>Helper functions for CV</h4>
+              <p>First, we define a function that for the given set of hyperparameters, trains the <code class="method">              XGBClassifier()</code> and spits out the model's mean-over-folds performance metrics.</p>
+                    
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput1" aria-expanded="false" aria-controls="collapseCVOutput1">
+</button>  
+<div class="collapse" id="collapseCVOutput1" aria-expanded="true" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python">from sklearn.metrics import average_precision_score
+from datetime import datetime, timedelta
+from itertools import product
+from pprint import pprint
+np.set_printoptions(threshold=5)
+
+Early_Stop_Rounds = 400
+Num_Boosting_Rounds = 4000
+
+def cv_summary(X_data, y_data, params, feature_names, cv, 
+               objective_func='binary:logistic', 
+               eval_metric='aucpr', 
+               spit_out_fold_results=False, 
+               spit_out_summary=True, 
+               num_boost_rounds=Num_Boosting_Rounds, 
+               early_stop_rounds=Early_Stop_Rounds):
+    """
+    Returns cv results for a given set of parameters
+    """
+    
+    # number of folds
+    num_splits = cv.cvargs['n_splits']
+    # num_rounds: total number of rounds (= n_repeats*n_folds)
+    num_rounds = cv.get_n_splits()
+    
+    # train_scores and val_scores store the mean over all repeats of 
+    # the in-sample and held-out predictions, respectively
+    train_scores = np.zeros(num_rounds)
+    valid_scores = np.zeros(num_rounds)
+    best_num_estimators = np.zeros(num_rounds)
+    
+    # track eval results
+    eval_results = []
+        
+    for i, (train_index, valid_index) in enumerate(cv.split(X_data, y_data)):
+        
+        # which repeat
+        rep = i//num_splits + 1 
+        
+        # which fold
+        fold = i%num_splits + 1
+        
+        # XGBoost train uses DMatrix 
+        xg_train = xgb.DMatrix(X_data[train_index,:], 
+                               feature_names=feature_names, 
+                               label = y_data[train_index])
+        
+        xg_valid = xgb.DMatrix(X_data[valid_index,:], 
+                               feature_names=feature_names, 
+                               label = y_data[valid_index])   
+        # set evaluation 
+        params['tree_method'] = 'gpu_hist'
+        params['objective'] = objective_func
+        params['eval_metric'] = eval_metric
+        
+        # track eval results
+        progress = dict()
+        
+        # train using train data
+        if early_stop_rounds is not None:
+            clf = xgb.train(params, xg_train, 
+                            num_boost_round = num_boost_rounds, 
+                            evals=[(xg_train, "train"), (xg_valid, "eval")], 
+                            early_stopping_rounds=early_stop_rounds, 
+                            evals_result=progress, 
+                            verbose_eval=False)
+            
+            # for validation data we don't need to set ntree_limit because from
+            # XGBoost docs:
+            #
+            # fit():
+            #
+            # if early_stopping_rounds is not None:
+            #     self.best_ntree_limit = self._Booster.best_ntree_limit
+            # ...
+            # ...
+            # predict():
+            #
+            # if ntree_limit is None:
+            #     ntree_limit = getattr(self, "best_ntree_limit", 0)
+            
+            y_pred_vl = clf.predict(xgb.DMatrix(X_train[valid_index,:], 
+                                                feature_names=feature_names))
+            
+            # for train data, we scale up the number of rounds, i.e., we consider that the 
+            # validation set size was 1/num_splits of the training data size. Essentially
+            # what we report as the optimal number of boosting trees is for a data with 
+            # the size of the training data
+            
+            best_num_estimators[i] = int(clf.best_ntree_limit / (1 - 1 / num_splits))
+            
+            y_pred_tr = clf.predict(xgb.DMatrix(X_train[train_index,:], 
+                                                feature_names=feature_names))
+            
+            
+        else:
+            clf = xgb.train(params, xg_train, 
+                            num_boost_round = num_boost_rounds, 
+                            evals=[(xg_train, "train"), (xg_valid, "eval")], 
+                            verbose_eval=False, 
+                            evals_result=progress)     
+            best_num_estimators[i] = num_boost_rounds
+            y_pred_tr = clf.predict(xgb.DMatrix(X_train[train_index,:], 
+                                                feature_names=feature_names),  
+                                                ntree_limit=0)
+            y_pred_vl = clf.predict(xgb.DMatrix(X_train[valid_index,:], 
+                                                feature_names=feature_names), 
+                                                ntree_limit=0)
+                             
+        train_scores[i] = average_precision_score(y_train[train_index], y_pred_tr)
+        valid_scores[i] = average_precision_score(y_train[valid_index], y_pred_vl)
+        
+
+        
+        if spit_out_fold_results:
+            
+            print(f"\n Repeat {rep}, Fold {fold} -", 
+                  f"PR-AUC tr = {train_scores[i]:<.3f},", 
+                  f"PR-AUC vl = {valid_scores[i]:<.3f}",
+                  f"(diff = {train_scores[i] - valid_scores[i]:<.4f})",
+                  )
+            if early_stop_rounds is not None:
+                print(f" best number of boosting rounds tr = {best_num_estimators[i]:<.0f}")
+                
+        eval_results.append(progress)
+        
+    # End of each repeat
+    if spit_out_summary:
+        
+        print(f"\nSummary:\n", 
+              f"mean PR-AUC training =  {np.average(train_scores):<.3f}\n",
+              f"mean PR-AUC validation = {np.average(valid_scores):<.3f}\n",
+              f"mean PR-AUC difference = {np.average(train_scores-valid_scores):<.4f}"
+             )
+        if early_stop_rounds is not None:
+            print(f" average number of boosting rounds tr = {np.average(best_num_estimators):<.0f}")
+    out = [(np.average(x), np.std(x)) for x in [train_scores, valid_scores, best_num_estimators]]
+    return  out, eval_results
+
+def cv_search_params(X_data, y_data, param_dict, feature_names, cv, 
+                     objective_func='binary:logistic', eval_metric='aucpr', 
+                     spit_out_fold_results=False, spit_out_summary=True, 
+                     num_boost_rounds=Num_Boosting_Rounds, 
+                     early_stop_rounds=None):
+    """
+    Returns the cv_summary() for all the combinations of the given parameter dictionary
+    """
+    
+    search_results = []
+    print("Grid search on:\n")
+    
+    pprint(param_dict)
+    print(f"\nstarted at {datetime.now()}")   
+    param_values = [
+        x if (isinstance(x, list) or isinstance(x, type(np.linspace(1,2,2))))
+          else [x] for x in param_dict.values()
+                 ]
+    param_dict = dict(zip(tuple(param_dict.keys()), param_values))
+    print(f"Total number of hyperparameter candidates = {len(list(product(*param_values)))}")   
+    
+    evals = [[] for i in range(len(list(product(*param_values))))]
+    for i, search_params in enumerate(product(*param_values)):
+    
+        start_time = datetime.now()
+        current_params = dict(zip(tuple(param_dict.keys()), search_params))
+        if len(evals)>1:
+            print(f'\nCV {i+1} on:\n')
+            pprint({k: v for k, v in current_params.items() if len(param_dict[k])>1})
+            print('\n started!')
+        else:
+            print('\nCV started!')
+        results, evals[i] = cv_summary(X_data, y_data, 
+                                       current_params, feature_names, 
+                                       cv, objective_func=objective_func, 
+                                       eval_metric=eval_metric, 
+                                       spit_out_fold_results=spit_out_fold_results, 
+                                       spit_out_summary=spit_out_summary, 
+                                       early_stop_rounds=early_stop_rounds, 
+                                       num_boost_rounds=num_boost_rounds)
+        end_time = datetime.now()
+        time_taken = f"{(end_time-start_time).total_seconds():.2f}"
+        if len(evals)>1:
+            print(f'CV {i+1} ended! (took {time_taken} seconds)')
+        else:
+            print(f'CV ended! (took {time_taken} seconds)')
+        [(tr_avg, tr_std), 
+        (val_avg, val_std), 
+        (numtrees_avg, numtrees_std)] = results
+        search_results.append([current_params, 
+                               tr_avg, tr_std, 
+                               val_avg, val_std, 
+                               numtrees_avg, numtrees_std, 
+                               tr_avg-val_avg, time_taken])
+        
+    print(f"Grid search ended at {datetime.now()}")  
+    search_df = pd.DataFrame(search_results, 
+                             columns=['current_params', 'tr_avg', 'tr_std', 
+                                      'val_avg', 'val_std', 'numtrees_avg', 
+                                      'numtrees_std', 'diff', 'time_taken'])
+    
+    return search_df, evals</code></pre></div>
+              <h4><a class="header_arg" id="hyper_param_groups"></a>Dividing the hyperparameters into orthogonal groups</h4>
+              <p>
+                Next, we define a hyperparameter dictionary and update it with some initial parameters for the model:
+              </p>
+<pre class="prettyprint lang-language"><code class="language-python">cur_params = {
+    'max_depth': 3,
+    'min_child_weight': 5,
+    'subsample': 1,
+    'colsample_bytree': 1,
+    'colsample_bylevel': 1,
+    'alpha': 1,
+    'gamma': 1,
+    'scale_pos_weight': 1,
+    'learning_rate': 2e-3,
+}</code></pre>
+              
+              <p>
+                We then define the parameter groups that are going to be the target of grid search:
+              </p>
+<pre class="prettyprint lang-language"><code class="language-python"># current xgb parameters
+param_group_1 = {'max_depth': [3, 4], 'min_child_weight': [1, 10, 20, 30, 40]}
+param_group_2 = {'subsample': np.linspace(0.1, 1, 5), 
+                 'colsample_bytree': np.linspace(0.1, 1, 5), 
+                 'colsample_bylevel': np.linspace(0.1, 1, 5)}
+param_group_3 = {'alpha': np.logspace(-6, 3, 4), 'gamma': np.linspace(1, 9, 5)}
+param_group_4 = {'scale_pos_weight': [0.5, 1, 2, 5, 10, 20, 50, 100, 500, 1000]}
+param_group_5 = {'learning_rate': np.logspace(-4, -2, 11)}</code></pre>
+              <h4><a class="header_arg" id="gs1"></a>Gridsearch for parameter group 1: <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;"> max_depth </code> and  <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;"> min_child_weight </code></h4>
+              <p>
+                We update the <code>cur_params</code> before performing the hyperparameter search. Also, it's a good practice to save the grid search results to minimize the chances of data loss. We use <code class="method">.to_pickle()</code> method of <code class="library">pandas</code> to save the resulting <code class="object">DataFrame</code>.
+              </p>
+              <pre class="prettyprint lang-language"><code class="language-python">search_params = param_group_1
+cur_params.update(search_params)
+pprint(cur_params)</code></pre>
+              <pre>    {'alpha': 1,
+     'colsample_bylevel': 1,
+     'colsample_bytree': 1,
+     'gamma': 1,
+     'learning_rate': 0.002,
+     'max_depth': [3, 4],
+     'min_child_weight': [1, 10, 20, 30, 40],
+     'scale_pos_weight': 1,
+     'subsample': 1}</pre>
+              
+<pre class="prettyprint lang-language"><code class="language-python">tmp_df, evals = cv_search_params(X_train, y_train, cur_params, all_features, rskf)
+tmp_df.to_pickle('hyperparams_round1.pkl')</code></pre>
+              <pre>   Grid search on:
+
+{'alpha': 1,
+ 'colsample_bylevel': 1,
+ 'colsample_bytree': 1,
+ 'gamma': 1,
+ 'learning_rate': 0.002,
+ 'max_depth': [3, 4],
+ 'min_child_weight': [1, 10, 20, 30, 40],
+ 'scale_pos_weight': 1,
+ 'subsample': 1}
+
+started at 2021-06-04 12:41:46.384232
+Total number of hyperparameter candidates = 10
+
+CV 1 on:
+
+{'max_depth': 3, 'min_child_weight': 1}
+
+ started!
+
+ Repeat 1, Fold 1 - PR-AUC tr = 0.816, PR-AUC vl = 0.752 (diff = 0.0639)
+best number of boosting rounds tr = 386
+
+ Repeat 1, Fold 2 - PR-AUC tr = 0.871, PR-AUC vl = 0.813 (diff = 0.0584)
+best number of boosting rounds tr = 5289
+
+ Repeat 1, Fold 3 - PR-AUC tr = 0.823, PR-AUC vl = 0.789 (diff = 0.0336)
+best number of boosting rounds tr = 1209
+
+...
+
+Repeat 5, Fold 2 - PR-AUC tr = 0.762, PR-AUC vl = 0.739 (diff = 0.0232)
+best number of boosting rounds tr = 1397
+
+ Repeat 5, Fold 3 - PR-AUC tr = 0.708, PR-AUC vl = 0.742 (diff = -0.0342)
+best number of boosting rounds tr = 838
+
+ Repeat 5, Fold 4 - PR-AUC tr = 0.700, PR-AUC vl = 0.683 (diff = 0.0165)
+best number of boosting rounds tr = 1110
+
+Summary:
+ mean PR-AUC training =  0.728
+ mean PR-AUC validation = 0.718
+ mean PR-AUC difference = 0.0094
+CV 10 ended! (took 319.31 seconds)
+Grid search ended at 2021-06-04 14:17:32.954835
+​</pre>
+              <pre class="prettyprint lang-language"><code class="language-python">tmp_df</code></pre>
+<table class="table table-striped">
+  <thead>
+    <tr style="text-align: left;">
+      <th></th>
+      <th>current_params</th>
+      <th>tr_avg</th>
+      <th>tr_std</th>
+      <th>val_avg</th>
+      <th>val_std</th>
+      <th>numtrees_avg</th>
+      <th>numtrees_std</th>
+      <th>diff</th>
+      <th>time_taken</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>{'max_depth': 3, 'min_child_weight': 1, 'subsa...</td>
+      <td>0.847</td>
+      <td>0.025</td>
+      <td>0.810</td>
+      <td>0.039</td>
+      <td>3163.150</td>
+      <td>1663.705</td>
+      <td>0.037</td>
+      <td>696.55</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>{'max_depth': 3, 'min_child_weight': 10, 'subs...</td>
+      <td>0.848</td>
+      <td>0.018</td>
+      <td>0.816</td>
+      <td>0.032</td>
+      <td>4030.550</td>
+      <td>1415.623</td>
+      <td>0.032</td>
+      <td>857.18</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>{'max_depth': 3, 'min_child_weight': 20, 'subs...</td>
+      <td>0.808</td>
+      <td>0.024</td>
+      <td>0.779</td>
+      <td>0.051</td>
+      <td>2194.450</td>
+      <td>1672.490</td>
+      <td>0.029</td>
+      <td>518.94</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.784</td>
+      <td>0.017</td>
+      <td>0.767</td>
+      <td>0.040</td>
+      <td>1859.400</td>
+      <td>1292.788</td>
+      <td>0.017</td>
+      <td>452.01</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>{'max_depth': 3, 'min_child_weight': 40, 'subs...</td>
+      <td>0.728</td>
+      <td>0.027</td>
+      <td>0.718</td>
+      <td>0.052</td>
+      <td>1168.550</td>
+      <td>277.548</td>
+      <td>0.009</td>
+      <td>319.31</td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>{'max_depth': 4, 'min_child_weight': 1, 'subsa...</td>
+      <td>0.874</td>
+      <td>0.042</td>
+      <td>0.817</td>
+      <td>0.037</td>
+      <td>3179.400</td>
+      <td>1812.708</td>
+      <td>0.057</td>
+      <td>783.87</td>
+    </tr>
+    <tr>
+      <th scope="row">6</th>
+      <td>{'max_depth': 4, 'min_child_weight': 10, 'subs...</td>
+      <td>0.844</td>
+      <td>0.026</td>
+      <td>0.806</td>
+      <td>0.050</td>
+      <td>3240.800</td>
+      <td>1910.967</td>
+      <td>0.038</td>
+      <td>769.04</td>
+    </tr>
+    <tr>
+      <th scope="row">7</th>
+      <td>{'max_depth': 4, 'min_child_weight': 20, 'subs...</td>
+      <td>0.810</td>
+      <td>0.025</td>
+      <td>0.780</td>
+      <td>0.051</td>
+      <td>2319.850</td>
+      <td>1727.073</td>
+      <td>0.030</td>
+      <td>574.93</td>
+    </tr>
+    <tr>
+      <th scope="row">8</th>
+      <td>{'max_depth': 4, 'min_child_weight': 30, 'subs...</td>
+      <td>0.784</td>
+      <td>0.018</td>
+      <td>0.767</td>
+      <td>0.040</td>
+      <td>1858.900</td>
+      <td>1292.927</td>
+      <td>0.017</td>
+      <td>455.43</td>
+    </tr>
+    <tr>
+      <th scope="row">9</th>
+      <td>{'max_depth': 4, 'min_child_weight': 40, 'subs...</td>
+      <td>0.728</td>
+      <td>0.027</td>
+      <td>0.718</td>
+      <td>0.052</td>
+      <td>1168.550</td>
+      <td>277.548</td>
+      <td>0.009</td>
+      <td>319.31</td>
+    </tr>
+  </tbody>
+</table>
+              <p>
+                We can remove the rows where the difference between the training and validation performance is significant. I take the <strong>threshold</strong> for this difference to be <strong>2%</strong>, meaning that <em>we disregard the parameters that cause a difference in performance $>2\%$ between training and validation sets</em>. For the rest of this project, we will refer to this threshold as the <a id="acceptance_threshold" class="definition"></a><em><strong>acceptance threshold</strong></em> (<em>not to be confused with the precision-recall threshold</em>) and to this condition as the <a id="acceptance_condition" class="definition"><a><em><strong>acceptance condition</a></strong></em>. This reduces the chances that the final model parameters cause overfitting. At the same time, we sort the output by <code>val_avg</code> which is the mean <strong>PR-AUC</strong> over the validation sets. 
+              </p>
+              <pre class="prettyprint lang-language"><code class="language-python">acceptance_threshold=0.02
+cur_params = param_df[param_df['diff']&#60;acceptance_threshold] \
+    .sort_values('val_avg', ascending=False)</code></pre>
+<table class="table table-striped">
+  <thead>
+    <tr style="text-align: left;">
+      <th></th>
+      <th>current_params</th>
+      <th>tr_avg</th>
+      <th>tr_std</th>
+      <th>val_avg</th>
+      <th>val_std</th>
+      <th>numtrees_avg</th>
+      <th>numtrees_std</th>
+      <th>diff</th>
+      <th>time_taken</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">3</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.784</td>
+      <td>0.017</td>
+      <td>0.767</td>
+      <td>0.040</td>
+      <td>1859.400</td>
+      <td>1292.788</td>
+      <td>0.017</td>
+      <td>452.01</td>
+    </tr>
+    <tr>
+      <th scope="row">8</th>
+      <td>{'max_depth': 4, 'min_child_weight': 30, 'subs...</td>
+      <td>0.784</td>
+      <td>0.018</td>
+      <td>0.767</td>
+      <td>0.040</td>
+      <td>1858.900</td>
+      <td>1292.927</td>
+      <td>0.017</td>
+      <td>455.43</td>
+    </tr>
+    <tr>
+  </tbody>
+</table>
+              <p>
+                <code class="arg">max_depth=3</code> and <code class="arg">min_child_weight=30</code> gives a reasonable PR-AUC while ensuring that the model's performance on the test data remains close to that of the training data. Note that using <code class="arg">max_depth=4</code> gives the same performance as <code class="arg">max_depth=3</code> so we move forward with the latter to reduce the complexity of the model. Next, we examine the second hyperparameter group.
+              </p>
+              <h4><a class="header_arg" id="gs2"></a>Gridsearch for parameter group 2: <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">colsample_bylevel</code>, <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">colsample_bytree</code>, and  <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">subsample</code></h4>
+              <p>
+                We update <code>cur_params</code> using the parameters obtained in previous step.
+              </p>
+              <pre class="prettyprint lang-language"><code class="language-python">cur_params.update({'max_depth': 3, 'min_child_weight': 30})
+search_params = param_group_2
+cur_params.update(search_params)
+pprint(cur_params)</code></pre>
+              <pre>{'alpha': 1,
+ 'colsample_bylevel': array([0.1  , 0.325, 0.55 , 0.775, 1.   ]),
+ 'colsample_bytree': array([0.1  , 0.325, 0.55 , 0.775, 1.   ]),
+ 'gamma': 1,
+ 'learning_rate': 0.002,
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'scale_pos_weight': 1,
+ 'subsample': array([0.1  , 0.325, 0.55 , 0.775, 1.   ])}</pre>
+<pre class="prettyprint lang-language"><code class="language-python">tmp_df, evals = cv_search_params(X_train, y_train, cur_params, all_features, rskf)</code></pre>
+              <pre>   Grid search started at 2021-05-24 10:48:53.507958
+   Total number of hyperparameter candidates = 125
+   
+   CV 1 on:
+
+{'subsample': 0.1, 'colsample_bylevel': 0.1, 'colsample_bytree': 0.1}
+
+ started!
+
+Summary:
+   
+   
+  mean PR-AUC training =  0.211
+  mean PR-AUC validation = 0.197
+  mean PR-AUC difference = 0.014
+  best number of boosting rounds = 703
+ CV 1 ended! (took 191.91 seconds)
+
+    ...
+  
+   CV 125 on:
+
+{'subsample': 1.0, 'colsample_bylevel': 1.0, 'colsample_bytree': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.784
+ mean PR-AUC validation = 0.767
+ mean PR-AUC difference = 0.0171
+ best number of boosting rounds = 1859
+CV 125 ended! (took 475.21 seconds)
+
+   Grid search ended at 2021-05-24 12:27:25.227479</pre>
+              <pre class="prettyprint lang-language"><code class="language-python">tmp_df[tmp_df['diff']&#60;acceptance_threshold].sort_values('val_avg', ascending=False)</code></pre>
+<table class="table table-striped">
+  <thead>
+    <tr style="text-align: left;">
+      <th>index</th>
+      <th>current_params</th>
+      <th>tr_avg</th>
+      <th>tr_std</th>
+      <th>val_avg</th>
+      <th>val_std</th>
+      <th>numtrees_avg</th>
+      <th>numtrees_std</th>
+      <th>diff</th>
+      <th>time_taken</th>
+    </tr>
+  </thead>
+<tbody>
+    <tr>
+      <th scope="row">124</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.784</td>
+      <td>0.017</td>
+      <td>0.767</td>
+      <td>0.033</td>
+      <td>1859.600</td>
+      <td>1409.712</td>
+      <td>0.016</td>
+      <td>475.21</td>
+    </tr>
+    <tr>
+      <th scope="row">119</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.777</td>
+      <td>0.014</td>
+      <td>0.765</td>
+      <td>0.037</td>
+      <td>547.000</td>
+      <td>536.632</td>
+      <td>0.011</td>
+      <td>207.12</td>
+    </tr>
+    <tr>
+      <th scope="row">123</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.775</td>
+      <td>0.010</td>
+      <td>0.761</td>
+      <td>0.039</td>
+      <td>214.250</td>
+      <td>229.384</td>
+      <td>0.014</td>
+      <td>146.70</td>
+    </tr>
+    <tr>
+      <th scope="row">118</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.776</td>
+      <td>0.015</td>
+      <td>0.760</td>
+      <td>0.041</td>
+      <td>691.100</td>
+      <td>889.920</td>
+      <td>0.015</td>
+      <td>235.01</td>
+    </tr>
+    <tr>
+      <th scope="row">114</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.777</td>
+      <td>0.016</td>
+      <td>0.760</td>
+      <td>0.045</td>
+      <td>1015.400</td>
+      <td>1382.065</td>
+      <td>0.017</td>
+      <td>292.21</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.211</td>
+      <td>0.039</td>
+      <td>0.211</td>
+      <td>0.055</td>
+      <td>862.600</td>
+      <td>364.775</td>
+      <td>-0.000</td>
+      <td>215.35</td>
+    </tr>
+    <tr>
+      <th scope="row">10</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.203</td>
+      <td>0.037</td>
+      <td>0.210</td>
+      <td>0.068</td>
+      <td>1018.400</td>
+      <td>510.480</td>
+      <td>-0.007</td>
+      <td>239.26</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.211</td>
+      <td>0.052</td>
+      <td>0.197</td>
+      <td>0.062</td>
+      <td>703.450</td>
+      <td>378.373</td>
+      <td>0.014</td>
+      <td>191.28</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.211</td>
+      <td>0.052</td>
+      <td>0.197</td>
+      <td>0.062</td>
+      <td>703.450</td>
+      <td>378.373</td>
+      <td>0.014</td>
+      <td>191.46</td>
+    </tr>
+    <tr>
+      <th scope="row">0</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.211</td>
+      <td>0.052</td>
+      <td>0.197</td>
+      <td>0.062</td>
+      <td>703.450</td>
+      <td>378.373</td>
+      <td>0.014</td>
+      <td>191.91</td>
+    </tr>
+  </tbody>
+</table>
+<p>125 rows × 9 columns</p>
+              <p>
+                Note that all the hyperparameter candidates satisfy the <a href="#acceptance_condition">acceptance condition</a>. We can query the first 10 hyperparameters with the best average PR-AUC on the validation data using:
+              </p>
+              <pre class="prettyprint lang-language"><code class="language-python">[list(map(tmp_df[tmp_df['diff']&#60;acceptance_threshold] \
+          .sort_values('val_avg', ascending=False)['current_params'] \
+          .iloc[x] \
+          .get,
+         ['subsample', 'colsample_bytree', 'colsample_bylevel']
+         )
+     ) for x in range(10)
+]</code></pre>
+              <pre>[[1.0, 1.0, 1.0],
+ [1.0, 0.775, 1.0],
+ [1.0, 1.0, 0.775],
+ [1.0, 0.775, 0.775],
+ [1.0, 0.55, 1.0],
+ [1.0, 1.0, 0.325],
+ [1.0, 1.0, 0.55],
+ [1.0, 0.775, 0.55],
+ [1.0, 0.55, 0.775],
+ [0.775, 1.0, 1.0]]</pre>
+              <p>
+                The results suggest that <code>colsample_bylevel</code> doesn't influenece the accuracy of the predictions. We can take a look at the evolution of PR-AUC for <code>colsample_bylevel=1</code> and different values of <code>subsample</code> and <code>colsample_bytree</code> in our grid-search space.
+              </p>
+                <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput2" aria-expanded="false" aria-controls="collapseCVOutput2">
+                </button>  
+                <div class="collapse" id="collapseCVOutput2" aria-expanded="false" style="height: 0px;"><pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(figsize=(10,10))
+fig.tight_layout()
+ax = fig.add_subplot(111, projection='3d')
+ax.view_init(elev=45, azim=-135)
+params = ['subsample', 'colsample_bytree', 'colsample_bylevel']
+param_values = np.linspace(0.1,1,5)
+indices = [x for x in range(len(tmp_df)) if tmp_df['current_params'] \
+                   .iloc[x] \
+                   .get('colsample_bylevel')==1]   
+_xx, _yy = np.meshgrid(param_values, param_values)
+width = depth = 0.225
+xdata, ydata = _xx.ravel()-width/2, _yy.ravel()-depth/2
+
+zdata = tmp_df['val_avg'] \
+             .iloc[indices] \
+             .values \
+             .reshape(xdata.shape)
+
+bottom = np.zeros_like(zdata)
+# Get desired colormap - you can change this!
+cmap = cm.get_cmap('jet') 
+rgba = [cmap(k) for k in zdata] 
+ax.bar3d(xdata, ydata, bottom, width, depth, zdata, color=rgba, zsort='max',shade=True)
+ax.set_xlim([min(xdata)+0.03, max(xdata)+width])
+ax.set_ylim([min(ydata)+0.03, max(ydata)+depth])
+ax.set_zlim([0, 1])
+ax.set_xticks(param_values)
+ax.set_yticks(param_values)
+plt.title("Average PR-AUC for different values of subsample \nand colsample_bytree for colsample_bytree=1", fontsize=20)
+plt.ylabel("subsample", labelpad=20)
+plt.xlabel("colsample_bylevel", labelpad=20)
+ax.grid(False)
+plt.savefig("paramgr")
+plt.show()</code></pre></div>
+              <a class="definition" id="fig3"></a>
+              <p class="text-align: center;">
+                <img src="output_3.png" style="width: 70%; display: block; margin: 10px auto 20px;"/>
+              </p>
+              <p>
+                <a href="#fig3">Figure 3</a> shows that the variation of <code>subsample</code> has the most significant effect on the accuracy of the model.
+              </p>
+              <p>
+                Finally, we set the first row of the resulting <code class="object">DataFrame</code> as the initial hyperparameter for the next round of grid search.
+              </p>
+              <pre class="prettyprint lang-language"><code class="language-python">cur_params = tmp_df[tmp_df['diff']&#60;acceptance_threshold] \
+                .sort_values('val_avg', ascending=False)['current_params'] \
+                .iloc[0]
+pprint(cur_params)</code></pre>
+              <pre>{'alpha': 1, 
+ 'colsample_bylevel': 1.0, 
+ 'colsample_bytree': 1.0, 
+ 'gamma': 1, 
+ 'learning_rate': 0.002, 
+ 'max_depth': 3, 
+ 'min_child_weight': 30, 
+ 'scale_pos_weight': 1, 
+ 'subsample': 1.0}</pre>
+              <h4><a class="header_arg" id="gs3"></a>Gridsearch for parameter group 3: <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha</code> and <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma</code></h4>
+              <pre class="prettyprint lang-language"><code class="language-python">cur_params.update(param_group_3)
+pprint(cur_params)</code></pre>
+              <pre>{'alpha': array([1.e-06, 1.e-03, 1.e+00, 1.e+03]),
+ 'colsample_bylevel': 1.0,
+ 'colsample_bytree': 1.0,
+ 'gamma': array([1., 3., 5., 7., 9.]),
+ 'learning_rate': 0.002,
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'scale_pos_weight': 1,
+ 'subsample': 1.0}</pre>
+<pre class="prettyprint lang-language"><code class="language-python">tmp_df, evals = cv_search_params(X_train, y_train, cur_params, all_features, rskf)
+tmp_df.to_pickle('hyperparams_round3.pkl')</code></pre><pre>Grid search on:
+
+{'alpha': array([1.e-06, 1.e-03, 1.e+00, 1.e+03]),
+ 'colsample_bylevel': 1.0,
+ 'colsample_bytree': 1.0,
+ 'eval_metric': 'aucpr',
+ 'gamma': array([1., 3., 5., 7., 9.]),
+ 'learning_rate': 0.002,
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'objective': 'binary:logistic',
+ 'scale_pos_weight': 1.0,
+ 'subsample': 1.0,
+ 'tree_method': 'gpu_hist'}
+
+started at 2021-06-07 12:26:51.336554
+Total number of hyperparameter candidates = 20
+
+CV 1 on:
+
+{'alpha': 1e-06, 'gamma': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.781
+ mean PR-AUC validation = 0.762
+ mean PR-AUC difference = 0.0192
+ average number of boosting rounds tr = 1450
+CV 1 ended! (took 384.88 seconds)
+
+</pre>
+<button class="btn btn-primary plus-minus-output collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput3" aria-expanded="false" aria-controls="collapseCVOutput3">
+</button>  
+<div class="collapse" id="collapseCVOutput3" aria-expanded="false" style="height: 0px;">
+    <pre >CV 2 on:
+
+{'alpha': 1e-06, 'gamma': 3.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.788
+ mean PR-AUC validation = 0.773
+ mean PR-AUC difference = 0.0157
+ average number of boosting rounds tr = 2000
+CV 2 ended! (took 471.16 seconds)
+
+CV 3 on:
+
+{'alpha': 1e-06, 'gamma': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.784
+ mean PR-AUC validation = 0.772
+ mean PR-AUC difference = 0.0129
+ average number of boosting rounds tr = 1809
+CV 3 ended! (took 432.78 seconds)
+
+CV 4 on:
+
+{'alpha': 1e-06, 'gamma': 7.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.782
+ mean PR-AUC validation = 0.764
+ mean PR-AUC difference = 0.0177
+ average number of boosting rounds tr = 1881
+CV 4 ended! (took 440.80 seconds)
+
+CV 5 on:
+
+{'alpha': 1e-06, 'gamma': 9.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.778
+ mean PR-AUC validation = 0.759
+ mean PR-AUC difference = 0.0187
+ average number of boosting rounds tr = 1506
+CV 5 ended! (took 375.05 seconds)
+
+CV 6 on:
+
+{'alpha': 0.001, 'gamma': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.782
+ mean PR-AUC validation = 0.763
+ mean PR-AUC difference = 0.0190
+ average number of boosting rounds tr = 1516
+CV 6 ended! (took 395.33 seconds)
+
+CV 7 on:
+
+{'alpha': 0.001, 'gamma': 3.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.788
+ mean PR-AUC validation = 0.773
+ mean PR-AUC difference = 0.0158
+ average number of boosting rounds tr = 2023
+CV 7 ended! (took 474.74 seconds)
+
+CV 8 on:
+
+{'alpha': 0.001, 'gamma': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.785
+ mean PR-AUC validation = 0.772
+ mean PR-AUC difference = 0.0130
+ average number of boosting rounds tr = 2004
+CV 8 ended! (took 463.54 seconds)
+
+CV 9 on:
+
+{'alpha': 0.001, 'gamma': 7.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.782
+ mean PR-AUC validation = 0.764
+ mean PR-AUC difference = 0.0177
+ average number of boosting rounds tr = 1880
+CV 9 ended! (took 441.33 seconds)
+
+CV 10 on:
+
+{'alpha': 0.001, 'gamma': 9.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.778
+ mean PR-AUC validation = 0.759
+ mean PR-AUC difference = 0.0188
+ average number of boosting rounds tr = 1506
+CV 10 ended! (took 375.77 seconds)
+
+CV 11 on:
+
+{'alpha': 1.0, 'gamma': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.784
+ mean PR-AUC validation = 0.767
+ mean PR-AUC difference = 0.0171
+ average number of boosting rounds tr = 1859
+CV 11 ended! (took 452.86 seconds)
+
+CV 12 on:
+
+{'alpha': 1.0, 'gamma': 3.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.784
+ mean PR-AUC validation = 0.770
+ mean PR-AUC difference = 0.0147
+ average number of boosting rounds tr = 1930
+CV 12 ended! (took 457.49 seconds)
+
+CV 13 on:
+
+{'alpha': 1.0, 'gamma': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.779
+ mean PR-AUC validation = 0.765
+ mean PR-AUC difference = 0.0137
+ average number of boosting rounds tr = 1604
+CV 13 ended! (took 395.10 seconds)
+
+CV 14 on:
+
+{'alpha': 1.0, 'gamma': 7.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.780
+ mean PR-AUC validation = 0.761
+ mean PR-AUC difference = 0.0186
+ average number of boosting rounds tr = 1687
+CV 14 ended! (took 410.15 seconds)
+
+CV 15 on:
+
+{'alpha': 1.0, 'gamma': 9.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.776
+ mean PR-AUC validation = 0.756
+ mean PR-AUC difference = 0.0197
+ average number of boosting rounds tr = 1556
+CV 15 ended! (took 379.72 seconds)
+
+CV 16 on:
+
+{'alpha': 1000.0, 'gamma': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.672
+ mean PR-AUC validation = 0.672
+ mean PR-AUC difference = -0.0001
+ average number of boosting rounds tr = 420
+CV 16 ended! (took 168.22 seconds)
+
+CV 17 on:
+
+{'alpha': 1000.0, 'gamma': 3.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.672
+ mean PR-AUC validation = 0.672
+ mean PR-AUC difference = -0.0001
+ average number of boosting rounds tr = 420
+CV 17 ended! (took 168.11 seconds)
+
+CV 18 on:
+
+{'alpha': 1000.0, 'gamma': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.672
+ mean PR-AUC validation = 0.672
+ mean PR-AUC difference = -0.0001
+ average number of boosting rounds tr = 420
+CV 18 ended! (took 168.26 seconds)
+
+CV 19 on:
+
+{'alpha': 1000.0, 'gamma': 7.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.672
+ mean PR-AUC validation = 0.672
+ mean PR-AUC difference = -0.0001
+ average number of boosting rounds tr = 420
+CV 19 ended! (took 167.94 seconds)
+</pre></div><pre>
+CV 20 on:
+
+{'alpha': 1000.0, 'gamma': 9.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.672
+ mean PR-AUC validation = 0.672
+ mean PR-AUC difference = -0.0001
+ average number of boosting rounds tr = 420
+CV 20 ended! (took 168.19 seconds)
+
+Grid search ended at 2021-06-07 14:34:06.880364
+</pre>
+<pre class="prettyprint lang-language"><code class="language-python">tmp_df[tmp_df['diff']&#60;acceptance_threshold] \
+    .sort_values('val_avg', ascending=False) \
+    .head()</code></pre>
+<table class="table table-striped">
+  <thead>
+    <tr style="text-align: left;">
+      <th scope="row"></th>
+      <th>current_params</th>
+      <th>tr_avg</th>
+      <th>tr_std</th>
+      <th>val_avg</th>
+      <th>val_std</th>
+      <th>numtrees_avg</th>
+      <th>numtrees_std</th>
+      <th>diff</th>
+      <th>time_taken</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.788</td>
+      <td>0.017</td>
+      <td>0.773</td>
+      <td>0.033</td>
+      <td>1999.550</td>
+      <td>1415.553</td>
+      <td>0.016</td>
+      <td>471.16</td>
+    </tr>
+    <tr>
+      <th scope="row">6</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.788</td>
+      <td>0.017</td>
+      <td>0.773</td>
+      <td>0.033</td>
+      <td>2022.600</td>
+      <td>1409.712</td>
+      <td>0.016</td>
+      <td>474.74</td>
+    </tr>
+    <tr>
+      <th scope="row">7</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.785</td>
+      <td>0.018</td>
+      <td>0.772</td>
+      <td>0.035</td>
+      <td>2003.700</td>
+      <td>1534.701</td>
+      <td>0.013</td>
+      <td>463.54</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.784</td>
+      <td>0.017</td>
+      <td>0.772</td>
+      <td>0.034</td>
+      <td>1809.200</td>
+      <td>1205.948</td>
+      <td>0.013</td>
+      <td>432.78</td>
+    </tr>
+    <tr>
+      <th scope="row">11</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.784</td>
+      <td>0.018</td>
+      <td>0.770</td>
+      <td>0.036</td>
+      <td>1929.900</td>
+      <td>1284.865</td>
+      <td>0.015</td>
+      <td>457.49</td>
+    </tr>
+  </tbody>
+</table>
+                <p>
+                  At this point, the resulting optimal parameters achieve extremely close results in terms of the model performance metric.
+                </p>
+<pre class="prettyprint lang-language"><code class="language-python">[list(map(tmp_df[tmp_df['diff']&#60;acceptance_threshold] \
+          .sort_values('val_avg', ascending=False)['current_params'] \
+          .iloc[x] \
+          .get,
+         ['alpha', 'gamma']
+         )
+     ) for x in range(5)
+]</pre></code>
+<pre>[[1e-06, 3.0], [0.001, 3.0], [0.001, 5.0], [1e-06, 5.0], [1.0, 3.0]]</pre>
+                <p>
+                  When looking at <code>val_avg</code> for PR-AUC, the first two sets of hyperparameters in the table demonstrate the same performance, hence, we choose the one with larger <code class="arg">alpha</code> (=<code>0.001</code>) as it leads to a more conservative model. Because of the way we find the best number of boosting rounds when we use early stopping, one might question whether we use enuogh number of boosting rounds? I decided to run the same grid search as above, this time withough early stopping and also setting the maximum number of boosting rounds to 10000. In addition, we keep track of the variation of <code>logloss</code> and <code>aucpr</code> for the training and validation data with the number of boosting rounds.
+                </p>
+<pre class="prettyprint lang-language"><code class="language-python">tmp_df_no_early, evals = cv_search_params(X_train, y_train, cur_params, all_features, rskf, 
+                                 eval_metric=['logloss','aucpr'], 
+                                 num_boost_rounds=10000, early_stop_rounds=None)
+tmp_df_no_early.to_pickle(f'hyperparam3_10000.pkl')
+with open(f'hyperparam3_10000_evals.pkl', 'wb') as pickle_file:
+    pickle.dump(evals, pickle_file)</code></pre>
+    <pre>
+      Grid search on:
+
+{'alpha': array([1.e-06, 1.e-03, 1.e+00, 1.e+03]),
+ 'colsample_bylevel': 1,
+ 'colsample_bytree': 1,
+ 'gamma': array([1., 3., 5., 7., 9.]),
+ 'learning_rate': 0.002,
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'scale_pos_weight': 1,
+ 'subsample': 1}
+
+started at 2021-06-09 05:23:46.155894
+Total number of hyperparameter candidates = 20
+
+CV 1 on:
+
+{'alpha': 1e-09, 'gamma': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.815
+ mean PR-AUC validation = 0.789
+ mean PR-AUC difference = 0.0258
+CV 1 ended! (took 1753.62 seconds)
+</pre>
+<button class="btn btn-primary plus-minus-output collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput9" aria-expanded="false" aria-controls="collapseCVOutput9">
+</button>  
+<div class="collapse" id="collapseCVOutput9" aria-expanded="false" style="height: 0px;">
+    <pre >
+CV 2 on:
+
+{'alpha': 1e-09, 'gamma': 3.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.811
+ mean PR-AUC validation = 0.788
+ mean PR-AUC difference = 0.0235
+CV 2 ended! (took 1659.27 seconds)
+
+CV 3 on:
+
+{'alpha': 1e-09, 'gamma': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.807
+ mean PR-AUC validation = 0.785
+ mean PR-AUC difference = 0.0220
+CV 3 ended! (took 1573.70 seconds)
+
+CV 4 on:
+
+{'alpha': 1e-09, 'gamma': 7.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.805
+ mean PR-AUC validation = 0.781
+ mean PR-AUC difference = 0.0236
+CV 4 ended! (took 1542.03 seconds)
+
+CV 5 on:
+
+{'alpha': 1e-09, 'gamma': 9.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.801
+ mean PR-AUC validation = 0.777
+ mean PR-AUC difference = 0.0237
+CV 5 ended! (took 1503.45 seconds)
+
+CV 6 on:
+
+{'alpha': 1e-06, 'gamma': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.815
+ mean PR-AUC validation = 0.789
+ mean PR-AUC difference = 0.0258
+CV 6 ended! (took 1759.45 seconds)
+
+CV 7 on:
+
+{'alpha': 1e-06, 'gamma': 3.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.811
+ mean PR-AUC validation = 0.788
+ mean PR-AUC difference = 0.0235
+CV 7 ended! (took 1674.50 seconds)
+
+CV 8 on:
+
+{'alpha': 1e-06, 'gamma': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.807
+ mean PR-AUC validation = 0.785
+ mean PR-AUC difference = 0.0220
+CV 8 ended! (took 1590.78 seconds)
+
+CV 9 on:
+
+{'alpha': 1e-06, 'gamma': 7.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.805
+ mean PR-AUC validation = 0.781
+ mean PR-AUC difference = 0.0236
+CV 9 ended! (took 1560.62 seconds)
+
+CV 10 on:
+
+{'alpha': 1e-06, 'gamma': 9.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.801
+ mean PR-AUC validation = 0.777
+ mean PR-AUC difference = 0.0237
+CV 10 ended! (took 1539.97 seconds)
+
+CV 11 on:
+
+{'alpha': 0.001, 'gamma': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.815
+ mean PR-AUC validation = 0.789
+ mean PR-AUC difference = 0.0257
+CV 11 ended! (took 1793.02 seconds)
+
+CV 12 on:
+
+{'alpha': 0.001, 'gamma': 3.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.811
+ mean PR-AUC validation = 0.788
+ mean PR-AUC difference = 0.0234
+CV 12 ended! (took 1690.34 seconds)
+
+CV 13 on:
+
+{'alpha': 0.001, 'gamma': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.807
+ mean PR-AUC validation = 0.785
+ mean PR-AUC difference = 0.0221
+CV 13 ended! (took 1600.69 seconds)
+
+CV 14 on:
+
+{'alpha': 0.001, 'gamma': 7.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.805
+ mean PR-AUC validation = 0.781
+ mean PR-AUC difference = 0.0236
+CV 14 ended! (took 1561.39 seconds)
+
+CV 15 on:
+
+{'alpha': 0.001, 'gamma': 9.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.801
+ mean PR-AUC validation = 0.777
+ mean PR-AUC difference = 0.0237
+CV 15 ended! (took 1534.42 seconds)
+
+CV 16 on:
+
+{'alpha': 1.0, 'gamma': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.813
+ mean PR-AUC validation = 0.789
+ mean PR-AUC difference = 0.0247
+CV 16 ended! (took 1747.98 seconds)
+
+CV 17 on:
+
+{'alpha': 1.0, 'gamma': 3.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.809
+ mean PR-AUC validation = 0.786
+ mean PR-AUC difference = 0.0230
+CV 17 ended! (took 1656.95 seconds)
+
+CV 18 on:
+
+{'alpha': 1.0, 'gamma': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.806
+ mean PR-AUC validation = 0.783
+ mean PR-AUC difference = 0.0225
+CV 18 ended! (took 1587.28 seconds)
+
+CV 19 on:
+
+{'alpha': 1.0, 'gamma': 7.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.803
+ mean PR-AUC validation = 0.779
+ mean PR-AUC difference = 0.0241
+CV 19 ended! (took 1556.41 seconds)
+</pre></div><pre>
+CV 20 on:
+
+{'alpha': 1.0, 'gamma': 9.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.800
+ mean PR-AUC validation = 0.775
+ mean PR-AUC difference = 0.0244
+CV 20 ended! (took 1520.48 seconds)
+
+Grid search ended at 2021-06-09 16:10:16.820294
+    </pre>
+    <h5>Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha=0.001</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma</code></h5>
+    <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput10" aria-expanded="false" aria-controls="collapseCVOutput10">
+</button>  
+<div class="collapse" id="collapseCVOutput10" aria-expanded="false" style="height: 0px;">
+    <pre >fig = plt.figure(dpi=280, figsize=(16,8))
+num_folds = 20
+test_params = {'alpha': [1e-3], 'gamma':[1., 3., 5., 7., 9.]}
+test_evals = evals[10:15]
+metrics = ['logloss','aucpr']
+num_cases = len(list(product(*test_params.values())))
+colors=[plt.cm.terrain(int(i/num_cases*256)) for i,_ in enumerate(product(*test_params.values()))]
+step=1000
+num_trees=10000
+
+for j,metric in enumerate(metrics):
+    ax = fig.add_subplot(1,2,j+1)
+    for i,(alpha,gamma) in enumerate(product(*test_params.values())):
+        eval_tr = np.mean(np.asarray([test_evals[i][x]['train'][metric] for x in range(num_folds)]), axis=0)[::step]
+        eval_val = np.mean(np.asarray([test_evals[i][x]['eval'][metric] for x in range(num_folds)]), axis=0)[::step]
+        len_eval = len(np.mean(np.asarray([test_evals[i][x]['train'][metric] for x in range(num_folds)]), axis=0))
+        x_data = np.arange(1,len(eval_tr)+1)*step
+        ax.plot(x_data, eval_tr, 
+                            marker='o', markersize=6, 
+                            markerFaceColor='white', 
+                            color=colors[i],
+                            label=f"alpha={alpha}, gamma={gamma} (tr-{metric})")
+        ax.plot(x_data, eval_val, 
+                            marker='s', markersize=6, 
+                            markerFaceColor='white', 
+                            color=colors[i], linestyle=':',
+                            label=f"alpha={alpha}, gamma={gamma} (val-{metric})")
+    ax.set_xlabel('number of boosting rounds', fontsize=18)
+    ax.set_ylabel(f'{metric}', fontsize=18, labelpad=15)
+    legend_loc = {0:'upper', 1:'lower'}.get(j)
+    ax.legend(loc=f"{legend_loc} right",fontsize=12)
+plt.suptitle('variation of logloss and PR-AUC with the number of\n' +
+             'boosting rounds for alpha=0.001 and gamma=[1,3,5,7,9]', 
+            fontsize=22)
+plt.show()</pre></div>
+    <a class="definition" id="fig11"></a>
+              <p class="text-align: center;">
+                <img src="round3_1.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p> 
+        <h5>Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma=3</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha</code></h5>
+    <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput11" aria-expanded="false" aria-controls="collapseCVOutput11">
+</button>  
+<div class="collapse" id="collapseCVOutput11" aria-expanded="false" style="height: 0px;">
+    <pre >fig = plt.figure(dpi=280, figsize=(16,8))
+num_folds = 20
+test_params = {'alpha': np.logspace(-6,0,3), 'gamma':[3]}
+test_evals = [evals[i] for i in [6,7,8]]
+metrics = ['logloss','aucpr']
+num_cases = len(list(product(*test_params.values())))
+colors=[plt.cm.jet(int(i/num_cases*256)) for i,_ in enumerate(product(*test_params.values()))]
+step=1000
+num_trees=10000
+
+for j,metric in enumerate(metrics):
+    ax = fig.add_subplot(1,2,j+1)
+    for i,(alpha,gamma) in enumerate(product(*test_params.values())):
+        eval_tr = np.mean(np.asarray([test_evals[i][x]['train'][metric] for x in range(num_folds)]), axis=0)[::step]
+        eval_val = np.mean(np.asarray([test_evals[i][x]['eval'][metric] for x in range(num_folds)]), axis=0)[::step]
+        len_eval = len(np.mean(np.asarray([test_evals[i][x]['train'][metric] for x in range(num_folds)]), axis=0))
+        x_data = np.arange(1,len(eval_tr)+1)*step
+        ax.plot(x_data, eval_tr, 
+                            marker='o', markersize=6, 
+                            markerFaceColor='white', 
+                            color=colors[i],
+                            label=f"alpha={alpha}, gamma={gamma} (tr-{metric})")
+        ax.plot(x_data, eval_val, 
+                            marker='s', markersize=6, 
+                            markerFaceColor='white', 
+                            color=colors[i], linestyle=':',
+                            label=f"alpha={alpha}, gamma={gamma} (val-{metric})")
+    ax.set_xlabel('number of boosting rounds', fontsize=18)
+    ax.set_ylabel(f'{metric}', fontsize=18, labelpad=15)
+    legend_loc = {0:'upper', 1:'lower'}.get(j)
+    ax.legend(loc=f"{legend_loc} right",fontsize=12)
+plt.suptitle('variation of logloss and PR-AUC with the number of\n' +
+             'boosting rounds for alpha=[1e-6,1e-3,1]  and gamma=3', 
+            fontsize=22)
+plt.show()</pre></div>
+              <a class="definition" id="fig12"></a>
+              <p class="text-align: center;">
+                <img src="round3_2.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p> 
+              <p>
+                There are a few observations to make from Figures <a href="#fig11">4</a> and <a href="#fig11">5</a>.
+                <ul>
+                  <li>Unlike Pr-AUC, Logloss is insensitive to the variation of <code>alpha</code> and <code>gamma</code>. This is most likely due to the severe imbalance of the classes. While PR-AUC is sensitive to imbalance, logloss is about the <strong>model's confidence in predicting the correct class</strong>, be it positive or negative.</li>
+                  <li><strong>Validation PR-AUC</strong> reaches its peak somewhere around 5000 trees followed by a slight reduction and then it plateaus. Train PR-AUC on the other hand is strictly increasing. This causes the gap between the training and validation PR-AUC to increase, i.e., overitting.</li>
+                  <li>Model is more sensitive to the variation of <code>gamma</code> than <code>alpha</code>.</li>
+                  <li>5000 seems to be a safe maximum for the number of boosting rounds.</li>
+                </ul>
+                We move on with <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma=3</code> and <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha=1e-3</code> to the next round of grid search.
+              </p>
+              
+<pre class="prettyprint lang-language"><code class="language-python">cur_params = tmp_df[tmp_df['diff']&#60;threshold].sort_values('val_avg', ascending=False)['current_params'].iloc[1]</code></pre>
+                <h4><a class="header_arg" id="gs4"></a>Gridsearch for parameter group 4: <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">scale_pos_weight</code></h4>
+                <p>
+                  <code class="arg">scale_pos_weight</code> controls the balance of positive and negative weights which is specifically useful when dealing with highly imbalanced cases. A typical value to consider is <code>sum(negative instances)/sum(positive instances)</code>, i.e.
+                </p>
+$$
+\frac{\text{The number of observations with }\textbf{valid}\text{ transactions}}{\text{The number of observations with }\textbf{fraudulent}\text{ transactions}}
+$$
+                <pre class="prettyprint lang-language"><code class="language-python">from collections import Counter
+counter = Counter(df['Class'])
+print(f'Class distribution of the response variable: {counter}')
+print(f'Majority and minority classes correspond to {100*counter[0]/(counter[0]+counter[1]):.3f}% ', 
+      f'and {100*counter[1]/(counter[0]+counter[1]):.3f}% of the data, respectvively,', 
+      f'\nwith positive-to-negative-ratio = {counter[0]/counter[1]:.1f}')</code></pre>
+<pre>Class distribution of the response variable: Counter({0: 284315, 1: 492})
+Majority and minority classes correspond to 99.827%  and 0.173% of the data, respectvively, 
+with positive-to-negative-ratio = 577.9</pre>
+                <p>
+                  Therefore, we make sure that this ratio or a value close to it is included in our hyperparameter candidates for <code class="arg">scale_pos_weight</code>.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">pprint(cur_params)</code></pre>
+<pre>{'alpha': 0.001,
+ 'colsample_bylevel': 1,
+ 'colsample_bytree': 1,
+ 'eval_metric': 'aucpr',
+ 'gamma': 3,
+ 'learning_rate': 0.002,
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'objective': 'binary:logistic',
+ 'scale_pos_weight': 1,
+ 'subsample': 1,
+ 'tree_method': 'gpu_hist'}</pre>
+                <p>
+                  <strong>Note:</strong> the only reason to include <code class="arg">scale_pos_weight=0.5</code> in the parameter search is to observe the model behavior.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">search_params = param_group_4
+cur_params.update(search_params)
+pprint(cur_params)</code></pre>
+                <pre>{'alpha': 0.001,
+ 'colsample_bylevel': 1,
+ 'colsample_bytree': 1,
+ 'gamma': 3,
+ 'learning_rate': 0.002,
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'scale_pos_weight': [0.5, 1, 2, 5, 10, 20, 50, 100, 500 ,1000],
+ 'subsample': 1}</pre>
+                <pre class="prettyprint lang-language"><code class="language-python">tmp_df, evals = cv_search_params(X_train, y_train, cur_params, all_features, rskf)
+tmp_df.to_pickle('hyperparams_round4.pkl')</code></pre>
+<pre> Grid search started at 2021-05-31 14:23:33.726916
+Total number of hyperparameter candidates = 10
+
+CV 1 on:
+
+{'scale_pos_weight': 0.5}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.729
+ mean PR-AUC validation = 0.710
+ mean PR-AUC difference = 0.0191
+CV 1 ended! (took 178.08 seconds)
+</pre>
+<button class="btn btn-primary plus-minus-output collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput4" aria-expanded="false" aria-controls="collapseCVOutput4">
+</button>  
+<div class="collapse" id="collapseCVOutput4" aria-expanded="false" style="height: 0px;">
+    <pre >CV 2 on:
+
+{'scale_pos_weight': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.788
+ mean PR-AUC validation = 0.772
+ mean PR-AUC difference = 0.0161
+CV 2 ended! (took 260.34 seconds)
+
+CV 3 on:
+
+{'scale_pos_weight': 2.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.815
+ mean PR-AUC validation = 0.787
+ mean PR-AUC difference = 0.0281
+CV 3 ended! (took 312.25 seconds)
+
+CV 4 on:
+
+{'scale_pos_weight': 5.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.829
+ mean PR-AUC validation = 0.803
+ mean PR-AUC difference = 0.0281
+CV 4 ended! (took 344.57 seconds)
+
+CV 5 on:
+
+{'scale_pos_weight': 10.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.832
+ mean PR-AUC validation = 0.801
+ mean PR-AUC difference = 0.0311
+CV 5 ended! (took 299.70 seconds)
+
+CV 6 on:
+
+{'scale_pos_weight': 50.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.829
+ mean PR-AUC validation = 0.801
+ mean PR-AUC difference = 0.0281
+CV 6 ended! (took 277.62 seconds)
+
+CV 7 on:
+
+{'scale_pos_weight': 100.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.762
+ mean PR-AUC validation = 0.739
+ mean PR-AUC difference = 0.0241
+CV 7 ended! (took 213.36 seconds)
+
+CV 8 on:
+
+{'scale_pos_weight': 500.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.754
+ mean PR-AUC validation = 0.731
+ mean PR-AUC difference = 0.0231
+CV 8 ended! (took 195.64 seconds)
+
+CV 9 on:
+
+{'scale_pos_weight': 10000.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.749
+ mean PR-AUC validation = 0.715
+ mean PR-AUC difference = 0.0341
+CV 9 ended! (took 190.46 seconds)
+
+</pre></div>
+<pre>
+CV 10 on:
+
+{'scale_pos_weight': }
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.759
+ mean PR-AUC validation = 0.722
+ mean PR-AUC difference = 0.0361
+ 
+CV 10 ended! (took 448.14 seconds)
+
+Grid search ended at 2021-05-31 15:21:49.174025</pre>
+<pre class="prettyprint lang-language"><code class="language-python">tmp_df[tmp_df['diff']&#60;acceptance_threshold] \
+    .sort_values('val_avg', ascending=False) \
+    .head()</code></pre>
+<table class="table table-striped">
+  <thead>
+    <tr style="text-align: left;">
+            <th></th>
+      <th>current_params</th>
+      <th>tr_avg</th>
+      <th>tr_std</th>
+      <th>val_avg</th>
+      <th>val_std</th>
+      <th>numtrees_avg</th>
+      <th>numtrees_std</th>
+      <th>diff</th>
+      <th>time_taken</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.777</td>
+      <td>0.014</td>
+      <td>0.765</td>
+      <td>0.037</td>
+      <td>307.913</td>
+      <td>301.897</td>
+      <td>0.011</td>
+      <td>0:03:26</td>
+    </tr>
+    <tr>
+      <th scope="row">0</th>
+      <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+      <td>0.702</td>
+      <td>0.013</td>
+      <td>0.690</td>
+      <td>0.048</td>
+      <td>91.575</td>
+      <td>169.184</td>
+      <td>0.012</td>
+      <td>0:02:14</td>
+    </tr>
+  </tbody>
+</table>
+
+              <p>
+                Note that only two of the search candidates for <code class="arg">scale_pos_weight</code> satisfy the <a href="#acceptance_condition">acceptance condition</a>. 
+              </p>
+<pre class="prettyprint lang-language"><code class="language-python">[x['scale_pos_weight'] for x in tmp_df[tmp_df['diff']&#60;acceptance_threshold] \
+    ['current_params']]</code></pre>
+<pre>[0.5, 1]</pre>
+            <p>
+              This is surprising because we expected a value close to <code>sum(negative instances)/sum(positive instances)</code> giving the best model performance. Looking at the variation of evaluation metric with might give us a hint about what might have gone wrong. Plotting the evolution of <code class="arg">eval_metric</code> with <code class="arg">scale_pos_weight</code> may reveal some more details regarding this discrepancy.
+            </p>
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput5" aria-expanded="false" aria-controls="collapseCVOutput5">
+</button>  
+<div class="collapse" id="collapseCVOutput5" aria-expanded="false" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(dpi=280, figsize=(8, 8))
+ax = fig.add_subplot(111)
+labels = []
+x_data = [np.log10(x['scale_pos_weight']) for x in tmp_df['current_params']]
+colors = ['dodgerblue', 'lightsalmon','forestgreen']
+labs = ['train', 'validation']
+avgs = ['tr_avg', 'val_avg']
+stds = ['tr_std', 'val_std']
+stdev_labs = [r'$\pm$ 1 std. dev. (train)', r'$\pm$ 1 std. dev. (validation)']
+axes = []
+
+for i, _ in enumerate(avgs):
+    axes.append(ax.plot(x_data, tmp_df[avgs[i]], marker='o', color=colors[i], label=labs[i]))
+    
+for i, _ in enumerate(avgs):
+    axes.append(ax.fill_between(x_data, 
+                    tmp_df[avgs[i]]-tmp_df[stds[i]], 
+                    tmp_df[avgs[i]]+tmp_df[stds[i]], 
+                    color=colors[i], alpha=.3, label=stdev_labs[i]))
+# diff
+ax.fill_between(x_data, tmp_df['tr_avg'], tmp_df['val_avg'], color='none',
+                hatch="XXX", edgecolor="b", linewidth=0.0, alpha=.6)
+
+offset_coef = 0.5
+ax.set_xlim([min(x_data), max(x_data)])
+ax.set_xlabel('$\log(\mathrm{scale\_pos\_weight})$', fontsize=14, labelpad=20)
+ax.set_ylabel('PR-AUC', fontsize=14, labelpad=20)
+ax_min = min(min(tmp_df['tr_avg']-tmp_df['tr_std']), min(tmp_df['val_avg']-tmp_df['val_std']))
+ax_max = max(max(tmp_df['tr_avg']+tmp_df['tr_std']), max(tmp_df['val_avg']+tmp_df['val_std']))
+ax.set_ylim(ax_min-offset_coef*(ax_max-ax_min), ax_max+offset_coef*(ax_max-ax_min))
+
+# plot number of boosting trees
+# initiate a second axes that shares the same x-axis
+ax2 = ax.twinx()  
+ax2.set_ylabel('Number of boosting trees',fontsize=14, labelpad=20) 
+axes.append(ax2.plot(x_data, tmp_df['numtrees_avg'], marker='1',linewidth=2,
+                     markersize=10, linestyle=':',color=colors[2], 
+                     label='average number of boosting trees'))
+ax2.tick_params(axis='y')
+ax2_min = min(tmp_df['numtrees_avg'])
+ax2_max = max(tmp_df['numtrees_avg'])
+ax2.set_ylim(ax2_min-offset_coef*(ax2_max-ax2_min), ax2_max+offset_coef*(ax2_max-ax2_min))
+
+
+# fix legend
+axes_ = [a[0] if isinstance(a, list) else a for a in axes]
+labels = [lab.get_label() for lab in axes_]
+ax.legend(axes_, labels,  fontsize=10, loc='upper right')
+
+# title
+plt.title('The difference between training and validation PR-AUC for\n'+ 
+          'different values of XGBoost\'s scale_pos_weight parameter', 
+           fontsize=16)
+fig.tight_layout()
+plt.show()</code></pre></div>
+              <a class="definition" id="fig4"></a>
+              <p class="text-align: center;">
+                <img src="output_4.png" style="width: 70%; display: block; margin: 10px auto 20px;"/>
+              </p>
+              <p>
+                Looking at Figure <a href="#fig4">6</a> above, we note that the <code class="arg">scale_pos_weight</code> values 10 an. We also observe that the deviation between the model performance on training versus validation data increases with the increase in <code class="arg">scale_pos_weight</code>. The increase in the width of the hatched region shows this deviation and we can see that for $\log(\mathrm{scale\_pos\_weight})\geq1$ the model is starting to overfit. The fact that the model does not demonstrate its best performance at XGBoost's recommended value should not be too concerning as these are general recommendations which can change with the imbalance ratio, the nature of data, the train-to-validation ratio, etc. Finally, we can see that there might be a <code class="arg">scale_pos_weight</code> value bigger than $1$ that demonstrates a better performance than <code class="arg">scale_pos_weight=1</code> while satisfying the <a href="#acceptance_condition">acceptance condition</a>. We can explore this by performing another round of parameter search over a much smaller window as below.
+              </p>
+<pre class="prettyprint lang-language"><code class="language-python">param_group_4_new = {'scale_pos_weight': np.linspace(1,2,6)}
+search_params = param_group_4_new
+cur_params.update(search_params)
+pprint(cur_params)</code></pre>
+<pre>{'alpha': 0.001,
+ 'colsample_bylevel': 1,
+ 'colsample_bytree': 1,
+ 'gamma': 3,
+ 'learning_rate': 0.002,
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'scale_pos_weight': array([1. , 1.2, 1.4, 1.6, 1.8, 2.]),
+ 'subsample': 1}</pre>
+ <pre class="prettyprint lang-language"><code class="language-python">tmp_df, evals = cv_search_params(X_train, y_train, cur_params, all_features, rskf)
+tmp_df.to_pickle('hyperparams_round4_new.pkl')</code></pre>
+<pre>Grid search on:
+
+{'alpha': 0.001,
+ 'colsample_bylevel': 1,
+ 'colsample_bytree': 1,
+ 'gamma': 3,
+ 'learning_rate': 0.002,
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'scale_pos_weight': array([1.0, 1.2, 1.4, 1.6, 1.8, 2.0]),
+ 'subsample': 1}
+
+started at 2021-06-07 15:07:46.962607
+Total number of hyperparameter candidates = 6
+
+CV 1 on:
+
+{'scale_pos_weight': 1.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.788
+ mean PR-AUC validation = 0.772
+ mean PR-AUC difference = 0.0167
+ average number of boosting rounds tr = 1958
+CV 1 ended! (took 260.34 seconds)
+</pre>
+<button class="btn btn-primary plus-minus-output collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput6" aria-expanded="false" aria-controls="collapseCVOutput6">
+</button>  
+<div class="collapse" id="collapseCVOutput6" aria-expanded="false" style="height: 0px;">
+    <pre >
+CV 2 on:
+
+{'scale_pos_weight': 1.2}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.794
+ mean PR-AUC validation = 0.778
+ mean PR-AUC difference = 0.0158
+ average number of boosting rounds tr = 1947
+CV 2 ended! (took 258.66 seconds)
+
+CV 3 on:
+
+{'scale_pos_weight': 1.4}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.794
+ mean PR-AUC validation = 0.773
+ mean PR-AUC difference = 0.0203
+ average number of boosting rounds tr = 1425
+CV 3 ended! (took 220.09 seconds)
+
+CV 4 on:
+
+{'scale_pos_weight': 1.6}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.799
+ mean PR-AUC validation = 0.777
+ mean PR-AUC difference = 0.0225
+ average number of boosting rounds tr = 1450
+CV 4 ended! (took 212.62 seconds)
+
+CV 5 on:
+
+{'scale_pos_weight': 1.8}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.807
+ mean PR-AUC validation = 0.780
+ mean PR-AUC difference = 0.0266
+ average number of boosting rounds tr = 1835
+CV 5 ended! (took 257.85 seconds)
+</pre></div>
+<pre>
+CV 6 on:
+
+{'scale_pos_weight': 2.0}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.815
+ mean PR-AUC validation = 0.787
+ mean PR-AUC difference = 0.0282
+ average number of boosting rounds tr = 2168
+CV 6 ended! (took 312.25 seconds)
+
+Grid search ended at 2021-06-07 15:23:36.177770</pre>
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput7" aria-expanded="false" aria-controls="collapseCVOutput7">
+</button>  
+<div class="collapse" id="collapseCVOutput7" aria-expanded="false" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(dpi=280, figsize=(8, 8))
+ax = fig.add_subplot(111)
+labels = []
+x_data = [x['scale_pos_weight'] for x in tmp_df['current_params']]
+colors = ['dodgerblue', 'lightsalmon','forestgreen']
+labs = ['train', 'validation']
+avgs = ['tr_avg', 'val_avg']
+stds = ['tr_std', 'val_std']
+stdev_labs = [r'$\pm$ 1 std. dev. (train)', r'$\pm$ 1 std. dev. (validation)']
+axes = []
+
+for i, _ in enumerate(avgs):
+    axes.append(ax.plot(x_data, tmp_df[avgs[i]], marker='o', color=colors[i], label=labs[i]))
+    
+for i, _ in enumerate(avgs):
+    axes.append(ax.fill_between(x_data, 
+                    tmp_df[avgs[i]]-tmp_df[stds[i]], 
+                    tmp_df[avgs[i]]+tmp_df[stds[i]], 
+                    color=colors[i], alpha=.3, label=stdev_labs[i]))
+# diff
+ax.fill_between(x_data, tmp_df['tr_avg'], tmp_df['val_avg'], color='none',
+                hatch="XXX", edgecolor="b", linewidth=0.0, alpha=.6)
+offset_coef = 0.5
+ax.set_xlim([min(x_data), max(x_data)])
+ax.set_xlabel('scale_pos_weight', fontsize=14)
+ax.set_ylabel('PR-AUC', fontsize=14)
+ax_min = min(min(tmp_df['tr_avg']-tmp_df['tr_std']), min(tmp_df['val_avg']-tmp_df['val_std']))
+ax_max = max(max(tmp_df['tr_avg']+tmp_df['tr_std']), max(tmp_df['val_avg']+tmp_df['val_std']))
+ax.set_ylim(ax_min-offset_coef*(ax_max-ax_min), ax_max+offset_coef*(ax_max-ax_min))
+
+# plot number of boosting trees
+# initiate a second axes that shares the same x-axis
+ax2 = ax.twinx()  
+ax2.set_ylabel('Number of boosting trees') 
+axes.append(ax2.plot(x_data, tmp_df['numtrees_avg'], marker='1',linewidth=2,
+                     markersize=10, linestyle=':',color=colors[2], 
+                     label='average number of boosting trees'))
+ax2.tick_params(axis='y')
+ax2_min = min(tmp_df['numtrees_avg'])
+ax2_max = max(tmp_df['numtrees_avg'])
+ax2.set_ylim(ax2_min-offset_coef*(ax2_max-ax2_min), ax2_max+offset_coef*(ax2_max-ax2_min))
+
+
+# fix legend
+axes_ = [a[0] if isinstance(a, list) else a for a in axes]
+labels = [lab.get_label() for lab in axes_]
+ax.legend(axes_, labels,  fontsize=10, loc='upper left')
+
+# title
+plt.title('The difference between training and validation PR-AUC for\n'+ 
+          'different values of XGBoost\'s scale_pos_weight parameter', 
+           fontsize=16)
+fig.tight_layout()
+plt.show()</code></pre></div>
+              <a class="definition" id="fig5"></a>
+              <p class="text-align: center;">
+                <img src="output_5.png" style="width: 70%; display: block; margin: 10px auto 20px;"/>
+              </p>
+<pre class="prettyprint lang-language"><code class="language-python">tmp_df[tmp_df['diff']&#60;acceptance_threshold] \
+    .sort_values('val_avg', ascending=False) \
+    .head()</code></pre>
+              <table class="table table-striped">
+                <thead>
+                  <tr style="text-align: left;">
+                    <th></th>
+                    <th>current_params</th>
+                    <th>tr_avg</th>
+                    <th>tr_std</th>
+                    <th>val_avg</th>
+                    <th>val_std</th>
+                    <th>numtrees_avg</th>
+                    <th>numtrees_std</th>
+                    <th>diff</th>
+                    <th>time_taken</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>1</th>
+                    <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+                    <td>0.794</td>
+                    <td>0.016</td>
+                    <td>0.778</td>
+                    <td>0.038</td>
+                    <td>1958.311</td>
+                    <td>1139.170</td>
+                    <td>0.016</td>
+                    <td>258.66</td>
+                  </tr>
+                  <tr>
+                    <th>0</th>
+                    <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
+                    <td>0.788</td>
+                    <td>0.016</td>
+                    <td>0.772</td>
+                    <td>0.037</td>
+                    <td>1947.413</td>
+                    <td>1279.757</td>
+                    <td>0.011</td>
+                    <td>260.34</td>
+                  </tr>
+                </tbody>
+              </table>
+ <pre class="prettyprint lang-language"><code class="language-python">tmp_df[tmp_df['diff']&#60;acceptance_threshold] \
+    .sort_values('val_avg', ascending=False) \
+    .iloc[0]['current_params']['scale_pos_weight']</code></pre>
+ <pre>1.2</pre>
+              <p>
+                Note how this little change of <code class="arg">scale_pos_weight</code> from 1 to 1.2 improves the validation PR-AUC by roughly 1$\%$. <em>This shows how important this hyperparameter is especially when dealing with highly imbalanced datasets</em>.
+              </p>
+              <h5><a class="header_arg" id="gs4_notes"></a>Important note regarding overfitting and the <em><a href="#acceptance_threshold">acceptance threshold</a></em></h5>
+              <p>
+                Looking at the figure above, one might ask why we limited ourselves to <a href="#acceptance_condition">acceptance condition</a>? For instance, taking <code class="arg">scale_pos_weight</code> to be 3 rather than 1.2 increases the average train and validation PR-AUC by roughly 4$\%$ while the difference between the two is only about 0.7$\%$ above the <a href="#acceptance_condition">acceptance threshold</a>. This is a great question and in fact, some would characterize over fitting as a <strong><em><a href="https://stats.stackexchange.com/questions/9053/how-does-cross-validation-overcome-the-overfitting-problem">situation where increasing the complexity of the model slightly tends to increase the validation error</a></em></strong>, e.g. $\log(\mathrm{scale\_pos\_weight})>1$ in Figure<a href="#fig4">6</a>. There is no good answer to questions like this as the answer might change depending on the business objectives, computational resources, etc. The important thing here is to make sure that we understand the reasoning behind eliminating or accepting some candidates. I performed a similar analysis to previous round of grid search by repeating the grid search for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">scale_pos_weight</code> with no early stopping.
+              </p>
+              <h5>Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">scale_pos_weight=[1,5,20,100,1000]</code></h5>
+              <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput13" aria-expanded="false" aria-controls="collapseCVOutput13">
+</button>  
+<div class="collapse" id="collapseCVOutput13" aria-expanded="false" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(dpi=280, figsize=(16, 8))
+num_folds = 20
+test_params = {'scale_pos_weight': [0.5, 1, 2, 5, 10, 20, 50, 100, 500, 1000][1::2]}
+test_evals = evals[1::2]
+metrics = ['logloss','aucpr']
+num_cases = len(list(product(*test_params.values())))
+colors=[plt.cm.jet(int(i/num_cases*256)) for i,_ in enumerate(product(*test_params.values()))]
+step=1000
+num_trees=10000
+
+for j,metric in enumerate(metrics):
+    ax = fig.add_subplot(1,2,j+1)
+    for i,(scale_pos_weight) in enumerate(product(*test_params.values())):
+        eval_tr = np.mean(np.asarray([test_evals[i][x]['train'][metric] for x in range(num_folds)]), axis=0)[::step]
+        eval_val = np.mean(np.asarray([test_evals[i][x]['eval'][metric] for x in range(num_folds)]), axis=0)[::step]
+        len_eval = len(np.mean(np.asarray([test_evals[i][x]['train'][metric] for x in range(num_folds)]), axis=0))
+        x_data = np.arange(1,len(eval_tr)+1)*step
+        ax.plot(x_data, eval_tr, 
+                            marker='o', markersize=6, 
+                            markerFaceColor='white', 
+                            color=colors[i],
+                            label=f"scale_pos_weight={scale_pos_weight[0]} (tr-{metric})")
+        ax.plot(x_data, eval_val, 
+                            marker='s', markersize=6, 
+                            markerFaceColor='white', 
+                            color=colors[i], linestyle=':',
+                            label=f"scale_pos_weight={scale_pos_weight[0]} (val-{metric})")
+    ax.set_xlabel('number of boosting rounds', fontsize=18)
+    ax.set_ylabel(f'{metric}', fontsize=18, labelpad=15)
+    legend_loc = {0:'upper', 1:'lower'}.get(j)
+    ax.legend(loc=f"{legend_loc} right",fontsize=12)
+plt.suptitle('Variation of logloss and PR-AUC with the number of\n' +
+             'boosting rounds for scale_pos_weight=[1,5,20,100,1000]', 
+            fontsize=22)
+plt.show()</code></pre></div>
+<a class="definition" id="fig14"></a>
+              <p class="text-align: center;">
+                <img src="round4.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p> 
+              <p>
+                <ul>
+                  <li>Notice that the reduction in logloss slows down for the higher values of <code>scale_pos_weight</code>. I believe that the possible reson behind this behavior is the model up samples the fraudulent class, i.e., repeats the positive instances <code>scale_pos_weight</code> times to make it a balanced problem but since the positive class is generally harder to predict, it requires a higher number of boosting rounds for the logloss to reduce.</li>
+                  <li>Note that until around 2000 boosting rounds, the training and validation PR-AUC improve simultaneously and roughly with the same rate. In this period, <code>scale_pos_weight=5</code> demonstrates a superior performance compared to other values.</li>
+                </ul>
+              </p>
+
+              <p>
+                Nevertheless, we stick to the rule that we initially defined and move forward with <code class="arg">scale_pos_weight=1.2</code>.
+              </p>
+              </p>
+
+              <h4><a class="header_arg" id="gs5"></a>Gridsearch for parameter group 5: <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;"> learning_rate </code></h4>
+              <p>
+                The last step in our hyperparameter grid search is tuning the learning rate where we explore 11 learning rates in the range (0.0001, 0.01). 
+              </p>
+ <pre class="prettyprint lang-language"><code class="language-python">cur_params.update({'scale_pos_weight': 1.2})
+search_params = param_group_5
+cur_params.update(search_params)
+pprint(cur_params)</code></pre>
+<pre>
+  {'alpha': 0.001,
+ 'colsample_bylevel': 1,
+ 'colsample_bytree': 1,
+ 'gamma': 3,
+ 'learning_rate': array([0.0001 , 0.00015849, ..., 0.00630957, 0.01]),
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'scale_pos_weight': 1.2,
+ 'subsample': 1}</pre>
+  <pre class="prettyprint lang-language"><code class="language-python">tmp_df, evals = cv_search_params(X_train, y_train, cur_params, all_features, rskf)
+tmp_df.to_pickle('hyperparams_round5.pkl')</code></pre>
+<pre>Grid search on:
+
+{'alpha': 0.001,
+ 'colsample_bylevel': 1,
+ 'colsample_bytree': 1,
+ 'gamma': 3,
+ 'learning_rate': array([0.   , 0.   , 0.   , ..., 0.004, 0.006, 0.01 ]),
+ 'max_depth': 3,
+ 'min_child_weight': 30,
+ 'scale_pos_weight': 1.2,
+ 'subsample': 1}
+
+started at 2021-06-07 17:25:20.839887
+Total number of hyperparameter candidates = 11
+
+CV 1 on:
+
+{'learning_rate': 0.0001}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.696
+ mean PR-AUC validation = 0.671
+ mean PR-AUC difference = 0.0252
+ average number of boosting rounds tr = 119
+CV 1 ended! (took 70.78 seconds)
+
+</pre>
+<button class="btn btn-primary plus-minus-output collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput8" aria-expanded="false" aria-controls="collapseCVOutput8">
+</button>  
+<div class="collapse" id="collapseCVOutput8" aria-expanded="false" style="height: 0px;">
+    <pre >
+CV 2 
+
+{'learning_rate': 0.00015848931924611142}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.697
+ mean PR-AUC validation = 0.671
+ mean PR-AUC difference = 0.0259
+ average number of boosting rounds tr = 114
+CV 2 ended! (took 66.29 seconds)
+
+CV 3 on:
+
+{'learning_rate': 0.00025118864315095795}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.722
+ mean PR-AUC validation = 0.697
+ mean PR-AUC difference = 0.0254
+ average number of boosting rounds tr = 652
+CV 3 ended! (took 120.19 seconds)
+
+CV 4 on:
+
+{'learning_rate': 0.00039810717055349735}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.747
+ mean PR-AUC validation = 0.724
+ mean PR-AUC difference = 0.0231
+ average number of boosting rounds tr = 1200
+CV 4 ended! (took 175.81 seconds)
+
+CV 5 on:
+
+{'learning_rate': 0.000630957344480193}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.758
+ mean PR-AUC validation = 0.738
+ mean PR-AUC difference = 0.0196
+ average number of boosting rounds tr = 1345
+CV 5 ended! (took 190.94 seconds)
+
+CV 6 on:
+
+{'learning_rate': 0.001}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.771
+ mean PR-AUC validation = 0.752
+ mean PR-AUC difference = 0.0183
+ average number of boosting rounds tr = 1436
+CV 6 ended! (took 214.33 seconds)
+
+CV 7 on:
+
+{'learning_rate': 0.001584893192461114}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.788
+ mean PR-AUC validation = 0.773
+ mean PR-AUC difference = 0.0155
+ average number of boosting rounds tr = 1849
+CV 7 ended! (took 263.90 seconds)
+
+CV 8 on:
+
+{'learning_rate': 0.002511886431509582}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.798
+ mean PR-AUC validation = 0.781
+ mean PR-AUC difference = 0.0178
+ average number of boosting rounds tr = 1963
+CV 8 ended! (took 285.39 seconds)
+
+CV 9 on:
+
+{'learning_rate': 0.003981071705534973}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.805
+ mean PR-AUC validation = 0.782
+ mean PR-AUC difference = 0.0224
+ average number of boosting rounds tr = 1648
+CV 9 ended! (took 270.81 seconds)
+
+CV 10 on:
+
+{'learning_rate': 0.00630957344480193}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.810
+ mean PR-AUC validation = 0.783
+ mean PR-AUC difference = 0.0265
+ average number of boosting rounds tr = 1263
+CV 10 ended! (took 222.63 seconds)
+</pre></div>
+<pre>
+  CV 11 on:
+
+{'learning_rate': 0.01}
+
+ started!
+
+Summary:
+ mean PR-AUC training =  0.814
+ mean PR-AUC validation = 0.786
+ mean PR-AUC difference = 0.0286
+ average number of boosting rounds tr = 943
+CV 11 ended! (took 181.38 seconds)
+
+Grid search ended at 2021-06-01 00:31:11.887756</pre>
+
+
+<h3><a class="header_arg" id="conclusion"></a>Summary and Conclusion</h3>
+
+
+              <ul>
+                <li>Using converntional scoring metrics such as accuracy may result in misleading conclusions regarding the performance of the classifier</li>.
+                <li>Precision-Recall curve is recommended for datasets with severe imbalance, especially when correct prediction of one class is more important than the other</li>
+                <li>ROC curves are also used to treat imbalanced datasets, however, they may provide a overly optimistic view regarding the accuracy of the classifier</li>
+                <li>Depending on the objective of the problem and the priorities of the business (e.g. maximizing recall, minimizing fpr etc.), appropriate metric must be chosen to achieve the best model</li>
+                <li>Once the model is picked, finetuning of the parameters might help further improve the performance of the baseline classifier</li>
+                <li>Exploratory data analysis can really help with identifying the hidden correlations between the features and outcome, especially for categorical variables.</li>
+                <li>Complexity of a classifier doesn't always mean that it will provide a superior performance. </li>
+              </ul>
+
+            </div>
+          </div>
+        </div>
+<!--         <div class="container">
+          <div class="row">
+            <div class="col text-center">
+              <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/miniprojects/mushrooms_dt.ipynb">Link to the <strong>ipython notebook</strong></a>
+            </div>
+          </div>
+        </div> -->
+      </section>
+    </main>
+
+<!-- ======= Footer ======= -->
+
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+      <div class="footer-newsletter">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6">
+              <h4><a class="header_arg" id=""></a>Newsletter</h4>
+              <p>Subscribe here to get notified when a new material is posted</p>
+            </div>
+            <div class="col-lg-6">
+              <form action="" method="post">
+                <input type="email" name="email"><input type="submit" value="Subscribe">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 footer-links">
+              <h4><a class="header_arg" id=""></a>Useful Links</h4>
+              <ul>
+                <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="#">About Me</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="#">Projects</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="#">Tutorials</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-4 col-md-6 footer-contact">
+              <h4><a class="header_arg" id=""></a>Contact</h4>
+              <p>
+                913 Boylston Street<br>
+               <p> Boston, MA 02115<br>
+               <p> United States <br><br>
+                <strong>Phone:</strong> +1 617 460 0555<br>
+                <strong>Email:</strong> alimehdirahim@gmail.com<br>
+              </p>
+            </div>
+            <div class="col-lg-4 col-md-6 footer-info">
+              <h3><a class="header_arg" id=""></a>About Me</h3>
+              <p>
+               <p> A data science enthusiast! I love developing new machine learning algorithms to address real-world problems. I try to learn something new on a daily basis.
+              </p>
+              <div class="social-links mt-3">
+                <a href="https://github.com/alineu" class="Github"><i class="bx bxl-github"></i></a>
+                <a href="https://www.linkedin.com/in/alimehdizadehrahimi/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                <a href="https://twitter.com/estoyali" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://instagram.com/aliexplores" class="instagram"><i class="bx bxl-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright 2021 <strong><span>Ali Mehdizadeh</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          <p>
+            Page design is adopted from <a href="https://bootstrapmade.com/">BootstrapMade</a>.<br>Page icons were taken from <a href="https://www.flaticon.com">flaticon.com</a>.
+          </p>
+        </div>
+      </div>
+    </footer><!-- End Footer -->
+    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+    <!-- Vendor JS Files -->
+    <script type="text/javascript" src="../../assets/vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/php-email-form/validate.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/venobox/venobox.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/counterup/counterup.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/prism/prism.js"></script>
+    <script type="text/javascript" src="../../assets/vendor/aos/aos.js"></script>
+    <!-- Template Main JS File -->
+    <script src="../../assets/js/main.js"></script>
+    <!-- MathJax JS File -->
+    <script type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      MathJax.Hub.Config({
+      tex2jax: {
+      inlineMath: [["$", "$"], ["\\(", "\\)"]],
+      processEscapes: true
+      }
+      });
+    </script>
+  </body>
+</html>
