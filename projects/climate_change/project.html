@@ -118,15 +118,2035 @@
                   </ol>. 
                 </div>
               </p>
+                <pre><code class="lang-python"><span class="hljs-keyword">import</span> warnings
+<span class="hljs-keyword">import</span> matplotlib
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> cm <span class="hljs-keyword">as</span> cm
+warnings.filterwarnings(<span class="hljs-string">'ignore'</span>)
+<span class="hljs-keyword">from</span> IPython.display <span class="hljs-keyword">import</span> Image
+<span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> rc, rcParams
+<span class="hljs-keyword">from</span> IPython.core.display <span class="hljs-keyword">import</span> HTML
+matplotlib.rcParams[<span class="hljs-string">'font.family'</span>] = <span class="hljs-string">'serif'</span>
+rc(<span class="hljs-string">'font'</span>,**{<span class="hljs-string">'family'</span>:<span class="hljs-string">'serif'</span>,<span class="hljs-string">'serif'</span>:[<span class="hljs-string">'Times'</span>]})
+rc(<span class="hljs-string">'text'</span>, usetex=<span class="hljs-keyword">False</span>)
+rc(<span class="hljs-string">'text.latex'</span>, preamble=<span class="hljs-string">r'\usepackage{underscore}'</span>)
+np.set_printoptions(precision=<span class="hljs-number">3</span>)
+pd.set_option(<span class="hljs-string">'display.float_format'</span>, <span class="hljs-keyword">lambda</span> x: <span class="hljs-string">'%.3f'</span> % x)
+<span class="hljs-keyword">import</span> chart_studio.plotly <span class="hljs-keyword">as</span> py 
+<span class="hljs-keyword">import</span> plotly.graph_objs <span class="hljs-keyword">as</span> go <span class="hljs-comment">#importing graphical objects</span>
+<span class="hljs-keyword">from</span> plotly.offline <span class="hljs-keyword">import</span> download_plotlyjs, init_notebook_mode, plot, iplot
+sns.set(rc={<span class="hljs-string">"figure.dpi"</span>:<span class="hljs-number">100</span>})
+<span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup, SoupStrainer
+
+<span class="hljs-comment"># download_plotlyjs allows plotly to work in offline mode.</span>
+<span class="hljs-comment"># init_notebook_mode connects Javascript to our notebook.</span>
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-attribute">us_states</span> = [
+    <span class="hljs-string">'AL'</span>, <span class="hljs-string">'AK'</span>, <span class="hljs-string">'AZ'</span>, <span class="hljs-string">'AR'</span>, <span class="hljs-string">'CA'</span>, <span class="hljs-string">'CO'</span>, <span class="hljs-string">'CT'</span>, <span class="hljs-string">'DE'</span>, 
+    <span class="hljs-string">'DC'</span>, <span class="hljs-string">'FL'</span>, <span class="hljs-string">'GA'</span>, <span class="hljs-string">'HI'</span>, <span class="hljs-string">'ID'</span>, <span class="hljs-string">'IL'</span>, <span class="hljs-string">'IN'</span>, <span class="hljs-string">'IA'</span>, 
+    <span class="hljs-string">'KS'</span>, <span class="hljs-string">'KY'</span>, <span class="hljs-string">'LA'</span>, <span class="hljs-string">'ME'</span>, <span class="hljs-string">'MD'</span>, <span class="hljs-string">'MA'</span>, <span class="hljs-string">'MI'</span>, <span class="hljs-string">'MN'</span>, 
+    <span class="hljs-string">'MS'</span>, <span class="hljs-string">'MO'</span>, <span class="hljs-string">'MT'</span>, <span class="hljs-string">'NE'</span>, <span class="hljs-string">'NV'</span>, <span class="hljs-string">'NH'</span>, <span class="hljs-string">'NJ'</span>, <span class="hljs-string">'NM'</span>, 
+    <span class="hljs-string">'NY'</span>, <span class="hljs-string">'NC'</span>, <span class="hljs-string">'ND'</span>, <span class="hljs-string">'OH'</span>, <span class="hljs-string">'OK'</span>, <span class="hljs-string">'OR'</span>, <span class="hljs-string">'PA'</span>, <span class="hljs-string">'RI'</span>, 
+    <span class="hljs-string">'SC'</span>, <span class="hljs-string">'SD'</span>, <span class="hljs-string">'TN'</span>, <span class="hljs-string">'TX'</span>, <span class="hljs-string">'UT'</span>, <span class="hljs-string">'VT'</span>, <span class="hljs-string">'VA'</span>, <span class="hljs-string">'WA'</span>, 
+    <span class="hljs-string">'WV'</span>, <span class="hljs-string">'WI'</span>, <span class="hljs-string">'WY'</span> 
+]
+</code></pre>
+<h3 id="data-cleaning">Data Cleaning</h3>
+<h4 id="energy-related-co2-emission-data-tables-from-us-energy-information-administration">Energy-Related CO2 Emission Data Tables from US Energy Information Administration</h4>
+<pre><code class="lang-python"><span class="hljs-selector-tag">pd</span><span class="hljs-selector-class">.read_excel</span>(<span class="hljs-string">'AL.xlsx'</span>)<span class="hljs-selector-class">.head</span>()
+</code></pre>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">Alabama Carbon Dioxide Emissions from Fossil Fuel Consumption (1980-2018)</th>
+      <th scope="row">Unnamed: 1</th>
+      <th scope="row">Unnamed: 2</th>
+      <th scope="row">Unnamed: 3</th>
+      <th scope="row">Unnamed: 4</th>
+      <th scope="row">Unnamed: 5</th>
+      <th scope="row">Unnamed: 6</th>
+      <th scope="row">Unnamed: 7</th>
+      <th scope="row">Unnamed: 8</th>
+      <th scope="row">Unnamed: 9</th>
+      <th scope="row">...</th>
+      <th scope="row">Unnamed: 31</th>
+      <th scope="row">Unnamed: 32</th>
+      <th scope="row">Unnamed: 33</th>
+      <th scope="row">Unnamed: 34</th>
+      <th scope="row">Unnamed: 35</th>
+      <th scope="row">Unnamed: 36</th>
+      <th scope="row">Unnamed: 37</th>
+      <th scope="row">Unnamed: 38</th>
+      <th scope="row">Unnamed: 39</th>
+      <th scope="row">Unnamed: 40</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>million metric tons of CO2</td>
+      <td>NaN</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>...</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>...</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1980.000</td>
+      <td>1981.000</td>
+      <td>1982.000</td>
+      <td>1983.000</td>
+      <td>1984.000</td>
+      <td>1985.000</td>
+      <td>1986.000</td>
+      <td>1987.000</td>
+      <td>...</td>
+      <td>2009.000</td>
+      <td>2010.000</td>
+      <td>2011.000</td>
+      <td>2012.000</td>
+      <td>2013.000</td>
+      <td>2014.000</td>
+      <td>2015.000</td>
+      <td>2016.000</td>
+      <td>2017.000</td>
+      <td>2018.000</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Residential Sector</td>
+      <td>NaN</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>...</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>NaN</td>
+      <td>Coal</td>
+      <td>0.110</td>
+      <td>0.037</td>
+      <td>0.048</td>
+      <td>0.049</td>
+      <td>0.063</td>
+      <td>0.063</td>
+      <td>0.069</td>
+      <td>0.073</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 41 columns</p>
+
+
+
+<pre><code class="lang-python"># <span class="hljs-selector-tag">drop</span> <span class="hljs-selector-tag">the</span> <span class="hljs-selector-tag">rows</span> <span class="hljs-selector-tag">wih</span> <span class="hljs-keyword">all</span> <span class="hljs-selector-tag">nan</span> <span class="hljs-selector-tag">columns</span>
+<span class="hljs-selector-tag">pd</span><span class="hljs-selector-class">.read_excel</span>(<span class="hljs-string">'AL.xlsx'</span>)<span class="hljs-selector-class">.dropna</span>(how=<span class="hljs-string">'all'</span>)<span class="hljs-selector-class">.head</span>()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">Alabama Carbon Dioxide Emissions from Fossil Fuel Consumption (1980-2018)</th>
+      <th scope="row">Unnamed: 1</th>
+      <th scope="row">Unnamed: 2</th>
+      <th scope="row">Unnamed: 3</th>
+      <th scope="row">Unnamed: 4</th>
+      <th scope="row">Unnamed: 5</th>
+      <th scope="row">Unnamed: 6</th>
+      <th scope="row">Unnamed: 7</th>
+      <th scope="row">Unnamed: 8</th>
+      <th scope="row">Unnamed: 9</th>
+      <th scope="row">...</th>
+      <th scope="row">Unnamed: 31</th>
+      <th scope="row">Unnamed: 32</th>
+      <th scope="row">Unnamed: 33</th>
+      <th scope="row">Unnamed: 34</th>
+      <th scope="row">Unnamed: 35</th>
+      <th scope="row">Unnamed: 36</th>
+      <th scope="row">Unnamed: 37</th>
+      <th scope="row">Unnamed: 38</th>
+      <th scope="row">Unnamed: 39</th>
+      <th scope="row">Unnamed: 40</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>million metric tons of CO2</td>
+      <td>NaN</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>...</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1980.000</td>
+      <td>1981.000</td>
+      <td>1982.000</td>
+      <td>1983.000</td>
+      <td>1984.000</td>
+      <td>1985.000</td>
+      <td>1986.000</td>
+      <td>1987.000</td>
+      <td>...</td>
+      <td>2009.000</td>
+      <td>2010.000</td>
+      <td>2011.000</td>
+      <td>2012.000</td>
+      <td>2013.000</td>
+      <td>2014.000</td>
+      <td>2015.000</td>
+      <td>2016.000</td>
+      <td>2017.000</td>
+      <td>2018.000</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Residential Sector</td>
+      <td>NaN</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>...</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>NaN</td>
+      <td>Coal</td>
+      <td>0.110</td>
+      <td>0.037</td>
+      <td>0.048</td>
+      <td>0.049</td>
+      <td>0.063</td>
+      <td>0.063</td>
+      <td>0.069</td>
+      <td>0.073</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>NaN</td>
+      <td>Petroleum Products</td>
+      <td>0.615</td>
+      <td>0.630</td>
+      <td>0.709</td>
+      <td>0.821</td>
+      <td>0.457</td>
+      <td>0.464</td>
+      <td>0.525</td>
+      <td>0.611</td>
+      <td>...</td>
+      <td>0.532</td>
+      <td>0.585</td>
+      <td>0.372</td>
+      <td>0.269</td>
+      <td>0.298</td>
+      <td>0.314</td>
+      <td>0.344</td>
+      <td>0.319</td>
+      <td>0.301</td>
+      <td>0.361</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 41 columns</p>
+</div>
+
+
+
+
+<pre><code class="lang-python"># <span class="hljs-selector-tag">start</span> <span class="hljs-selector-tag">reading</span> <span class="hljs-selector-tag">from</span> <span class="hljs-selector-tag">the</span> <span class="hljs-selector-tag">correct</span> <span class="hljs-selector-tag">row</span>
+<span class="hljs-selector-tag">pd</span><span class="hljs-selector-class">.read_excel</span>(<span class="hljs-string">'AL.xlsx'</span>, skiprows=<span class="hljs-number">3</span>)<span class="hljs-selector-class">.dropna</span>(how=<span class="hljs-string">'all'</span>)<span class="hljs-selector-class">.head</span>()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">Unnamed: 0</th>
+      <th scope="row">Unnamed: 1</th>
+      <th scope="row">1980</th>
+      <th scope="row">1981</th>
+      <th scope="row">1982</th>
+      <th scope="row">1983</th>
+      <th scope="row">1984</th>
+      <th scope="row">1985</th>
+      <th scope="row">1986</th>
+      <th scope="row">1987</th>
+      <th scope="row">...</th>
+      <th scope="row">2009</th>
+      <th scope="row">2010</th>
+      <th scope="row">2011</th>
+      <th scope="row">2012</th>
+      <th scope="row">2013</th>
+      <th scope="row">2014</th>
+      <th scope="row">2015</th>
+      <th scope="row">2016</th>
+      <th scope="row">2017</th>
+      <th scope="row">2018</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>Residential Sector</td>
+      <td>NaN</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>...</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>NaN</td>
+      <td>Coal</td>
+      <td>0.110</td>
+      <td>0.037</td>
+      <td>0.048</td>
+      <td>0.049</td>
+      <td>0.063</td>
+      <td>0.063</td>
+      <td>0.069</td>
+      <td>0.073</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>NaN</td>
+      <td>Petroleum Products</td>
+      <td>0.615</td>
+      <td>0.630</td>
+      <td>0.709</td>
+      <td>0.821</td>
+      <td>0.457</td>
+      <td>0.464</td>
+      <td>0.525</td>
+      <td>0.611</td>
+      <td>...</td>
+      <td>0.532</td>
+      <td>0.585</td>
+      <td>0.372</td>
+      <td>0.269</td>
+      <td>0.298</td>
+      <td>0.314</td>
+      <td>0.344</td>
+      <td>0.319</td>
+      <td>0.301</td>
+      <td>0.361</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>NaN</td>
+      <td>Natural Gas</td>
+      <td>2.870</td>
+      <td>2.757</td>
+      <td>2.620</td>
+      <td>2.658</td>
+      <td>2.769</td>
+      <td>2.406</td>
+      <td>2.455</td>
+      <td>2.689</td>
+      <td>...</td>
+      <td>1.965</td>
+      <td>2.275</td>
+      <td>1.973</td>
+      <td>1.487</td>
+      <td>1.890</td>
+      <td>2.114</td>
+      <td>1.786</td>
+      <td>1.547</td>
+      <td>1.437</td>
+      <td>1.892</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>NaN</td>
+      <td>Total</td>
+      <td>3.594</td>
+      <td>3.425</td>
+      <td>3.377</td>
+      <td>3.528</td>
+      <td>3.289</td>
+      <td>2.933</td>
+      <td>3.050</td>
+      <td>3.373</td>
+      <td>...</td>
+      <td>2.496</td>
+      <td>2.859</td>
+      <td>2.344</td>
+      <td>1.756</td>
+      <td>2.188</td>
+      <td>2.428</td>
+      <td>2.130</td>
+      <td>1.866</td>
+      <td>1.737</td>
+      <td>2.253</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 41 columns</p>
+</div>
+
+
+
+
+<pre><code class="lang-python"># <span class="hljs-selector-tag">finally</span>, <span class="hljs-selector-tag">reset</span> <span class="hljs-selector-tag">index</span>
+<span class="hljs-selector-tag">pd</span><span class="hljs-selector-class">.read_excel</span>(<span class="hljs-string">'AL.xlsx'</span>, skiprows=<span class="hljs-number">3</span>)<span class="hljs-selector-class">.dropna</span>(how=<span class="hljs-string">'all'</span>)<span class="hljs-selector-class">.reset_index</span>(drop=True)<span class="hljs-selector-class">.head</span>()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">Unnamed: 0</th>
+      <th scope="row">Unnamed: 1</th>
+      <th scope="row">1980</th>
+      <th scope="row">1981</th>
+      <th scope="row">1982</th>
+      <th scope="row">1983</th>
+      <th scope="row">1984</th>
+      <th scope="row">1985</th>
+      <th scope="row">1986</th>
+      <th scope="row">1987</th>
+      <th scope="row">...</th>
+      <th scope="row">2009</th>
+      <th scope="row">2010</th>
+      <th scope="row">2011</th>
+      <th scope="row">2012</th>
+      <th scope="row">2013</th>
+      <th scope="row">2014</th>
+      <th scope="row">2015</th>
+      <th scope="row">2016</th>
+      <th scope="row">2017</th>
+      <th scope="row">2018</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>Residential Sector</td>
+      <td>NaN</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>...</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>NaN</td>
+      <td>Coal</td>
+      <td>0.110</td>
+      <td>0.037</td>
+      <td>0.048</td>
+      <td>0.049</td>
+      <td>0.063</td>
+      <td>0.063</td>
+      <td>0.069</td>
+      <td>0.073</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>NaN</td>
+      <td>Petroleum Products</td>
+      <td>0.615</td>
+      <td>0.630</td>
+      <td>0.709</td>
+      <td>0.821</td>
+      <td>0.457</td>
+      <td>0.464</td>
+      <td>0.525</td>
+      <td>0.611</td>
+      <td>...</td>
+      <td>0.532</td>
+      <td>0.585</td>
+      <td>0.372</td>
+      <td>0.269</td>
+      <td>0.298</td>
+      <td>0.314</td>
+      <td>0.344</td>
+      <td>0.319</td>
+      <td>0.301</td>
+      <td>0.361</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>NaN</td>
+      <td>Natural Gas</td>
+      <td>2.870</td>
+      <td>2.757</td>
+      <td>2.620</td>
+      <td>2.658</td>
+      <td>2.769</td>
+      <td>2.406</td>
+      <td>2.455</td>
+      <td>2.689</td>
+      <td>...</td>
+      <td>1.965</td>
+      <td>2.275</td>
+      <td>1.973</td>
+      <td>1.487</td>
+      <td>1.890</td>
+      <td>2.114</td>
+      <td>1.786</td>
+      <td>1.547</td>
+      <td>1.437</td>
+      <td>1.892</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>NaN</td>
+      <td>Total</td>
+      <td>3.594</td>
+      <td>3.425</td>
+      <td>3.377</td>
+      <td>3.528</td>
+      <td>3.289</td>
+      <td>2.933</td>
+      <td>3.050</td>
+      <td>3.373</td>
+      <td>...</td>
+      <td>2.496</td>
+      <td>2.859</td>
+      <td>2.344</td>
+      <td>1.756</td>
+      <td>2.188</td>
+      <td>2.428</td>
+      <td>2.130</td>
+      <td>1.866</td>
+      <td>1.737</td>
+      <td>2.253</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 41 columns</p>
+</div>
+
+
+
+
+<pre><code class="lang-python">### <span class="hljs-keyword">drop</span> the <span class="hljs-keyword">last</span> row
+df = pd.read_excel(<span class="hljs-string">'AL.xlsx'</span>, skiprows=<span class="hljs-number">3</span>).dropna(how=<span class="hljs-string">'all'</span>).reset_index(<span class="hljs-keyword">drop</span>=True)
+df.<span class="hljs-keyword">drop</span>(df.<span class="hljs-built_in">index</span>.<span class="hljs-built_in">max</span>(), inplace=True)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-selector-tag">df</span><span class="hljs-selector-class">.tail</span>()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">Unnamed: 0</th>
+      <th scope="row">Unnamed: 1</th>
+      <th scope="row">1980</th>
+      <th scope="row">1981</th>
+      <th scope="row">1982</th>
+      <th scope="row">1983</th>
+      <th scope="row">1984</th>
+      <th scope="row">1985</th>
+      <th scope="row">1986</th>
+      <th scope="row">1987</th>
+      <th scope="row">...</th>
+      <th scope="row">2009</th>
+      <th scope="row">2010</th>
+      <th scope="row">2011</th>
+      <th scope="row">2012</th>
+      <th scope="row">2013</th>
+      <th scope="row">2014</th>
+      <th scope="row">2015</th>
+      <th scope="row">2016</th>
+      <th scope="row">2017</th>
+      <th scope="row">2018</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">27</th>
+      <td>NaN</td>
+      <td>Coal</td>
+      <td>61.574</td>
+      <td>58.773</td>
+      <td>47.780</td>
+      <td>49.865</td>
+      <td>54.681</td>
+      <td>62.083</td>
+      <td>61.928</td>
+      <td>61.925</td>
+      <td>...</td>
+      <td>60.176</td>
+      <td>68.511</td>
+      <td>62.056</td>
+      <td>52.105</td>
+      <td>53.827</td>
+      <td>54.863</td>
+      <td>47.100</td>
+      <td>39.064</td>
+      <td>36.076</td>
+      <td>35.916</td>
+    </tr>
+    <tr>
+      <th scope="row">28</th>
+      <td>NaN</td>
+      <td>Petroleum Products</td>
+      <td>30.362</td>
+      <td>29.109</td>
+      <td>29.143</td>
+      <td>27.479</td>
+      <td>27.271</td>
+      <td>26.681</td>
+      <td>28.215</td>
+      <td>29.926</td>
+      <td>...</td>
+      <td>35.791</td>
+      <td>36.063</td>
+      <td>36.194</td>
+      <td>35.703</td>
+      <td>34.432</td>
+      <td>34.383</td>
+      <td>36.314</td>
+      <td>38.526</td>
+      <td>37.450</td>
+      <td>36.670</td>
+    </tr>
+    <tr>
+      <th scope="row">29</th>
+      <td>NaN</td>
+      <td>Natural Gas</td>
+      <td>14.771</td>
+      <td>14.911</td>
+      <td>13.449</td>
+      <td>12.203</td>
+      <td>12.715</td>
+      <td>12.086</td>
+      <td>11.154</td>
+      <td>11.387</td>
+      <td>...</td>
+      <td>24.739</td>
+      <td>28.884</td>
+      <td>32.327</td>
+      <td>35.940</td>
+      <td>33.207</td>
+      <td>34.517</td>
+      <td>37.224</td>
+      <td>37.937</td>
+      <td>36.144</td>
+      <td>40.902</td>
+    </tr>
+    <tr>
+      <th scope="row">30</th>
+      <td>State allocation of national-level discrepancy</td>
+      <td>NaN</td>
+      <td>-1.024</td>
+      <td>-0.646</td>
+      <td>-0.174</td>
+      <td>-0.268</td>
+      <td>-0.048</td>
+      <td>-0.248</td>
+      <td>-0.093</td>
+      <td>0.242</td>
+      <td>...</td>
+      <td>0.537</td>
+      <td>0.300</td>
+      <td>0.175</td>
+      <td>0.418</td>
+      <td>0.059</td>
+      <td>-0.009</td>
+      <td>-0.007</td>
+      <td>-0.176</td>
+      <td>-0.269</td>
+      <td>-0.136</td>
+    </tr>
+    <tr>
+      <th scope="row">31</th>
+      <td>Total with discrepancy</td>
+      <td>NaN</td>
+      <td>105.682</td>
+      <td>102.147</td>
+      <td>90.198</td>
+      <td>89.278</td>
+      <td>94.619</td>
+      <td>100.602</td>
+      <td>101.204</td>
+      <td>103.479</td>
+      <td>...</td>
+      <td>121.244</td>
+      <td>133.759</td>
+      <td>130.751</td>
+      <td>124.165</td>
+      <td>121.524</td>
+      <td>123.753</td>
+      <td>120.631</td>
+      <td>115.352</td>
+      <td>109.402</td>
+      <td>113.351</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 41 columns</p>
+</div>
+
+
+
+<p>Here&#39;s how the first two column of the states excel files look like (once the empty rows are removed):</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-title">Image</span><span class="hljs-params">(<span class="hljs-string">'excel_template.png'</span>)</span></span>
+</code></pre>
+              <p class="text-align: center;">
+                <img src="excel_template.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+              </p>
+<pre><code class="lang-python"><span class="hljs-comment"># Step 1- find non null values in the first column</span>
+<span class="hljs-comment"># The words corresponding to the first six non-null </span>
+<span class="hljs-comment"># row indices denote the energy sector</span>
+</code></pre>
+<pre><code class="lang-python">nulls = np.where(df.iloc[:,0].isnull())[0]
+notnulls = np.where(df.iloc[<span class="hljs-string">:,0</span>].notnull())[<span class="hljs-string">0</span>][<span class="hljs-symbol">:-2</span>]
+discrepancies = np.where(df.iloc[<span class="hljs-string">:,0</span>].notnull())[<span class="hljs-string">0</span>][<span class="hljs-symbol">-2:</span>]
+notnulls
+</code></pre>
+<pre><code>array([ <span class="hljs-number">0</span>,  <span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>, <span class="hljs-number">20</span>, <span class="hljs-number">26</span>])
+</code></pre><pre><code class="lang-python"><span class="hljs-selector-tag">df</span><span class="hljs-selector-class">.iloc</span><span class="hljs-selector-attr">[notnulls,0]</span>
+</code></pre>
+<pre><code><span class="hljs-number">0</span>        Residential Sector
+<span class="hljs-number">5</span>         Commercial Sector
+<span class="hljs-number">10</span>        Industrial Sector
+<span class="hljs-number">15</span>    Transportation Sector
+<span class="hljs-number">20</span>    Electric Power Sector
+<span class="hljs-number">26</span>              Fuel Totals
+<span class="hljs-string">Name:</span> <span class="hljs-string">Unnamed:</span> <span class="hljs-number">0</span>, <span class="hljs-string">dtype:</span> object
+</code></pre><pre><code class="lang-python"><span class="hljs-comment"># and null values; the null indices of first column are </span>
+<span class="hljs-comment"># the indices for the sector-specific co2 sources of the second column</span>
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-selector-tag">df</span><span class="hljs-selector-class">.iloc</span><span class="hljs-selector-attr">[nulls,1]</span>
+</code></pre>
+<pre><code><span class="hljs-number">1</span>                   Coal
+<span class="hljs-number">2</span>     Petroleum Products
+<span class="hljs-number">3</span>            Natural Gas
+<span class="hljs-number">4</span>                  <span class="hljs-keyword">Total</span>
+<span class="hljs-number">6</span>                   Coal
+<span class="hljs-number">7</span>     Petroleum Products
+<span class="hljs-number">8</span>            Natural Gas
+<span class="hljs-number">9</span>                  <span class="hljs-keyword">Total</span>
+<span class="hljs-number">11</span>                  Coal
+<span class="hljs-number">12</span>    Petroleum Products
+<span class="hljs-number">13</span>           Natural Gas
+<span class="hljs-number">14</span>                 <span class="hljs-keyword">Total</span>
+<span class="hljs-number">16</span>                  Coal
+<span class="hljs-number">17</span>    Petroleum Products
+<span class="hljs-number">18</span>           Natural Gas
+<span class="hljs-number">19</span>                 <span class="hljs-keyword">Total</span>
+<span class="hljs-number">21</span>                  Coal
+<span class="hljs-number">22</span>    Petroleum Products
+<span class="hljs-number">23</span>           Natural Gas
+<span class="hljs-number">24</span>                 <span class="hljs-keyword">Total</span>
+<span class="hljs-number">25</span>           Grand <span class="hljs-keyword">Total</span>
+<span class="hljs-number">27</span>                  Coal
+<span class="hljs-number">28</span>    Petroleum Products
+<span class="hljs-number">29</span>           Natural Gas
+Name: Unnamed: <span class="hljs-number">1</span>, dtype: object
+</code></pre><p>Our goal is to combine the first two columns to get something like</p>
+<pre><code class="lang-python">
+</code></pre>
+<pre><code>[<span class="hljs-symbol">'residential_sector_coal</span>',
+ <span class="hljs-symbol">'residential_sector_petroleum_products</span>',
+ <span class="hljs-symbol">'residential_sector_natural_gas</span>',
+ <span class="hljs-symbol">'residential_sector_total</span>',
+ <span class="hljs-symbol">'commercial_sector_coal</span>',
+ <span class="hljs-symbol">'commercial_sector_petroleum_products</span>',
+ <span class="hljs-symbol">'commercial_sector_natural_gas</span>',
+ <span class="hljs-symbol">'commercial_sector_total</span>',
+ <span class="hljs-symbol">'industrial_sector_coal</span>',
+ <span class="hljs-symbol">'industrial_sector_petroleum_products</span>',
+ <span class="hljs-symbol">'industrial_sector_natural_gas</span>',
+ <span class="hljs-symbol">'industrial_sector_total</span>',
+ <span class="hljs-symbol">'transportation_sector_coal</span>',
+ <span class="hljs-symbol">'transportation_sector_petroleum_products</span>',
+ <span class="hljs-symbol">'transportation_sector_natural_gas</span>',
+ <span class="hljs-symbol">'transportation_sector_total</span>',
+ <span class="hljs-symbol">'electric_power_sector_coal</span>',
+ <span class="hljs-symbol">'electric_power_sector_petroleum_products</span>',
+ <span class="hljs-symbol">'electric_power_sector_natural_gas</span>',
+ <span class="hljs-symbol">'electric_power_sector_total</span>',
+ <span class="hljs-symbol">'electric_power_sector_grand_total</span>',
+ <span class="hljs-symbol">'fuel_totals_coal</span>',
+ <span class="hljs-symbol">'fuel_totals_petroleum_products</span>',
+ <span class="hljs-symbol">'fuel_totals_natural_gas</span>']
+</code></pre><p>We can define a function to facilitate the process for all state execl files.</p>
+<pre><code class="lang-python">def clean_co2_df(state_name):
+    df = pd.read_excel(f<span class="hljs-string">'{state_name}.xlsx'</span>, skiprows=<span class="hljs-number">3</span>).dropna(how=<span class="hljs-string">'all'</span>).reset_index(drop=<span class="hljs-symbol">True</span>)
+    # drop the last row
+    df.drop(df.index.max(), inplace=<span class="hljs-symbol">True</span>)
+    nulls = np.where(df.iloc[:,<span class="hljs-number">0</span>].isnull())[<span class="hljs-number">0</span>]
+    notnulls = np.where(df.iloc[:,<span class="hljs-number">0</span>].notnull())[<span class="hljs-number">0</span>][:-<span class="hljs-number">2</span>]
+    discrepancy_ids = np.where(df.iloc[:,<span class="hljs-number">0</span>].notnull())[<span class="hljs-number">0</span>][<span class="hljs-number">-2</span>:]
+    fuels = list(df.iloc[nulls, <span class="hljs-number">1</span>])
+    sectors = list(df.iloc[notnulls,<span class="hljs-number">0</span>])
+    num_sectors = np.diff(np.where(df.iloc[:,<span class="hljs-number">0</span>].notnull())[<span class="hljs-number">0</span>][:-<span class="hljs-number">1</span>])<span class="hljs-number">-1</span>
+    labels = []
+    for i, num in enumerate(list(num_sectors)):
+        labels += num*[sectors[i]]
+    entries = [(labels[i] + <span class="hljs-string">'_'</span> + fuels[i]).replace(<span class="hljs-string">' '</span>,<span class="hljs-string">'_'</span>).lower() for i in range(len(fuels))]
+    discrepancies = list(df.iloc[discrepancy_ids, <span class="hljs-number">0</span>].apply(lambda x: <span class="hljs-string">'_'</span>.join(x.split()).lower()))
+    entries.extend(discrepancies)
+    df.dropna(thresh=<span class="hljs-number">2</span>, inplace=<span class="hljs-symbol">True</span>)
+    df.drop([<span class="hljs-string">'Unnamed: 0'</span>, <span class="hljs-string">'Unnamed: 1'</span>], axis=<span class="hljs-number">1</span>, inplace=<span class="hljs-symbol">True</span>)
+    colnames = df.columns.tolist()
+    df[<span class="hljs-string">'entry'</span>] = entries
+    df[<span class="hljs-string">'state'</span>] = [state_name]*len(entries)
+    new_colnames = [<span class="hljs-string">'state'</span>,<span class="hljs-string">'entry'</span>]+colnames
+    return df[new_colnames]
+</code></pre>
+<pre><code class="lang-python">c<span class="hljs-meta">o2</span>_df = clea<span class="hljs-symbol">n_co2</span>_df<span class="hljs-comment">('AL')</span>
+</code></pre>
+<pre><code class="lang-python">c<span class="hljs-meta">o2</span>_df.head<span class="hljs-comment">()</span>
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">state</th>
+      <th scope="row">entry</th>
+      <th scope="row">1980</th>
+      <th scope="row">1981</th>
+      <th scope="row">1982</th>
+      <th scope="row">1983</th>
+      <th scope="row">1984</th>
+      <th scope="row">1985</th>
+      <th scope="row">1986</th>
+      <th scope="row">1987</th>
+      <th scope="row">...</th>
+      <th scope="row">2009</th>
+      <th scope="row">2010</th>
+      <th scope="row">2011</th>
+      <th scope="row">2012</th>
+      <th scope="row">2013</th>
+      <th scope="row">2014</th>
+      <th scope="row">2015</th>
+      <th scope="row">2016</th>
+      <th scope="row">2017</th>
+      <th scope="row">2018</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>AL</td>
+      <td>residential_sector_coal</td>
+      <td>0.110</td>
+      <td>0.037</td>
+      <td>0.048</td>
+      <td>0.049</td>
+      <td>0.063</td>
+      <td>0.063</td>
+      <td>0.069</td>
+      <td>0.073</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>AL</td>
+      <td>residential_sector_petroleum_products</td>
+      <td>0.615</td>
+      <td>0.630</td>
+      <td>0.709</td>
+      <td>0.821</td>
+      <td>0.457</td>
+      <td>0.464</td>
+      <td>0.525</td>
+      <td>0.611</td>
+      <td>...</td>
+      <td>0.532</td>
+      <td>0.585</td>
+      <td>0.372</td>
+      <td>0.269</td>
+      <td>0.298</td>
+      <td>0.314</td>
+      <td>0.344</td>
+      <td>0.319</td>
+      <td>0.301</td>
+      <td>0.361</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>AL</td>
+      <td>residential_sector_natural_gas</td>
+      <td>2.870</td>
+      <td>2.757</td>
+      <td>2.620</td>
+      <td>2.658</td>
+      <td>2.769</td>
+      <td>2.406</td>
+      <td>2.455</td>
+      <td>2.689</td>
+      <td>...</td>
+      <td>1.965</td>
+      <td>2.275</td>
+      <td>1.973</td>
+      <td>1.487</td>
+      <td>1.890</td>
+      <td>2.114</td>
+      <td>1.786</td>
+      <td>1.547</td>
+      <td>1.437</td>
+      <td>1.892</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>AL</td>
+      <td>residential_sector_total</td>
+      <td>3.594</td>
+      <td>3.425</td>
+      <td>3.377</td>
+      <td>3.528</td>
+      <td>3.289</td>
+      <td>2.933</td>
+      <td>3.050</td>
+      <td>3.373</td>
+      <td>...</td>
+      <td>2.496</td>
+      <td>2.859</td>
+      <td>2.344</td>
+      <td>1.756</td>
+      <td>2.188</td>
+      <td>2.428</td>
+      <td>2.130</td>
+      <td>1.866</td>
+      <td>1.737</td>
+      <td>2.253</td>
+    </tr>
+    <tr>
+      <th scope="row">6</th>
+      <td>AL</td>
+      <td>commercial_sector_coal</td>
+      <td>0.404</td>
+      <td>0.163</td>
+      <td>0.230</td>
+      <td>0.252</td>
+      <td>0.262</td>
+      <td>0.219</td>
+      <td>0.228</td>
+      <td>0.238</td>
+      <td>...</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 41 columns</p>
+</div>
+
+
+
+
+<pre><code class="lang-python"><span class="hljs-keyword">for</span> <span class="hljs-keyword">state</span> <span class="hljs-keyword">in</span> us_states[<span class="hljs-number">1</span>:]:
+    tmp = clean_co2_df(<span class="hljs-keyword">state</span>)
+    co2_df=pd.concat([co2_df,tmp])
+</code></pre>
+<pre><code class="lang-python">c<span class="hljs-meta">o2</span>_df.to_pickle<span class="hljs-comment">('co2_data.pkl')</span>
+<span class="hljs-attr"># co2</span>_df=pd.read_pickle<span class="hljs-comment">('co2_data.pkl')</span>
+</code></pre>
+<h4 id="the-data-supporting-the-washington-post-s-series-2-c-beyond-the-limit">The data supporting the Washington Post&#39;s series, 2°C: Beyond the limit</h4>
+<pre><code class="lang-python"><span class="hljs-attr">WApost_climate_df</span> = pd.read_csv(<span class="hljs-string">'WApost_climdiv_county_year.csv'</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-selector-tag">WApost_climate_df</span><span class="hljs-selector-class">.head</span>()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">fips</th>
+      <th scope="row">year</th>
+      <th scope="row">temp</th>
+      <th scope="row">tempc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>1001</td>
+      <td>1895</td>
+      <td>62.633</td>
+      <td>17.019</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>1001</td>
+      <td>1896</td>
+      <td>65.342</td>
+      <td>18.523</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>1001</td>
+      <td>1897</td>
+      <td>65.150</td>
+      <td>18.417</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>1001</td>
+      <td>1898</td>
+      <td>63.817</td>
+      <td>17.676</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>1001</td>
+      <td>1899</td>
+      <td>63.925</td>
+      <td>17.736</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<pre><code class="lang-python"><span class="hljs-selector-tag">WApost_climate_df</span><span class="hljs-selector-class">.describe</span>()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">fips</th>
+      <th scope="row">year</th>
+      <th scope="row">temp</th>
+      <th scope="row">tempc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">count</th>
+      <td>388375.000</td>
+      <td>388375.000</td>
+      <td>388375.000</td>
+      <td>388375.000</td>
+    </tr>
+    <tr>
+      <th scope="row">mean</th>
+      <td>30665.073</td>
+      <td>1957.000</td>
+      <td>53.996</td>
+      <td>12.220</td>
+    </tr>
+    <tr>
+      <th scope="row">std</th>
+      <td>14979.044</td>
+      <td>36.083</td>
+      <td>8.432</td>
+      <td>4.684</td>
+    </tr>
+    <tr>
+      <th scope="row">min</th>
+      <td>1001.000</td>
+      <td>1895.000</td>
+      <td>30.508</td>
+      <td>-0.829</td>
+    </tr>
+    <tr>
+      <th scope="row">25%</th>
+      <td>19043.000</td>
+      <td>1926.000</td>
+      <td>47.650</td>
+      <td>8.694</td>
+    </tr>
+    <tr>
+      <th scope="row">50%</th>
+      <td>29211.000</td>
+      <td>1957.000</td>
+      <td>53.908</td>
+      <td>12.171</td>
+    </tr>
+    <tr>
+      <th scope="row">75%</th>
+      <td>46007.000</td>
+      <td>1988.000</td>
+      <td>60.533</td>
+      <td>15.852</td>
+    </tr>
+    <tr>
+      <th scope="row">max</th>
+      <td>56045.000</td>
+      <td>2019.000</td>
+      <td>78.817</td>
+      <td>26.009</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<pre><code class="lang-python"><span class="hljs-selector-tag">WApost_climate_df</span><span class="hljs-selector-class">.isnull</span>()<span class="hljs-selector-class">.values</span><span class="hljs-selector-class">.any</span>()
+</code></pre>
+<pre><code><span class="hljs-literal">False</span>
+</code></pre><h4 id="how-to-join-the-washington-post-data-and-co2-data-">How to join the Washington Post data and CO2 data?</h4>
+<p>The co2 emission data is a state-level data that reports the emission rates due to different sources for each state, whereas the Washington Post data that includes the variation of temperatures over the period 1895-2019 is a county-level data where the counties are represented using their Federal Information Processing Standards (<a href="https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards">FIPS</a>) codes.</p>
+<p>We need to find a table that converts these codes to the county/state names before being able to join the two climate dataframes.</p>
+<pre><code class="lang-python">## obtaining the fips table <span class="hljs-keyword">from</span>
+## https:<span class="hljs-comment">//www.nrcs.usda.gov/wps/portal/nrcs/detail/national/home/?cid=nrcs143_013697</span>
+</code></pre>
+<p><a href="https://www.nrcs.usda.gov/wps/portal/nrcs/detail/national/home/?cid=nrcs143_013697">NRCS</a> page has a table including FIPS codes for every county in the US.
+We use a relatively straightforward way to convert this table into a useful dictionary in <code>Python</code>. First, we need to get the contents of the html page.</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> requests
+response = requests.<span class="hljs-keyword">get</span>('https:<span class="hljs-comment">//www.nrcs.usda.gov/wps/portal/nrcs/detail/national/home/?cid=nrcs143_013697')</span>
+</code></pre>
+<p>The most important components of a response to check before moving forward are the <strong>status code</strong> and the <strong>content</strong>.</p>
+<pre><code class="lang-python"><span class="hljs-selector-tag">response</span><span class="hljs-selector-class">.status_code</span>
+</code></pre>
+<pre><code><span class="hljs-number">200</span>
+</code></pre><p>We get a response code of <code>200</code>, meaning that our request was &#39;Successful&#39;!</p>
+<pre><code class="lang-python"><span class="hljs-selector-tag">response</span><span class="hljs-selector-class">.content</span><span class="hljs-selector-attr">[:100]</span>
+</code></pre>
+<pre><code>b'<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span><span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span><span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span><span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span> <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>  <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span><span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>  <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span><span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span> &lt;!DOCTYPE html&gt;<span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>   <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span><span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span> <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>             <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>    <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>      <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>    <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>   <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span> <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span> <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span> <span class="hljs-symbol">\r</span><span class="hljs-symbol">\n</span>'
+</code></pre><p>We can check the response <code>text</code> using <a href="https://www.crummy.com/software/BeautifulSoup/"><code>BeautifulSoup</code></a>. <code>BeautifulSoup</code> allows us to find our <code>tag</code> of interest by specifying one of its attributes. By inspecting the <code>table</code> tag in this case we realize that it has and attribute <code>class=&quot;data&quot;</code>. Furthermore, <code>SoupStrainer</code> method of the <code>bs4</code> library can be used to limit our search to <code>table</code> tags only.</p>
+<pre><code class="lang-python">soup = BeautifulSoup(response<span class="hljs-selector-class">.text</span>,<span class="hljs-string">'html.parser'</span>,parse_only=SoupStrainer(<span class="hljs-string">'table'</span>))
+<span class="hljs-selector-tag">table</span> = soup.find(<span class="hljs-string">"table"</span>, { <span class="hljs-string">"class"</span> : <span class="hljs-string">"data"</span> })
+<span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(table.text[:<span class="hljs-number">50</span>])</span></span>
+</code></pre>
+<pre><code>FIPS
+Name
+State
+
+
+<span class="hljs-number">01001</span>
+Autauga
+AL
+
+
+<span class="hljs-number">01003</span>
+Bald
+</code></pre><p>Looks Ok! Next we want to encapsulate this information into a <code>list()</code> or <code>DataFrame</code></p>
+<pre><code class="lang-python">def get_row_data(<span class="hljs-built_in">tr</span>, column_tag='td'):
+    <span class="hljs-built_in">return</span> [td.get_text(strip=True) <span class="hljs-keyword">for</span> td <span class="hljs-keyword">in</span> <span class="hljs-built_in">tr</span>.find_all(column_tag)]  
+
+rows = []
+trs = table.find_all('<span class="hljs-built_in">tr</span>')
+headerow = get_row_data(trs[<span class="hljs-number">0</span>], 'th')
+<span class="hljs-keyword">for</span> <span class="hljs-built_in">tr</span> <span class="hljs-keyword">in</span> trs[<span class="hljs-number">1</span>:]: # <span class="hljs-keyword">for</span> <span class="hljs-built_in">every</span> table <span class="hljs-built_in">row</span>
+    rows.<span class="hljs-built_in">append</span>(get_row_data(<span class="hljs-built_in">tr</span>)) # data <span class="hljs-built_in">row</span>
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(headerow)</span></span>
+</code></pre>
+<pre><code>[<span class="hljs-symbol">'FIPS</span>', <span class="hljs-symbol">'Name</span>', <span class="hljs-symbol">'State</span>']
+</code></pre><pre><code class="lang-python">fips_df = pd.DataFrame(rows[<span class="hljs-number">1</span>:],columns=['FIPS', 'county', '<span class="hljs-keyword">state</span>'])
+fips_df.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">FIPS</th>
+      <th scope="row">county</th>
+      <th scope="row">state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>01005</td>
+      <td>Barbour</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>01007</td>
+      <td>Bibb</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>01009</td>
+      <td>Blount</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>01011</td>
+      <td>Bullock</td>
+      <td>AL</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>We save the dataframe for later use.</p>
+<pre><code class="lang-python">fips_df.to_pickle(<span class="hljs-symbol">'fips</span>.pkl', protocol=<span class="hljs-number">4</span>)
+fips_df=pd.read_pickle(<span class="hljs-symbol">'fips</span>.pkl')
+</code></pre>
+<h4 id="merging-the-washington-post-and-fips-data-into-a-single-dataframe">Merging the Washington Post and FIPS data into a single dataframe</h4>
+<p>Note that the Washington Post data for <code>FIPS</code>, <code>WApost_climate_df[&#39;fips&#39;]</code> has the type <code>int64</code>:</p>
+<pre><code class="lang-python"><span class="hljs-selector-tag">WApost_climate_df</span><span class="hljs-selector-attr">['fips']</span><span class="hljs-selector-class">.dtype</span>
+</code></pre>
+<pre><code><span class="hljs-function"><span class="hljs-title">dtype</span><span class="hljs-params">(<span class="hljs-string">'int64'</span>)</span></span>
+</code></pre><p>This will cause issues for the counties that have a <strong>leading zero</strong>. We convert the type of <code>fips</code> column to <code>str</code> and add the leading zero to those rows that lack it.</p>
+<pre><code class="lang-python">WApost_climate_df[<span class="hljs-string">'FIPS'</span>] = climate_df[<span class="hljs-string">'fips'</span>].apply(lambda x: <span class="hljs-string">'0'</span>+<span class="hljs-keyword">str</span>(x) <span class="hljs-keyword">if</span> x&lt;<span class="hljs-number">10000</span> <span class="hljs-keyword">else</span> <span class="hljs-keyword">str</span>(x))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-selector-tag">WApost_climate_df</span><span class="hljs-selector-class">.head</span>()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">fips</th>
+      <th scope="row">year</th>
+      <th scope="row">temp</th>
+      <th scope="row">tempc</th>
+      <th scope="row">FIPS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>1001</td>
+      <td>1895</td>
+      <td>62.633</td>
+      <td>17.019</td>
+      <td>01001</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>1001</td>
+      <td>1896</td>
+      <td>65.342</td>
+      <td>18.523</td>
+      <td>01001</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>1001</td>
+      <td>1897</td>
+      <td>65.150</td>
+      <td>18.417</td>
+      <td>01001</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>1001</td>
+      <td>1898</td>
+      <td>63.817</td>
+      <td>17.676</td>
+      <td>01001</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>1001</td>
+      <td>1899</td>
+      <td>63.925</td>
+      <td>17.736</td>
+      <td>01001</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>Looks good! Next, we merge the <code>WApost_climate_df</code> and <code>fips_df</code> to add the state and county information into one dataframe.</p>
+<pre><code class="lang-python">climate_df = <span class="hljs-string">\</span>
+pd.merge(WApost_climate_df, fips_df, how=<span class="hljs-string">'left'</span>, left_on=[<span class="hljs-string">'FIPS'</span>], right_on=[<span class="hljs-string">'FIPS'</span>]) <span class="hljs-string">\</span>
+        .dropna() <span class="hljs-string">\</span>
+        .reset_index(drop=True) <span class="hljs-string">\</span>
+        .drop(columns=[<span class="hljs-string">'fips'</span>])
+climate_df.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">year</th>
+      <th scope="row">temp</th>
+      <th scope="row">tempc</th>
+      <th scope="row">FIPS</th>
+      <th scope="row">county</th>
+      <th scope="row">state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>1895</td>
+      <td>65.533</td>
+      <td>18.630</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>1896</td>
+      <td>68.208</td>
+      <td>20.116</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>1897</td>
+      <td>68.142</td>
+      <td>20.079</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>1898</td>
+      <td>66.467</td>
+      <td>19.148</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>1899</td>
+      <td>67.017</td>
+      <td>19.454</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>We also change the name of the column <code>temp</code> to <code>tempf</code> for the sake of clarity.</p>
+<pre><code class="lang-python">climate_df.<span class="hljs-keyword">rename</span>({<span class="hljs-string">'temp'</span>: <span class="hljs-string">'tempf'</span>}, axis=<span class="hljs-number">1</span>, inplace=True)
+climate_df.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">year</th>
+      <th scope="row">tempf</th>
+      <th scope="row">tempc</th>
+      <th scope="row">FIPS</th>
+      <th scope="row">county</th>
+      <th scope="row">state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">0</th>
+      <td>1895</td>
+      <td>65.533</td>
+      <td>18.630</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>1896</td>
+      <td>68.208</td>
+      <td>20.116</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>1897</td>
+      <td>68.142</td>
+      <td>20.079</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>1898</td>
+      <td>66.467</td>
+      <td>19.148</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>1899</td>
+      <td>67.017</td>
+      <td>19.454</td>
+      <td>01003</td>
+      <td>Baldwin</td>
+      <td>AL</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<pre><code class="lang-python">np.unique(climate_df['<span class="hljs-keyword">state</span>'])
+</code></pre>
+<pre><code><span class="hljs-keyword">array</span>([<span class="hljs-string">'AL'</span>, <span class="hljs-string">'AR'</span>, <span class="hljs-string">'AZ'</span>, <span class="hljs-string">'CA'</span>, <span class="hljs-string">'CO'</span>, <span class="hljs-string">'CT'</span>, <span class="hljs-string">'DC'</span>, <span class="hljs-string">'DE'</span>, <span class="hljs-string">'FL'</span>, <span class="hljs-string">'GA'</span>, <span class="hljs-string">'IA'</span>,
+       <span class="hljs-string">'ID'</span>, <span class="hljs-string">'IL'</span>, <span class="hljs-string">'IN'</span>, <span class="hljs-string">'KS'</span>, <span class="hljs-string">'KY'</span>, <span class="hljs-string">'LA'</span>, <span class="hljs-string">'MA'</span>, <span class="hljs-string">'MD'</span>, <span class="hljs-string">'ME'</span>, <span class="hljs-string">'MI'</span>, <span class="hljs-string">'MN'</span>,
+       <span class="hljs-string">'MO'</span>, <span class="hljs-string">'MS'</span>, <span class="hljs-string">'MT'</span>, <span class="hljs-string">'NC'</span>, <span class="hljs-string">'ND'</span>, <span class="hljs-string">'NE'</span>, <span class="hljs-string">'NH'</span>, <span class="hljs-string">'NJ'</span>, <span class="hljs-string">'NM'</span>, <span class="hljs-string">'NV'</span>, <span class="hljs-string">'NY'</span>,
+       <span class="hljs-string">'OH'</span>, <span class="hljs-string">'OK'</span>, <span class="hljs-string">'OR'</span>, <span class="hljs-string">'PA'</span>, <span class="hljs-string">'RI'</span>, <span class="hljs-string">'SC'</span>, <span class="hljs-string">'SD'</span>, <span class="hljs-string">'TN'</span>, <span class="hljs-string">'TX'</span>, <span class="hljs-string">'UT'</span>, <span class="hljs-string">'VA'</span>,
+       <span class="hljs-string">'VT'</span>, <span class="hljs-string">'WA'</span>, <span class="hljs-string">'WI'</span>, <span class="hljs-string">'WV'</span>, <span class="hljs-string">'WY'</span>], dtype=<span class="hljs-keyword">object</span>)
+</code></pre><pre><code class="lang-python">len(np.unique(climate_df['<span class="hljs-keyword">state</span>'])), len(us_states)
+</code></pre>
+<pre><code>(<span class="hljs-number">49</span>, <span class="hljs-number">51</span>)
+</code></pre><pre><code class="lang-python">print(<span class="hljs-name">set</span>(<span class="hljs-name">us_states</span>).difference(<span class="hljs-name">set</span>(<span class="hljs-name">climate_df</span>['state'])))
+</code></pre>
+<pre><code>{<span class="hljs-string">'AK'</span>, <span class="hljs-string">'HI'</span>}
+</code></pre><p>Note that the information for &#39;Alaska&#39; and &#39;Hawaii&#39; are not included in Washington Post data. For the sake of consistency, we remove them from the <code>us_states</code>.</p>
+<pre><code class="lang-python">us_states.<span class="hljs-built_in">remove</span>(<span class="hljs-string">'AK'</span>)
+us_states.<span class="hljs-built_in">remove</span>(<span class="hljs-string">'HI'</span>)
+</code></pre>
+<p>Sanity check!</p>
+<pre><code class="lang-python">print(<span class="hljs-name">set</span>(<span class="hljs-name">us_states</span>).difference(<span class="hljs-name">set</span>(<span class="hljs-name">climate_df</span>['state'])))
+</code></pre>
+<pre><code><span class="hljs-function"><span class="hljs-title">set</span><span class="hljs-params">()</span></span>
+</code></pre><p>Lastly, we save the dataframe.</p>
+<pre><code class="lang-python">climate_df.to_pickle(<span class="hljs-symbol">'climate</span>.pkl')
+#climate_df=pd.read_pickle(<span class="hljs-symbol">'climate</span>.pkl')
+</code></pre>
+<h3 id="eda">EDA</h3>
+<h4 id="temperature-variation-of-different-states-over-time-">Temperature variation of different states over time.</h4>
+<pre><code class="lang-python">sns.set_style('white')
+fig, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, figsize=(<span class="hljs-number">15</span>,<span class="hljs-number">10</span>), dpi=<span class="hljs-number">300</span>)
+temp_unit = 'F' <span class="hljs-comment"># or 'F' for farenheit</span>
+states_list = us_states[:<span class="hljs-number">5</span>]
+<span class="hljs-keyword">for</span> <span class="hljs-keyword">state</span> <span class="hljs-keyword">in</span> states_list:
+    means = climate_df[climate_df['<span class="hljs-keyword">state</span>']==<span class="hljs-keyword">state</span>] \
+                .groupby('year') \
+                .agg({'temp'+temp_unit.lower(): 'mean'})
+    years = means.index.tolist()
+    ax.plot(years, means, <span class="hljs-keyword">label</span>=<span class="hljs-keyword">state</span>)
+ax.set_xlabel('year', labelpad=<span class="hljs-number">10</span>, fontsize=<span class="hljs-number">18</span>)
+ax.set_ylabel(f'Temperature ($^\circ${temp_unit})', labelpad=<span class="hljs-number">15</span>, fontsize=<span class="hljs-number">18</span>)
+states = ', '.join([<span class="hljs-keyword">state</span> <span class="hljs-keyword">for</span> <span class="hljs-keyword">state</span> <span class="hljs-keyword">in</span> states_list])
+ax.set_title(f'Temperature variation over the period {<span class="hljs-keyword">min</span>(years)}-{<span class="hljs-keyword">max</span>(years)} <span class="hljs-keyword">for</span> \n{states}', 
+             fontsize=<span class="hljs-number">22</span>, y=<span class="hljs-number">1.02</span>)
+plt.setp(ax.get_xticklabels(), fontsize=<span class="hljs-number">14</span>)
+plt.setp(ax.get_yticklabels(), fontsize=<span class="hljs-number">14</span>)
+ax.legend(bbox_to_anchor=(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.1</span>, <span class="hljs-number">1</span>), loc='upper left', fontsize=<span class="hljs-number">14</span>)
+plt.show()
+</code></pre>
+              <p class="text-align: center;">
+                <img src="output_85_0.png" style="width: 90%; display: block; margin: 10px auto 20px;"/>
+              </p>
+
+<h4 id="fourier-analysis">Fourier Analysis</h4>
+<pre><code class="lang-python">import scipy.<span class="hljs-built_in">fft</span>
+fig, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, figsize=(<span class="hljs-number">15</span>,<span class="hljs-number">5</span>))
+state='AL'
+means = climate_df[climate_df['state']==state] \
+                .groupby('year') \
+                .agg({'tempf': '<span class="hljs-built_in">mean</span>'})
+years = means.index.tolist()
+<span class="hljs-built_in">mean</span> = <span class="hljs-built_in">np</span>.average(means)
+<span class="hljs-built_in">fft</span> = scipy.<span class="hljs-built_in">fft</span>.<span class="hljs-built_in">fft</span>(means - <span class="hljs-built_in">mean</span>)
+ax.plot(<span class="hljs-built_in">np</span>.<span class="hljs-built_in">abs</span>(<span class="hljs-built_in">fft</span>), <span class="hljs-built_in">label</span>='AL')
+ax.set_xlabel(f'# Cycles <span class="hljs-keyword">in</span> full window of data ({<span class="hljs-built_in">max</span>(years)-<span class="hljs-built_in">min</span>(years)} years)', fontsize=<span class="hljs-number">18</span>, labelpad=<span class="hljs-number">10</span>)
+ax.set_ylabel('Frequency', fontsize=<span class="hljs-number">18</span>, labelpad=<span class="hljs-number">15</span>)
+ax.set_title(f<span class="hljs-string">"FFT of temperature data for {state}"</span>, fontsize=<span class="hljs-number">22</span>, y=<span class="hljs-number">1.02</span>)
+plt.<span class="hljs-built_in">setp</span>(ax.get_xticklabels(), fontsize=<span class="hljs-number">14</span>)
+plt.<span class="hljs-built_in">setp</span>(ax.get_yticklabels(), fontsize=<span class="hljs-number">14</span>)
+ax.<span class="hljs-built_in">legend</span>();
+</code></pre>
+              <p class="text-align: center;">
+                <img src="output_87_0.png" style="width: 90%; display: block; margin: 10px auto 20px;"/>
+              </p>
+<h4 id="autocorrelation-function">Autocorrelation function</h4>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> pandas.plotting <span class="hljs-keyword">import</span> autocorrelation_plot
+<span class="hljs-comment"># Let's plot a Autocorrelation for Alabama</span>
+fig, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, figsize=(<span class="hljs-number">15</span>,<span class="hljs-number">5</span>))
+means = climate_df[climate_df[<span class="hljs-string">'state'</span>]==<span class="hljs-string">'AL'</span>] <span class="hljs-string">\</span>
+                .groupby(<span class="hljs-string">'year'</span>) <span class="hljs-string">\</span>
+                .agg({<span class="hljs-string">'tempf'</span>: <span class="hljs-string">'mean'</span>})
+autocorrelation_plot(means, ax=ax)
+ax.set_ylim([-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>])
+</code></pre>
+<pre>(-1.0, 1.0)</pre>
+              <p class="text-align: center;">
+                <img src="output_90_1.png" style="width: 90%; display: block; margin: 10px auto 20px;"/>
+              </p>
+<pre><code class="lang-python">states_list = us_states[:<span class="hljs-number">20</span>]
+<span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(itertools.chain(states_list)</span></span>)
+</code></pre>
+<pre><code>&lt;itertools<span class="hljs-selector-class">.chain</span> <span class="hljs-selector-tag">object</span> at <span class="hljs-number">0</span>x2ab468700ad0&gt;
+</code></pre><pre><code class="lang-python"><span class="hljs-selector-id">#https</span>:<span class="hljs-comment">//ourcodingclub.github.io/tutorials/pandas-time-series/</span>
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-selector-tag">all_states_df</span><span class="hljs-selector-attr">[all_states_df['entry']</span><span class="hljs-selector-class">.str</span><span class="hljs-selector-class">.endswith</span>(<span class="hljs-string">'_sector_total'</span>) | 
+              <span class="hljs-selector-tag">all_states_df</span><span class="hljs-selector-attr">['entry']</span><span class="hljs-selector-class">.str</span><span class="hljs-selector-class">.endswith</span>(<span class="hljs-string">'_with_discrepancy'</span>)]<span class="hljs-selector-class">.head</span>(<span class="hljs-number">7</span>)
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table class="table table-striped">
+                <thead>
+                  <tr style="text-align: right;">
+      <th scope="row"></th>
+      <th scope="row">state</th>
+      <th scope="row">entry</th>
+      <th scope="row">1980</th>
+      <th scope="row">1981</th>
+      <th scope="row">1982</th>
+      <th scope="row">1983</th>
+      <th scope="row">1984</th>
+      <th scope="row">1985</th>
+      <th scope="row">1986</th>
+      <th scope="row">1987</th>
+      <th scope="row">...</th>
+      <th scope="row">2009</th>
+      <th scope="row">2010</th>
+      <th scope="row">2011</th>
+      <th scope="row">2012</th>
+      <th scope="row">2013</th>
+      <th scope="row">2014</th>
+      <th scope="row">2015</th>
+      <th scope="row">2016</th>
+      <th scope="row">2017</th>
+      <th scope="row">2018</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">4</th>
+      <td>AL</td>
+      <td>residential_sector_total</td>
+      <td>3.594</td>
+      <td>3.425</td>
+      <td>3.377</td>
+      <td>3.528</td>
+      <td>3.289</td>
+      <td>2.933</td>
+      <td>3.050</td>
+      <td>3.373</td>
+      <td>...</td>
+      <td>2.496</td>
+      <td>2.859</td>
+      <td>2.344</td>
+      <td>1.756</td>
+      <td>2.188</td>
+      <td>2.428</td>
+      <td>2.130</td>
+      <td>1.866</td>
+      <td>1.737</td>
+      <td>2.253</td>
+    </tr>
+    <tr>
+      <th scope="row">9</th>
+      <td>AL</td>
+      <td>commercial_sector_total</td>
+      <td>2.614</td>
+      <td>2.396</td>
+      <td>2.269</td>
+      <td>2.484</td>
+      <td>2.350</td>
+      <td>2.547</td>
+      <td>2.484</td>
+      <td>2.298</td>
+      <td>...</td>
+      <td>1.890</td>
+      <td>2.111</td>
+      <td>2.045</td>
+      <td>1.777</td>
+      <td>1.830</td>
+      <td>1.929</td>
+      <td>2.164</td>
+      <td>2.218</td>
+      <td>2.109</td>
+      <td>2.353</td>
+    </tr>
+    <tr>
+      <th scope="row">14</th>
+      <td>AL</td>
+      <td>industrial_sector_total</td>
+      <td>31.648</td>
+      <td>28.767</td>
+      <td>25.881</td>
+      <td>21.854</td>
+      <td>24.947</td>
+      <td>22.906</td>
+      <td>22.158</td>
+      <td>23.783</td>
+      <td>...</td>
+      <td>17.441</td>
+      <td>18.893</td>
+      <td>19.324</td>
+      <td>21.432</td>
+      <td>21.135</td>
+      <td>22.224</td>
+      <td>21.070</td>
+      <td>21.170</td>
+      <td>20.959</td>
+      <td>21.838</td>
+    </tr>
+    <tr>
+      <th scope="row">19</th>
+      <td>AL</td>
+      <td>transportation_sector_total</td>
+      <td>24.786</td>
+      <td>24.152</td>
+      <td>23.543</td>
+      <td>22.924</td>
+      <td>23.811</td>
+      <td>23.516</td>
+      <td>24.460</td>
+      <td>25.990</td>
+      <td>...</td>
+      <td>31.882</td>
+      <td>32.181</td>
+      <td>32.264</td>
+      <td>31.808</td>
+      <td>31.565</td>
+      <td>31.590</td>
+      <td>32.882</td>
+      <td>34.654</td>
+      <td>33.877</td>
+      <td>33.224</td>
+    </tr>
+    <tr>
+      <th scope="row">24</th>
+      <td>AL</td>
+      <td>electric_power_sector_total</td>
+      <td>44.065</td>
+      <td>44.053</td>
+      <td>35.301</td>
+      <td>38.757</td>
+      <td>40.271</td>
+      <td>48.947</td>
+      <td>49.146</td>
+      <td>47.793</td>
+      <td>...</td>
+      <td>66.997</td>
+      <td>77.414</td>
+      <td>74.598</td>
+      <td>66.975</td>
+      <td>64.748</td>
+      <td>65.591</td>
+      <td>62.392</td>
+      <td>55.619</td>
+      <td>50.988</td>
+      <td>53.819</td>
+    </tr>
+    <tr>
+      <th scope="row">31</th>
+      <td>AL</td>
+      <td>total_with_discrepancy</td>
+      <td>105.682</td>
+      <td>102.147</td>
+      <td>90.198</td>
+      <td>89.278</td>
+      <td>94.619</td>
+      <td>100.602</td>
+      <td>101.204</td>
+      <td>103.479</td>
+      <td>...</td>
+      <td>121.244</td>
+      <td>133.759</td>
+      <td>130.751</td>
+      <td>124.165</td>
+      <td>121.524</td>
+      <td>123.753</td>
+      <td>120.631</td>
+      <td>115.352</td>
+      <td>109.402</td>
+      <td>113.351</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>AK</td>
+      <td>residential_sector_total</td>
+      <td>0.930</td>
+      <td>0.944</td>
+      <td>1.177</td>
+      <td>1.193</td>
+      <td>1.394</td>
+      <td>1.425</td>
+      <td>1.304</td>
+      <td>1.264</td>
+      <td>...</td>
+      <td>1.748</td>
+      <td>1.676</td>
+      <td>1.718</td>
+      <td>1.754</td>
+      <td>1.551</td>
+      <td>1.455</td>
+      <td>1.580</td>
+      <td>1.495</td>
+      <td>1.656</td>
+      <td>1.457</td>
+    </tr>
+  </tbody>
+</table>
+<p>7 rows × 41 columns</p>
+</div>
+
+
+
               </div>
             </div>
           </div>
         <div class="container">
           <div class="row">
-            <div class="col text-center">
+<!--             <div class="col text-center">
               <a class="btn btn-notebook" role="button" href="https://github.com/alineu/pyDataScintist-Notebooks/blob/main/miniprojects/mushrooms_dt.ipynb">Link to the <strong>ipython notebook</strong></a>
             </div>
-          </div>
+ -->          </div>
         </div>
       </section>
     </main>
