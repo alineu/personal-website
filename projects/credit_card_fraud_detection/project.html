@@ -115,11 +115,21 @@
                 <li><a href="#gs1">Gridsearch for parameter group 1</a></li>
                 <li><a href="#gs2">Gridsearch for parameter group 2</a></li>
                 <li><a href="#gs3">Gridsearch for parameter group 3</a></li>
+                <ul>
+                  <li><a href="#gs3_notes_1">Evolution of <code>eval_metrics</code> with the number of boosting rounds and <code>learning_rate</code></a></li>
+                  <li><a href="#gs3_notes_2">Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma=3</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha</code></a></li>
+                </ul>
                 <li><a href="#gs4">Gridsearch for parameter group 4</a></li>
                 <ul>
-                <li><a href="#gs4_notes">Important note regarding overfitting and the <em><a href="#acceptance_threshold">acceptance threshold</a></em></a></li>
+                <li><a href="#gs4_notes_1">Important note regarding overfitting and the <em><a href="#acceptance_threshold">acceptance threshold</a></em></a></li>
+                <li><a href="#gs4_notes_2">Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">scale_pos_weight=[1,5,20,100,1000]</code></a></li>
+
                 </ul>
                 <li><a href="#gs5">Gridsearch for parameter group 5</a></li>
+                <ul>
+                  <li><a href="#gs5_notes_1">How <strong>Early Stopping</strong> influences the optimal <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">learning_rate</code></a></li>
+                  <li><a href="#gs5_notes_2">Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha=0.001</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma</code></a></li>
+                </ul>
                 </ul>
                 <li><a href="#conclusion">Summary and Conclusion</a></li>
                 </ul>
@@ -880,7 +890,9 @@ ax_.set_xticklabels(
     horizontalalignment='right'
 )
 ax.set_title('Correlation between principal components of the credit card dataset', fontsize=18, y=1.02);</code></pre>
-              <a class="definition" id="fig1"></a>
+              <div style="text-align:center">
+                 <a id="fig1" style="font-size: 1.5em;">Figure 1</a>
+              </div>
               <p class="text-align: center;">
                 <img src="output_1.png" style="width: 90%; display: block; margin: 10px auto 20px;"/>
               </p>              
@@ -1211,7 +1223,9 @@ for i, col in enumerate(important_features):
 fig.legend(leg.legendHandles, ['valid','fraud'], loc='center')
 sns.despine(left=True)
 plt.suptitle('Kernel Density Estimate (KDE) plot of class distributions for \n 5 most important features', x=0.64, y=1.15);</code></pre>
-              <a class="definition" id="fig2"></a>
+              <div style="text-align:center">
+                 <a id="fig2" style="font-size: 1.5em;">Figure 2</a>
+              </div>
               <p class="text-align: center;">
                 <img src="output_2.png" style="width: 70%; display: block; margin: 10px auto 20px;"/>
               </p>
@@ -1460,6 +1474,9 @@ best_nrounds = int((res.shape[0] - estop) / (1 - 1 / n_folds))
                 </li>
                 <li>
                   Because we are using <strong>early stopping</strong>, the model throws out the optimal number of trees (<code class="arg">n_estimators</code>) for each fold. For each parameter group, the best number of boosting trees is returned as the mean over the folds. 
+                </li>
+                <li>
+                  We use a Python <code class="method">dictionary</code>, <code>progress</code>, to record the changes in validation and training data <code>eval_metric(s)</code>. This can help a lot with assessing whether the model is overfitting or not.
                 </li>
                 <li>
                   Our efforts to reduce overfitting are in accordance with <a href="https://xgboost.readthedocs.io/en/latest/tutorials/param_tuning.html">XGBoost's Notes on Parameter Tuning</a>.
@@ -2213,9 +2230,9 @@ CV 125 ended! (took 475.21 seconds)
               <p>
                 The results suggest that <code>colsample_bylevel</code> doesn't influenece the accuracy of the predictions. We can take a look at the evolution of PR-AUC for <code>colsample_bylevel=1</code> and different values of <code>subsample</code> and <code>colsample_bytree</code> in our grid-search space.
               </p>
-                <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput2" aria-expanded="false" aria-controls="collapseCVOutput2">
+                <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig2code" aria-expanded="false" aria-controls="fig2code">
                 </button>  
-                <div class="collapse" id="collapseCVOutput2" aria-expanded="false" style="height: 0px;"><pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(figsize=(10,10))
+                <div class="collapse" id="fig2code" aria-expanded="false" style="height: 0px;"><pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(figsize=(10,10))
 fig.tight_layout()
 ax = fig.add_subplot(111, projection='3d')
 ax.view_init(elev=45, azim=-135)
@@ -2249,7 +2266,10 @@ plt.xlabel("colsample_bylevel", labelpad=20)
 ax.grid(False)
 plt.savefig("paramgr")
 plt.show()</code></pre></div>
-              <a class="definition" id="fig3"></a>
+              <div style="text-align:center">
+                 <a id="fig3" style="font-size: 1.5em;">Figure 3</a>
+              </div>
+              
               <p class="text-align: center;">
                 <img src="output_3.png" style="width: 70%; display: block; margin: 10px auto 20px;"/>
               </p>
@@ -2933,11 +2953,11 @@ CV 20 ended! (took 1520.48 seconds)
 
 Grid search ended at 2021-06-09 16:10:16.820294
     </pre>
-    <h5>Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha=0.001</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma</code></h5>
-    <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput10" aria-expanded="false" aria-controls="collapseCVOutput10">
-</button>  
-<div class="collapse" id="collapseCVOutput10" aria-expanded="false" style="height: 0px;">
-    <pre >fig = plt.figure(dpi=280, figsize=(16,8))
+    <h5><a class="header_arg" id="gs3_notes_1">Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha=0.001</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma</code></h5>
+    <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig4code" aria-expanded="false" aria-controls="fig4code"> 
+      </button> 
+      <div class="collapse" id="fig4code" aria-expanded="false" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(dpi=280, figsize=(16,8))
 num_folds = 20
 test_params = {'alpha': [1e-3], 'gamma':[1., 3., 5., 7., 9.]}
 test_evals = evals[10:15]
@@ -2971,16 +2991,20 @@ for j,metric in enumerate(metrics):
 plt.suptitle('variation of logloss and PR-AUC with the number of\n' +
              'boosting rounds for alpha=0.001 and gamma=[1,3,5,7,9]', 
             fontsize=22)
-plt.show()</pre></div>
-    <a class="definition" id="fig11"></a>
+plt.show()</pre></code></div>
+    
+              <div style="text-align:center">
+                 <a id="fig4" style="font-size: 1.5em;">Figure 4</a>
+              </div>
+              
               <p class="text-align: center;">
                 <img src="round3_1.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
               </p> 
-        <h5>Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma=3</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha</code></h5>
-    <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput11" aria-expanded="false" aria-controls="collapseCVOutput11">
+        <h5><a class="header_arg" id="gs3_notes_2">Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma=3</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha</code></h5>
+    <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig5code" aria-expanded="false" aria-controls="fig5code">
 </button>  
-<div class="collapse" id="collapseCVOutput11" aria-expanded="false" style="height: 0px;">
-    <pre >fig = plt.figure(dpi=280, figsize=(16,8))
+<div class="collapse" id="fig5code" aria-expanded="false" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python"><pre >fig = plt.figure(dpi=280, figsize=(16,8))
 num_folds = 20
 test_params = {'alpha': np.logspace(-6,0,3), 'gamma':[3]}
 test_evals = [evals[i] for i in [6,7,8]]
@@ -3014,13 +3038,16 @@ for j,metric in enumerate(metrics):
 plt.suptitle('variation of logloss and PR-AUC with the number of\n' +
              'boosting rounds for alpha=[1e-6,1e-3,1]  and gamma=3', 
             fontsize=22)
-plt.show()</pre></div>
-              <a class="definition" id="fig12"></a>
+plt.show()</pre></code></div>
+              <div style="text-align:center">
+                 <a id="fig5" style="font-size: 1.5em;">Figure 5</a>
+              </div>
+              
               <p class="text-align: center;">
                 <img src="round3_2.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
               </p> 
               <p>
-                There are a few observations to make from Figures <a href="#fig11">4</a> and <a href="#fig11">5</a>.
+                There are a few observations to make from Figures <a href="#fig4">4</a> and <a href="#fig5">5</a>.
                 <ul>
                   <li>Unlike Pr-AUC, Logloss is insensitive to the variation of <code>alpha</code> and <code>gamma</code>. This is most likely due to the severe imbalance of the classes. While PR-AUC is sensitive to imbalance, logloss is about the <strong>model's confidence in predicting the correct class</strong>, be it positive or negative.</li>
                   <li><strong>Validation PR-AUC</strong> reaches its peak somewhere around 5000 trees followed by a slight reduction and then it plateaus. Train PR-AUC on the other hand is strictly increasing. This causes the gap between the training and validation PR-AUC to increase, i.e., overitting.</li>
@@ -3265,9 +3292,9 @@ Grid search ended at 2021-05-31 15:21:49.174025</pre>
             <p>
               This is surprising because we expected a value close to <code>sum(negative instances)/sum(positive instances)</code> giving the best model performance. Looking at the variation of evaluation metric with might give us a hint about what might have gone wrong. Plotting the evolution of <code class="arg">eval_metric</code> with <code class="arg">scale_pos_weight</code> may reveal some more details regarding this discrepancy.
             </p>
-<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput5" aria-expanded="false" aria-controls="collapseCVOutput5">
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig6code" aria-expanded="false" aria-controls="fig6code">
 </button>  
-<div class="collapse" id="collapseCVOutput5" aria-expanded="false" style="height: 0px;">
+<div class="collapse" id="fig6code" aria-expanded="false" style="height: 0px;">
 <pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(dpi=280, figsize=(8, 8))
 ax = fig.add_subplot(111)
 labels = []
@@ -3323,12 +3350,15 @@ plt.title('The difference between training and validation PR-AUC for\n'+
            fontsize=16)
 fig.tight_layout()
 plt.show()</code></pre></div>
-              <a class="definition" id="fig4"></a>
+              <div style="text-align:center">
+                 <a id="fig6" style="font-size: 1.5em;">Figure 6</a>
+              </div>
+              
               <p class="text-align: center;">
                 <img src="output_4.png" style="width: 70%; display: block; margin: 10px auto 20px;"/>
               </p>
               <p>
-                Looking at Figure <a href="#fig4">6</a> above, we note that the <code class="arg">scale_pos_weight</code> values 10 an. We also observe that the deviation between the model performance on training versus validation data increases with the increase in <code class="arg">scale_pos_weight</code>. The increase in the width of the hatched region shows this deviation and we can see that for $\log(\mathrm{scale\_pos\_weight})\geq1$ the model is starting to overfit. The fact that the model does not demonstrate its best performance at XGBoost's recommended value should not be too concerning as these are general recommendations which can change with the imbalance ratio, the nature of data, the train-to-validation ratio, etc. Finally, we can see that there might be a <code class="arg">scale_pos_weight</code> value bigger than $1$ that demonstrates a better performance than <code class="arg">scale_pos_weight=1</code> while satisfying the <a href="#acceptance_condition">acceptance condition</a>. We can explore this by performing another round of parameter search over a much smaller window as below.
+                Looking at Figure <a href="#fig6">6</a> above, we note that the <code class="arg">scale_pos_weight</code> values 10 an. We also observe that the deviation between the model performance on training versus validation data increases with the increase in <code class="arg">scale_pos_weight</code>. The increase in the width of the hatched region shows this deviation and we can see that for $\log(\mathrm{scale\_pos\_weight})\geq1$ the model is starting to overfit. The fact that the model does not demonstrate its best performance at XGBoost's recommended value should not be too concerning as these are general recommendations which can change with the imbalance ratio, the nature of data, the train-to-validation ratio, etc. Finally, we can see that there might be a <code class="arg">scale_pos_weight</code> value bigger than $1$ that demonstrates a better performance than <code class="arg">scale_pos_weight=1</code> while satisfying the <a href="#acceptance_condition">acceptance condition</a>. We can explore this by performing another round of parameter search over a much smaller window as below.
               </p>
 <pre class="prettyprint lang-language"><code class="language-python">param_group_4_new = {'scale_pos_weight': np.linspace(1,2,6)}
 search_params = param_group_4_new
@@ -3444,9 +3474,9 @@ Summary:
 CV 6 ended! (took 312.25 seconds)
 
 Grid search ended at 2021-06-07 15:23:36.177770</pre>
-<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput7" aria-expanded="false" aria-controls="collapseCVOutput7">
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig7code" aria-expanded="false" aria-controls="fig7code">
 </button>  
-<div class="collapse" id="collapseCVOutput7" aria-expanded="false" style="height: 0px;">
+<div class="collapse" id="fig7code" aria-expanded="false" style="height: 0px;">
 <pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(dpi=280, figsize=(8, 8))
 ax = fig.add_subplot(111)
 labels = []
@@ -3501,7 +3531,10 @@ plt.title('The difference between training and validation PR-AUC for\n'+
            fontsize=16)
 fig.tight_layout()
 plt.show()</code></pre></div>
-              <a class="definition" id="fig5"></a>
+              <div style="text-align:center">
+                 <a id="fig7" style="font-size: 1.5em;">Figure 7</a>
+              </div>
+              
               <p class="text-align: center;">
                 <img src="output_5.png" style="width: 70%; display: block; margin: 10px auto 20px;"/>
               </p>
@@ -3525,7 +3558,7 @@ plt.show()</code></pre></div>
                 </thead>
                 <tbody>
                   <tr>
-                    <th>1</th>
+                    <th scope="row">1</th>
                     <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
                     <td>0.794</td>
                     <td>0.016</td>
@@ -3537,7 +3570,7 @@ plt.show()</code></pre></div>
                     <td>258.66</td>
                   </tr>
                   <tr>
-                    <th>0</th>
+                    <th scope="row">0</th>
                     <td>{'max_depth': 3, 'min_child_weight': 30, 'subs...</td>
                     <td>0.788</td>
                     <td>0.016</td>
@@ -3557,14 +3590,14 @@ plt.show()</code></pre></div>
               <p>
                 Note how this little change of <code class="arg">scale_pos_weight</code> from 1 to 1.2 improves the validation PR-AUC by roughly 1$\%$. <em>This shows how important this hyperparameter is especially when dealing with highly imbalanced datasets</em>.
               </p>
-              <h5><a class="header_arg" id="gs4_notes"></a>Important note regarding overfitting and the <em><a href="#acceptance_threshold">acceptance threshold</a></em></h5>
+              <h5><a class="header_arg" id="gs4_notes_1"></a>Important note regarding overfitting and the <em><a href="#acceptance_threshold">acceptance threshold</a></em></h5>
               <p>
-                Looking at the figure above, one might ask why we limited ourselves to <a href="#acceptance_condition">acceptance condition</a>? For instance, taking <code class="arg">scale_pos_weight</code> to be 3 rather than 1.2 increases the average train and validation PR-AUC by roughly 4$\%$ while the difference between the two is only about 0.7$\%$ above the <a href="#acceptance_condition">acceptance threshold</a>. This is a great question and in fact, some would characterize over fitting as a <strong><em><a href="https://stats.stackexchange.com/questions/9053/how-does-cross-validation-overcome-the-overfitting-problem">situation where increasing the complexity of the model slightly tends to increase the validation error</a></em></strong>, e.g. $\log(\mathrm{scale\_pos\_weight})>1$ in Figure<a href="#fig4">6</a>. There is no good answer to questions like this as the answer might change depending on the business objectives, computational resources, etc. The important thing here is to make sure that we understand the reasoning behind eliminating or accepting some candidates. I performed a similar analysis to previous round of grid search by repeating the grid search for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">scale_pos_weight</code> with no early stopping.
+                Looking at the figure above, one might ask why we limited ourselves to <a href="#acceptance_condition">acceptance condition</a>? For instance, taking <code class="arg">scale_pos_weight</code> to be 3 rather than 1.2 increases the average train and validation PR-AUC by roughly 4$\%$ while the difference between the two is only about 0.7$\%$ above the <a href="#acceptance_condition">acceptance threshold</a>. This is a great question and in fact, some would characterize over fitting as a <strong><em><a href="https://stats.stackexchange.com/questions/9053/how-does-cross-validation-overcome-the-overfitting-problem">situation where increasing the complexity of the model slightly tends to increase the validation error</a></em></strong>, e.g. $\log(\mathrm{scale\_pos\_weight})>1$ in Figure<a href="#fig6">6</a>. There is no good answer to questions like this as the answer might change depending on the business objectives, computational resources, etc. The important thing here is to make sure that we understand the reasoning behind eliminating or accepting some candidates. I performed a similar analysis to previous round of grid search by repeating the grid search for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">scale_pos_weight</code> with no early stopping.
               </p>
-              <h5>Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">scale_pos_weight=[1,5,20,100,1000]</code></h5>
-              <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput13" aria-expanded="false" aria-controls="collapseCVOutput13">
+              <h5><a class="header_arg" id="gs4_notes_2"></a>Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">scale_pos_weight=[1,5,20,100,1000]</code></h5>
+              <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig8code" aria-expanded="false" aria-controls="fig8code">
 </button>  
-<div class="collapse" id="collapseCVOutput13" aria-expanded="false" style="height: 0px;">
+<div class="collapse" id="fig8code" aria-expanded="false" style="height: 0px;">
 <pre class="prettyprint lang-language"><code class="language-python">fig = plt.figure(dpi=280, figsize=(16, 8))
 num_folds = 20
 test_params = {'scale_pos_weight': [0.5, 1, 2, 5, 10, 20, 50, 100, 500, 1000][1::2]}
@@ -3600,7 +3633,10 @@ plt.suptitle('Variation of logloss and PR-AUC with the number of\n' +
              'boosting rounds for scale_pos_weight=[1,5,20,100,1000]', 
             fontsize=22)
 plt.show()</code></pre></div>
-<a class="definition" id="fig14"></a>
+              <div style="text-align:center">
+                 <a id="fig8" style="font-size: 1.5em;">Figure 8</a>
+              </div>
+
               <p class="text-align: center;">
                 <img src="round4.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
               </p> 
@@ -3618,7 +3654,7 @@ plt.show()</code></pre></div>
 
               <h4><a class="header_arg" id="gs5"></a>Gridsearch for parameter group 5: <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;"> learning_rate </code></h4>
               <p>
-                The last step in our hyperparameter grid search is tuning the learning rate where we explore 11 learning rates in the range (0.0001, 0.01). 
+                The last step in our hyperparameter grid search is tuning the learning rate where we explore 11 learning rates in the range (0.0001, 0.01). Furthermore, to study the effect of <code>Early_Stop_Rounds</code> in more detail, we repeat the grid search for multiple values of <code>Early_Stop_Rounds</code>. This can help us to understand the benefits and potential disadvantages of using <code>Early_Stop_Rounds</code>. We also keep track of <code>'error'</code> in addition to <code>aucpr</code> and <code>logloss</code> to see if we can get more insights about the evolution of <code>eval_metrics</code> with the grid search parameter. Finally, we increase the maximum number of boosting rounds to 10000.
               </p>
  <pre class="prettyprint lang-language"><code class="language-python">cur_params.update({'scale_pos_weight': 1.2})
 search_params = param_group_5
@@ -3634,186 +3670,289 @@ pprint(cur_params)</code></pre>
  'min_child_weight': 30,
  'scale_pos_weight': 1.2,
  'subsample': 1}</pre>
-  <pre class="prettyprint lang-language"><code class="language-python">tmp_df, evals = cv_search_params(X_train, y_train, cur_params, all_features, rskf)
-tmp_df.to_pickle('hyperparams_round5.pkl')</code></pre>
-<pre>Grid search on:
-
-{'alpha': 0.001,
- 'colsample_bylevel': 1,
- 'colsample_bytree': 1,
- 'gamma': 3,
- 'learning_rate': array([0.   , 0.   , 0.   , ..., 0.004, 0.006, 0.01 ]),
- 'max_depth': 3,
- 'min_child_weight': 30,
- 'scale_pos_weight': 1.2,
- 'subsample': 1}
-
-started at 2021-06-07 17:25:20.839887
-Total number of hyperparameter candidates = 11
-
-CV 1 on:
-
-{'learning_rate': 0.0001}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.696
- mean PR-AUC validation = 0.671
- mean PR-AUC difference = 0.0252
- average number of boosting rounds tr = 119
-CV 1 ended! (took 70.78 seconds)
-
+<h5><a class="header_arg" id="gs5_notes_1"></a>Evolution of <code>eval_metrics</code> with the number of boosting rounds and <code>learning_rate</code></h5>
+  <pre class="prettyprint lang-language"><code class="language-python">dfs = []
+early_stoppng_values = [200, 400, 1000, 2000, 5000, 10000]
+for i, es in enumerate(early_stoppng_values):
+    tmp_df, evals = cv_search_params(X_train, y_train, cur_params, all_features, \
+                                     rskf, eval_metric=['error','logloss','aucpr'], \
+                                     num_boost_rounds=10000, early_stop_rounds=es)
+    tmp_df['early_stop'] = es
+    with open('hyperparam5_{es}_evals.pkl', 'wb') as pickle_file:
+        pickle.dump(evals, pickle_file, protocol=4)
+    tmp_df.to_pickle('hyperparam5_{es}_df.pkl')
+    dfs.append(tmp_df)</code></pre>
+              <p>
+                First, we look at the variation of average <code>error</code>, <code>logloss</code>, and <code>aucpr</code> for training and validation data when there is no early stopping.
+              </p>
 </pre>
-<button class="btn btn-primary plus-minus-output collapsed" type="button" data-toggle="collapse" data-target="#collapseCVOutput8" aria-expanded="false" aria-controls="collapseCVOutput8">
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#codefig9" aria-expanded="false" aria-controls="codefig9">
 </button>  
-<div class="collapse" id="collapseCVOutput8" aria-expanded="false" style="height: 0px;">
-    <pre >
-CV 2 
+<div class="collapse" id="codefig9" aria-expanded="false" style="height: 0px;">
+    <pre class="prettyprint lang-language"><code class="language-python">fig,axes = plt.subplots(3,1,dpi=280, figsize=(10,12), sharex=True)
+sns.axes_style('white')
+sns.set(rc={'axes.facecolor':'lightgray', 'figure.facecolor':'white'})
+num_folds = 20
+test_params = {}
+test_params['learning_rate'] = np.logspace(-4, -2, 11)[::2]
+fig.tight_layout()
+test_evals = eevals[::2]
+metrics = ['error','logloss','aucpr']
+num_cases = len(list(product(*test_params.values())))
+colors=[plt.cm.jet(int(i/num_cases*256)) for i,_ in enumerate(product(*test_params.values()))]
+step=250
+ylims = [[6.1e-4, 7.7e-4],[-0.05, 0.75],[0.67, 0.83]]
+plt.subplots_adjust(hspace=0.02)
+for j,metric in enumerate(metrics):
+    for i,lr in enumerate(product(*test_params.values())):
+        ax = axes[j]
+        eval_tr = np.mean(np.asarray([test_evals[i][x]['train'][metric] for x in range(num_folds)]), 
+                                     axis=0)[::step]
+        eval_val = np.mean(np.asarray([test_evals[i][x]['eval'][metric] for x in range(num_folds)]), 
+                                     axis=0)[::step]
+        len_eval = len(np.mean(np.asarray([test_evals[i][x]['train'][metric] for x in range(num_folds)]), 
+                                     axis=0))
+        x_data = np.arange(1,len(eval_tr)+1)*step
+        ax.plot(x_data, eval_tr, 
+                            marker='o', markersize=6, 
+                            markerFaceColor='white', 
+                            color=colors[i],
+                            label=f"LR={lr[0]:.2e} (tr-{metric})")
+        ax.plot(x_data, eval_val, 
+                            marker='s', markersize=6, 
+                            markerFaceColor='white', 
+                            color=colors[i], linestyle=':',
+                            label=f"LR={lr[0]:.2e} (val-{metric})")
+        sns.despine(left=False)
+        ax.set_ylim(ylims[j])
+    if j==1:
+        ax.legend(bbox_to_anchor=(1,0.5,0,0),loc=f"center left",fontsize=10)
+    ax.set_ylabel(f'{metric}', fontsize=18, labelpad=15)
+plt.suptitle('Variation of error, logloss, and aucpr for training and validation\n' +
+             'with the number of boosting rounds with learning rate', y=1.04,
+            fontsize=22)
+plt.xlabel('number of boosting rounds', fontsize=18, labelpad=10)
+plt.show();</code></pre></div>
+              <div style="text-align:center">
+                 <a id="fig9" style="font-size: 1.5em;">Figure 9</a>
+              </div>
+              <p class="text-align: center;">
+                <img src="fig15.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p>
+              <p>
+                There are some interesting observations to point out in <a href="#fig9">Figure 9</a>
+                <ul>
+                  <li>
+                    All evaluation metric for the higher learning rates, i.e., <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">lr=1e-2, 3.98e-3</code>, remain unchanged after $n_{\text{tree}}\approx3000$. This means adding more complexity to the model does not imprpove the performance of the model. 
+                  </li>
+                  <li>
+                    In contrast, when looking at the results for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">lr=2.5e-4</code>, we notice that even at a much higher number of boosting rounds, the <strong>validation metrics</strong> are still improving. 
+                  </li>
 
-{'learning_rate': 0.00015848931924611142}
+                  <li>
+                    For the really low values of learning rate, i.e., <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">lr=1e-4</code>, the model is certainly underfitting as all the evaluation metrics are still improving at $n_{\text{tree}}\approx10000$.
+                  </li>
 
- started!
+                  <li>
+                    The higher the learning rate gets, the sooner the model starts to overfit. This can be seen by looking at the error and aucpr subplots in <a href="#fig9">Figure 9</a> where for the highest learning rate (<code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">lr=0.01</code>), the divergence between the training and validation data results start at the very beginning where $n_{\text{tree}}\approx250$.
+                  </li>
+                </ul>
+              </p>
+              <h5><a class="header_arg" id="gs5_notes_2"></a>How <strong>Early Stopping</strong> influences the optimal <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">learning_rate</code></h5>
+              <p>
+                We now look at the way using <strong>Early Stopping</strong> affects the computation cost, the best learning rate accorading to the criteria <a href="#acceptance_condition">discussed previously</a>, and whether or not that might affect the accuracy of the model. Note that the <em>size of markers in <a href="#fig10">Figure 10</a> are scaled by the square-root of the time taken to train the model</em>.
+              </p>
+</pre>
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#codefig10" aria-expanded="false" aria-controls="codefig10">
+</button>  
+<div class="collapse" id="codefig10" aria-expanded="false" style="height: 0px;">
+    <pre class="prettyprint lang-language"><code class="language-python">fig,ax = plt.subplots(1,1,dpi=400, figsize=(15,15))
+sns.axes_style('white')
+sns.set(rc={'axes.facecolor':'lightgray', 'figure.facecolor':'white'})
+x_data = np.logspace(-4, -2, 11)
+num_case = len(early_stoppng_values)
+metric='aucpr'
+colors=[plt.cm.jet(int(i/num_cases*256)) for i,_ in enumerate(early_stoppng_values)]
 
-Summary:
- mean PR-AUC training =  0.697
- mean PR-AUC validation = 0.671
- mean PR-AUC difference = 0.0259
- average number of boosting rounds tr = 114
-CV 2 ended! (took 66.29 seconds)
-
-CV 3 on:
-
-{'learning_rate': 0.00025118864315095795}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.722
- mean PR-AUC validation = 0.697
- mean PR-AUC difference = 0.0254
- average number of boosting rounds tr = 652
-CV 3 ended! (took 120.19 seconds)
-
-CV 4 on:
-
-{'learning_rate': 0.00039810717055349735}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.747
- mean PR-AUC validation = 0.724
- mean PR-AUC difference = 0.0231
- average number of boosting rounds tr = 1200
-CV 4 ended! (took 175.81 seconds)
-
-CV 5 on:
-
-{'learning_rate': 0.000630957344480193}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.758
- mean PR-AUC validation = 0.738
- mean PR-AUC difference = 0.0196
- average number of boosting rounds tr = 1345
-CV 5 ended! (took 190.94 seconds)
-
-CV 6 on:
-
-{'learning_rate': 0.001}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.771
- mean PR-AUC validation = 0.752
- mean PR-AUC difference = 0.0183
- average number of boosting rounds tr = 1436
-CV 6 ended! (took 214.33 seconds)
-
-CV 7 on:
-
-{'learning_rate': 0.001584893192461114}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.788
- mean PR-AUC validation = 0.773
- mean PR-AUC difference = 0.0155
- average number of boosting rounds tr = 1849
-CV 7 ended! (took 263.90 seconds)
-
-CV 8 on:
-
-{'learning_rate': 0.002511886431509582}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.798
- mean PR-AUC validation = 0.781
- mean PR-AUC difference = 0.0178
- average number of boosting rounds tr = 1963
-CV 8 ended! (took 285.39 seconds)
-
-CV 9 on:
-
-{'learning_rate': 0.003981071705534973}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.805
- mean PR-AUC validation = 0.782
- mean PR-AUC difference = 0.0224
- average number of boosting rounds tr = 1648
-CV 9 ended! (took 270.81 seconds)
-
-CV 10 on:
-
-{'learning_rate': 0.00630957344480193}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.810
- mean PR-AUC validation = 0.783
- mean PR-AUC difference = 0.0265
- average number of boosting rounds tr = 1263
-CV 10 ended! (took 222.63 seconds)
-</pre></div>
-<pre>
-  CV 11 on:
-
-{'learning_rate': 0.01}
-
- started!
-
-Summary:
- mean PR-AUC training =  0.814
- mean PR-AUC validation = 0.786
- mean PR-AUC difference = 0.0286
- average number of boosting rounds tr = 943
-CV 11 ended! (took 181.38 seconds)
-
-Grid search ended at 2021-06-01 00:31:11.887756</pre>
-
-
+for i,es in enumerate(early_stoppng_values):
+    
+    y_data = dfs[i].iloc[:,1] # train
+    # scale the plot markers by the square root of the time taken
+    time_taken = np.sqrt(dfs[i].iloc[:,8].astype(float))*3
+    ax.plot(x_data, y_data, 
+                marker=None, 
+                color=colors[i], linestyle=':')
+    ax.scatter(x_data, y_data, 
+                marker='o', s=time_taken, 
+                color=colors[i],
+                label=f"Estop={es} (tr-{metric})", zorder=-i+10)
+    
+    y_data = dfs[i].iloc[:,3] # validation
+    ax.plot(x_data, y_data, 
+                marker=None, 
+                color=colors[i], linestyle=':')
+    ax.scatter(x_data, y_data, 
+                marker='d', s=time_taken, 
+                color=colors[i], linestyle=':',
+                label=f"Estop={es} (val-{metric})", zorder=-i+10)
+    sns.despine(left=False)
+ax.set_xscale('log')
+ax.set_ylabel(f'aucpr', fontsize=22, labelpad=15)
+plt.suptitle('Variation of aucpr for training and validation data for different\n' +
+             'learning rates and different values of early stopping', y=0.95,
+             fontsize=28)
+plt.setp(ax.get_xticklabels(), fontsize=18)
+plt.setp(ax.get_yticklabels(), fontsize=18)
+plt.legend(bbox_to_anchor=(1,0.5,0,0),loc=f"center left",fontsize=14)
+plt.xlabel('learning rate', fontsize=22)
+plt.show()</code></pre></div>
+              <div style="text-align:center">
+                 <a id="fig10" style="font-size: 1.5em;">Figure 10</a>
+              </div>
+              <p class="text-align: center;">
+                <img src="fig16.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p>
+              <p>
+                <a href="#fig10">Figure 10</a> shed light on choosing the best number of trees as the <strong>Early Stopping criteria</strong>. 
+                <ul>
+                  <li>
+                    The lower <strong>Early Stopping</strong> means the less computation cost. This can clearly be seen by the increase in the markers' size as the <strong>Early Stopping</strong>  increases. 
+                  </li>
+                  <li>
+                    Notice that there is a bottleneck in all training-validation-pair curves for each Early Stop value where the training and validation aucpr are the closest. For instance for <code>Estop=200</code>, the bottleneck occurs at <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">lr=2.5e-4</code> whereas for <code>Estop=2000</code>, it occurs at <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">lr=6.51e-4</code>.
+                  </li>
+                  <li>
+                    Comparing the training and validation curves for <code>(Estop=200, lr=2.51e-3)</code> and <code>(Estop=10000, lr=2.51e-4</code>) with roughly the same performance for the training and validation PR-AUC. Notice that early stopping can significantly reduce the computation cost as the first case takes 107 seconds whereas the second case takes 1409 seconds. An almost 14 folds increase in the compuation cost.
+                  </li>
+                </ul>
+              </p>
+              <p>
+                Finally, we can take a look at all the learning rates that meet the <a href="#acceptance_condition">Acceptance Condition</a>. 
+              </p>
+<pre class="prettyprint lang-language"><code class="language-python">for i,es in enumerate(early_stoppng_values): 
+    dfs[i]['early_stop'] = es
+    dfs[i]['learning_rate'] = 0
+    for j in range(len(dfs[i])):
+        dfs[i]['learning_rate'].iloc[j]=f"{dfs[i]['current_params'].iloc[j]['learning_rate']:.2e}"
+df_es = pd.concat(dfs, axis=0)
+df_es = df_es[df_es['diff']&#60;acceptance_threshold].sort_values('val_avg', ascending=False)
+df_es = df_es.reset_index(drop=True)
+df_es[['tr_avg','val_avg','time_taken','early_stop','learning_rate']].iloc[:,:10]</code></pre>
+              <table class="table table-striped">
+                <thead>
+                  <tr style="text-align: left;">
+                    <th></th>
+                    <th>tr_avg</th>
+                    <th>val_avg</th>
+                    <th>numtrees_avg</th>
+                    <th>time_taken</th>
+                    <th>early_stop</th>
+                    <th>learning_rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scopre="row">0</th>
+                    <td>0.801</td>
+                    <td>0.782</td>
+                    <td>3227.400</td>
+                    <td>438.81</td>
+                    <td>1000</td>
+                    <td>1.58e-03</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">1</th>
+                    <td>0.798</td>
+                    <td>0.781</td>
+                    <td>1963.000</td>
+                    <td>285.39</td>
+                    <td>400</td>
+                    <td>2.51e-03</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">2</th>
+                    <td>0.800</td>
+                    <td>0.780</td>
+                    <td>5000.000</td>
+                    <td>556.59</td>
+                    <td>5000</td>
+                    <td>1.00e-03</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">3</th>
+                    <td>0.799</td>
+                    <td>0.780</td>
+                    <td>4220.050</td>
+                    <td>529.53</td>
+                    <td>2000</td>
+                    <td>1.00e-03</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">4</th>
+                    <td>0.795</td>
+                    <td>0.778</td>
+                    <td>3801.550</td>
+                    <td>482.29</td>
+                    <td>1000</td>
+                    <td>1.00e-03</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">5</th>
+                    <td>0.794</td>
+                    <td>0.778</td>
+                    <td>985.150</td>
+                    <td>138.15</td>
+                    <td>200</td>
+                    <td>3.98e-03</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">6</th>
+                    <td>0.793</td>
+                    <td>0.776</td>
+                    <td>10000.000</td>
+                    <td>1409.15</td>
+                    <td>10000</td>
+                    <td>2.51e-04</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">7</th>
+                    <td>0.789</td>
+                    <td>0.773</td>
+                    <td>5000.000</td>
+                    <td>551.06</td>
+                    <td>5000</td>
+                    <td>6.31e-04</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">8</th>
+                    <td>0.789</td>
+                    <td>0.773</td>
+                    <td>4322.450</td>
+                    <td>539.58</td>
+                    <td>2000</td>
+                    <td>6.31e-04</td>
+                  </tr>
+                  <tr>
+                    <th scopre="row">9</th>
+                    <td>0.788</td>
+                    <td>0.773</td>
+                    <td>1848.850</td>
+                    <td>263.90</td>
+                    <td>400</td>
+                    <td>1.58e-03</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                Note that the value that we chose for <em>Early Stopping</em> gives the second best performance among all the combinations with only 0.1% lower accuracy than the best performance for <code>val_avg</code>. However, it takes rouhgly half the time that takes to train a model with <code>(Estop=400, lr=2.51e-3)</code> than the time that takes to trian <code>(Estop=1000, lr=1.58e-3)</code>. 
+              </p>
 <h3><a class="header_arg" id="conclusion"></a>Summary and Conclusion</h3>
-
-
               <ul>
-                <li>Using converntional scoring metrics such as accuracy may result in misleading conclusions regarding the performance of the classifier</li>.
-                <li>Precision-Recall curve is recommended for datasets with severe imbalance, especially when correct prediction of one class is more important than the other</li>
-                <li>ROC curves are also used to treat imbalanced datasets, however, they may provide a overly optimistic view regarding the accuracy of the classifier</li>
-                <li>Depending on the objective of the problem and the priorities of the business (e.g. maximizing recall, minimizing fpr etc.), appropriate metric must be chosen to achieve the best model</li>
-                <li>Once the model is picked, finetuning of the parameters might help further improve the performance of the baseline classifier</li>
-                <li>Exploratory data analysis can really help with identifying the hidden correlations between the features and outcome, especially for categorical variables.</li>
-                <li>Complexity of a classifier doesn't always mean that it will provide a superior performance. </li>
+                <li>In this project, we went through the process of finding the best supervised model to identify fraudulent transactions in a credit card transaction data</li>
+                <li>The dataset was extremely imbalance with a valid-to-fraudulent class ratio of 581 to 1</li>
+                <li>Our analysis found the <code class="method">XGBClassifier()</code> to be the model that best performs on this specific data set and assuming the PR-AUC to be the performance criteria.</li>
+                <li>Due to the large number of parameters that <code class="library">XGBoost</code> takes, we employed a sequential grid search to find the optimal hyperparameters of the model.</li>
+                <li>We learned that early stoppping can benefits the training and tuning process by <strong>reducing the overfitting</strong> and <strong>reducing the computation cost</strong>.
               </ul>
 
             </div>

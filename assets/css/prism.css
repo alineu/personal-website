@@ -15,6 +15,7 @@ pre[class*="language-"] {
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	font-size: 1em;
 	text-align: left;
+	/*white-space: pre-line;*/
 	white-space: pre-wrap;
 	word-spacing: normal;
 	word-break: normal;
@@ -36,6 +37,7 @@ code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-select
 	text-shadow: none;
 	/*background: #b3d4fc;*/
 	background: #068a00;
+	white-space:normal;
 }
 
 pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
