@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>ML - Non-parametric Machine Learning Models</title>
+    <title>ML - Parametric Machine Learning Models</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <!-- Favicons -->
@@ -34,10 +34,10 @@
           <ul>
             <li><a href="../../index.html">Home</a></li>
             <li><a href="../../projects.html">Projects</a></li>
-            <li class="active drop-down"><a href="../../notes.html">Tutorials</a>
+            <li class="active drop-down"><a href="../../tutorials.html">Tutorials</a>
             <ul>
-              <li><a href="../../notes.html#Pandas">Pandas</a></li>
-              <li class="drop-down"><a href="../../notes.html#Machine-Learning">Machine Learning</a>
+              <li><a href="../../tutorials.html#Pandas">Pandas</a></li>
+              <li class="drop-down"><a href="../../tutorials.html#Machine-Learning">Machine Learning</a>
               <ul>
                 <li><a href="linear_regression.html">Linear Regression</a></li>
                 <li><a href="linear_regression.html">Support Vector Machines</a></li>
@@ -46,18 +46,18 @@
                 <li><a href="linear_regression.html">Ensemble Methods</a></li>
               </ul>
             </li>
-            <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
-            <li><a href="../../notes.html#Visualization">Visualization</a></li>
-            <li><a href="../../notes.html#Jupyter-Notebook">Jupyter Notebook</a></li>
-            <li><a href="../../notes.html#Git">Git</a></li>
-            <li><a href="../../notes.html#Bash">Bash</a></li>
-            <li><a href="../../notes.html#Deep-Learning">Deep Learning</a></li>
-            <li><a href="../../notes.html#Conda">Conda</a></li>
-            <li><a href="../../notes.html#Numerical-Methods">Numerical Methods</a></li>
-            <li><a href="../../notes.html#Big-Data">Big Data</a></li>
-            <li><a href="../../notes.html#Classification">Classification</a></li>
-            <li><a href="../../notes.html#Pattern-Recognition">Pattern Recognition</a></li>
-            <li><a href="../../notes.html#SQL">SQL</a></li>
+            <li><a href="../../tutorials.html#Linear-Algebra">Linear Algebra</a></li>
+            <li><a href="../../tutorials.html#Visualization">Visualization</a></li>
+            <li><a href="../../tutorials.html#Jupyter-Notebook">Jupyter Notebook</a></li>
+            <li><a href="../../tutorials.html#Git">Git</a></li>
+            <li><a href="../../tutorials.html#Bash">Bash</a></li>
+            <li><a href="../../tutorials.html#Deep-Learning">Deep Learning</a></li>
+            <li><a href="../../tutorials.html#Conda">Conda</a></li>
+            <li><a href="../../tutorials.html#Numerical-Methods">Numerical Methods</a></li>
+            <li><a href="../../tutorials.html#Big-Data">Big Data</a></li>
+            <li><a href="../../tutorials.html#Classification">Classification</a></li>
+            <li><a href="../../tutorials.html#Pattern-Recognition">Pattern Recognition</a></li>
+            <li><a href="../../tutorials.html#SQL">SQL</a></li>
           </ul>
         </li>
         <li><a href="../../about.html">About Me</a></li>
@@ -73,8 +73,8 @@
           <div class="d-flex justify-content-between align-items-center">
             <h2>ML</h2>
             <ol>
-              <li><a href="../../notes.html#Machine-Learning">ML</a></li>
-              <li>Non-parametric Machine Learning Models</li>
+              <li><a href="../../tutorials.html#Machine-Learning">ML</a></li>
+              <li>Parametric Machine Learning Models</li>
             </ol>
           </div>
         </div>
@@ -85,23 +85,44 @@
           <div class="row">
             <div class="col-12">
               <div>
-                <h2>Non-parametric Machine Learning Models</h2>
+                <h2>Parametric Machine Learning Models</h2>
                 <p>
-                  We learned about parameteeric machine learning algorithms in <a href="param.html">previous post</a> and in this post, we're going to learn about their counterpart, <strong>Nnon-parameteric machine learning algorithms</strong>
+                  One of the main differences between the machine learning algorithms as we pointed out in <a href="intro.html">Introduction</a> is about the assumptions that they make about the mapping function $\hat{f}$. The model/function $\hat{f}$ maps the input variables/features $X$ to the outcome $y$ as
+                  $$
+                  y=\hat{f}(X)
+                  $$
+                  Those algorithms that assume a certain functional form for the mapping are called <strong>parameteric algorithms</strong> and the ones that do not make such assumptions are called <strong>non-parameteric algorithms</strong>.
                 </p>
-                <h3>Non-parameteric Models</h3>
+                <h3>Parameteric Models</h3>
                 <p>
-                  Unlike parametric techniques, <strong>do not make any strong assumption about the form of the mapping function $\hat{f}$</strong>. Most of the advnaced machine learning algorithms fall into this category. These algorithms make a few or no assumptions abuot the relationship between the features and outcome. 
-                </p>
-                <p>
-                  One example of the non-parameteric machine learning algorithms are <strong><a href="decision_tree.html">decision trees</a></strong>. Let's think of a binary classification task where we have $n$ labeled data points with $m$ features. Decision tree is a binary tree where the root node contains all $n$ data. As we go down the tree, the tree nodes split into two branches according to a rule that is figured out by the algorithm. To find the rule, at each split (node) and for every feature $x_i$, the model tries to find a value $\beta_i$ that best divides the entire data into classes 1 and 2. <em>Best division</em> in a sense that the data points with $x_i\leq\beta_i$ fall into one class and the data points with $x_i>\beta_i$ fall into the other class with the least number of misclassified data points. Once all the features are tested at one node, the feature with the least number of misclassified classes sets the rule (if $x_i>\beta_i$ the data point belongs to class I, otherwise class II) on that node. 
-                </p>
-                <p>
-                  The algorithm did not make any prior assumption about the data or the rules (model parameters). It simply divided the observations according to the patterns that demonstrated similar output variables (Classes 1 and 2).
-                </p>
-                <p>
-                  Other machine learning algorithms that use non-parameteric algorithms include <strong>neural networks, support vector machines, k-nearest neighbors</strong>, and <strong>naive Bayes</strong>.
-                </p>
+                  Parameteric models make a simplifying assumption about the relationship between the data features and outcome, ususally in the form of linear combination of the input variables. For example, a simple linear regression model to predict housing prices using the house area makes the assumption that
+                  $$
+                  \text{Price}=\theta_0 + \theta_1\,\times\,\text{Area},
+                  $$
+                  meaning that the predicted house prices $\hat{y}$ are going to be a linear function of the house areas $X$
+                  $$
+                  \hat{y}=\hat{f}(X).
+                  $$
+                  <p class="text-align: center;">
+                    <img src="reg_housing_0.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+                  </p>
+                  Linear regression can be used to find the unknown coefficents $\theta_0$ and $\theta_1$ using gradient descent or least squares method. The resulting model predictions will look like
+                  <p class="text-align: center;">
+                    <img src="reg_housing_1.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+                  </p>
+                  <p>
+                    We can see the consequences of the strong assumption that we made. The linear model doesn't do a great job of prediction the house prices. The two figures above are two different ways that we can demonstrate the accuracy of the simple linear regression model. Figure (A) presents the <strong>model predictions and the actual data plotted against the house area</strong>, the single feature that the model was trained against. The model predictions take the form $ax+b$ which was the assumption that the model was built upon, and the coefficients $\theta_0$ and $\theta_1$ turn out to be $1.169$ and $-322$, respectively. <strong>Figure (B) looks at these predictions differently by plotting them against the actual prices</strong> which makes it easy to asses the accuracy of the model. <strong>The dotted green line shows the line $x=y$, i.e., what would have been a perfect model</strong>.
+                  </p>
+                  <h3>Concluding Remarks, Cons, and Pros</h3>
+                  <p>
+                    <strong>Linear regression, logistic regression</strong>, and <strong>linear discriminant functions</strong> are some of the most widely used parameteric machine learning algorithms. Parameteric algorithms <strong>do not require a lot of data to train.</strong> 100 or 100000 data points doesn't make a difference once the form of the function has been set. The model will still have the same number of parameters. 
+                  </p>
+                  <p>
+                    Parameteric models are <strong>simple to interpret</strong> and <strong>extremely efficient (very fast)</strong> because the model doesn't spend any time figuring out the form of the mapping function</strong>. The problem is that <strong>in most cases, the unknown mapping does not have a linear form, meaning that making any assumption about the relationship between the output and input variables is just wrong! That makes the parameteric algorithms limited to simple problems.</strong> 
+                  </p>
+                  <p>
+                    Next, We'll take a look at <a href="nonparam.html">non-parameteric techniques</a> and learn about the assumptions they make, their advantages and disadvantages, and the machine learning algorithms that adopt them. 
+                  </p>
                 </div>
               </div>
             </div>
@@ -133,9 +154,9 @@
               <div class="col-lg-4 col-md-6 footer-links">
                 <h4>Useful Links</h4>
                 <ul>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">About Me</a></li>
-                  <li><i class="bx bx-chevron-right"></i> <a href="#">Projects</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="index.html">Home</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="about.html">About Me</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="projects.html">Projects</a></li>
                   <li><i class="bx bx-chevron-right"></i> <a href="#">Tutorials</a></li>
                 </ul>
               </div>

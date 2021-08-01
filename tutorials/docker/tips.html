@@ -1,0 +1,51 @@
+<h4>Why Docker?</h4>
+control package version dependencies and avoid collisions
+it makes sure that your analyses are reproducible.
+
+<h4>Tips and Tricks</h4>
+
+
+
+<h4>Change repository or image name</h4>
+
+Scenario: You have a <code>REPOSITORY</code> named old_image and tagged old_tag. 
+<pre>
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+old_image           old_tag             a1b2c3d4e5f6        1 minutes ago       63.5 MB
+</pre>
+
+You want to rename it to new_image and tag new_tag.
+
+<pre>
+docker tag a1b new_image:new_tag
+</pre>
+
+where <code>a1b</code> is the first 3 characters of the IMAGE ID. You can ultimately delete the old image using
+
+<pre>
+docker rmi old_name
+</pre>
+
+<h4>push a local docker image to your dockerhub account</h4>
+<pre>
+docker images
+</pre>
+gives
+<pre>
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+local_image         local_tag           a1b2c3d4e5f6        1 minutes ago       63.5 MB
+</pre>
+<pre>
+docker tag a1b2c3d4e5f6 dockerhub_username/dockerhub_image:dockerhub_tag
+docker push dockerhub_username/dockerhub_image:dockerhub_tag
+</pre>
+where <code>dockerhub_tag</code> may or may not be the same as the <code>local_tag</code>. The same is true about <code>local_image</code> and <code>dockerhub_image</code>.
+
+<h4>saving the local image</h4>
+<pre>
+docker save local_image > local_image.tar
+</pre>
+and later load it using
+<pre>
+docker load --input local_image.tar
+</pre>

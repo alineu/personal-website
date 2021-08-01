@@ -34,10 +34,10 @@
           <ul>
             <li><a href="../../index.html">Home</a></li>
             <li class="active"><a href="../../projects.html">Projects</a></li>
-            <li class="drop-down"><a href="../../notes.html">Tutorials</a>
+            <li class="drop-down"><a href="../../tutorials.html">Tutorials</a>
             <ul>
-              <li><a href="../../notes.html#Pandas">Pandas</a></li>
-              <li class="drop-down"><a href="../../notes.html#Machine-Learning">Machine Learning</a>
+              <li><a href="../../tutorials.html#Pandas">Pandas</a></li>
+              <li class="drop-down"><a href="../../tutorials.html#Machine-Learning">Machine Learning</a>
               <ul>
                 <li><a href="linear_regression.html">Linear Regression</a></li>
                 <li><a href="linear_regression.html">Support Vector Machines</a></li>
@@ -46,18 +46,18 @@
                 <li><a href="linear_regression.html">Ensemble Methods</a></li>
               </ul>
             </li>
-            <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
-            <li><a href="../../notes.html#Visualization">Visualization</a></li>
-            <li><a href="../../notes.html#Jupyter-Notebook">Jupyter Notebook</a></li>
-            <li><a href="../../notes.html#Git">Git</a></li>
-            <li><a href="../../notes.html#Bash">Bash</a></li>
-            <li><a href="../../notes.html#Deep-Learning">Deep Learning</a></li>
-            <li><a href="../../notes.html#Conda">Conda</a></li>
-            <li><a href="../../notes.html#Numerical-Methods">Numerical Methods</a></li>
-            <li><a href="../../notes.html#Big-Data">Big Data</a></li>
-            <li><a href="../../notes.html#Classification">Classification</a></li>
-            <li><a href="../../notes.html#Pattern-Recognition">Pattern Recognition</a></li>
-            <li><a href="../../notes.html#SQL">SQL</a></li>
+            <li><a href="../../tutorials.html#Linear-Algebra">Linear Algebra</a></li>
+            <li><a href="../../tutorials.html#Visualization">Visualization</a></li>
+            <li><a href="../../tutorials.html#Jupyter-Notebook">Jupyter Notebook</a></li>
+            <li><a href="../../tutorials.html#Git">Git</a></li>
+            <li><a href="../../tutorials.html#Bash">Bash</a></li>
+            <li><a href="../../tutorials.html#Deep-Learning">Deep Learning</a></li>
+            <li><a href="../../tutorials.html#Conda">Conda</a></li>
+            <li><a href="../../tutorials.html#Numerical-Methods">Numerical Methods</a></li>
+            <li><a href="../../tutorials.html#Big-Data">Big Data</a></li>
+            <li><a href="../../tutorials.html#Classification">Classification</a></li>
+            <li><a href="../../tutorials.html#Pattern-Recognition">Pattern Recognition</a></li>
+            <li><a href="../../tutorials.html#SQL">SQL</a></li>
           </ul>
         </li>
         <li><a href="../../about.html">About Me</a></li>
@@ -84,49 +84,91 @@
         <div class="container">
           <div class="row">
             <div class="col-12">
-                <h2 id="title"><font color='green'>Opti</font><font color='orange'>Med</font> - What<font color='orange'>Medicine</font> <font color='green'>Best</font> Suits Your Need?</h2>
+                <h2  id="title"><font color='green'>Opti</font><font color='orange'>Med</font> - What <font color='orange'>Medicine</font> <font color='green'>Best</font> Suits Your Need?</h2>
                 <div style="text-align:center">
                   <span><a id="fig1" style="font-size: 1.5em;"></a></span>
                 </div>
                 <p class="text-align: center;">
-                  <img src="project_cover.jpeg" style="width: 90%; display: block; margin: 10px auto 20px;"/>
+                  <img src="project_cover.jpeg" style="width: 80%; display: block; margin: 10px auto 20px;"/>
                 </p>
                 
-                <h3 id="motivation">Motivation</h3>
+                <h3>Motivation and summary of the project</h3>
                 <p>
-                  The idea behind this project is to analyze the patient review of different drugs (obtained from from Drugs.com) and use the results to design a <a href="https://optimed-stage.herokuapp.com">web application</a> to help the patient find the best drugs according to their symptoms.
+                  I had this idea about building an application that can diagnose your causes of discomfort and pain and suggest you the drugs that fit that description! I spent some time and looked at the different data sources that I knew such as <a href="https://www.reddit.com/r/dataisbeautiful"><strong>Data is beautiful</strong></a>, <a href="https://data.world/"><strong>data.world</strong></a>, <a href="https://tinyletter.com/data-is-plural/letters/data-is-plural-2020-06-17-edition"><strong>Data is plural</strong></a>, <a href="https://www.kaggle.com/datasets"><strong>kaggle</strong></a>, <a href="https://archive.ics.uci.edu/ml/datasets.php"><strong>UCI datasets</strong></a> and so on and found a <a href="https://archive.ics.uci.edu/ml/datasets/Drug+Review+Dataset+%28Drugs.com%29"><strong>Drug Review Dataset (Drugs.com)</strong></a> about cutomer reviews of 3671 unique drugs.
                 </p>
                 <p>
-                  I like to break down the idea that I have into a few parts to make it more clear and enhances the thought process for potential development of each part:
+                  I thought there are probably many people like me neither know nor look for the drug that best fits their symptoms and just go with that one drug that they always relied on when they had a headache ... So I thought about different ways that this data set can be used to 
                 </p>
-                <ul>
-                  <li>
-                    <p>
-                      I spent some time and looked at the different data sources that I knew such as <a href="https://www.reddit.com/r/dataisbeautiful"><strong>Data is beautiful</strong></a>, <a href="https://data.world/"><strong>data.world</strong></a>, <a href="https://tinyletter.com/data-is-plural/letters/data-is-plural-2020-06-17-edition"><strong>Data is plural</strong></a>, <a href="https://www.kaggle.com/datasets"><strong>kaggle</strong></a>, <a href="https://archive.ics.uci.edu/ml/datasets.php"><strong>UCI datasets</strong></a> and so on and found a <a href="https://archive.ics.uci.edu/ml/datasets/Drug+Review+Dataset+%28Drugs.com%29"><strong>Drug Review Dataset (Drugs.com)</strong></a> about cutomer reviews of 3671 unique drugs.
-                    </p>
-                  </li>
-                  <li>I thought there are probably many people like me neither know nor look for the drug that best fits their symptoms and just go with that one drug that they always relied on when they had a headache ... So I thought about the ways that this data set can be used to find the best hit from the data set given:</li>
-                  <li>the symptoms</li>
-                  <li>location (living close to CVS, walgreens etc.)</li>
-                  <li>budget</li>
-                  <li>potential allergies or intolerance</li>
-                  <li>other drugs being taken currently (if any) that can cause drug interactions</li>
-                  <li>urgency of the situation (might influence the importance of the location)</li>
-                  <li>...</li>
-                </ul>
-                <p>of the user.</p>
+                  <ol>
+                    <li>Drug recommender: find the best hit from the data set using:</li>
+                    <ul>
+                      <li>the patient symptoms</li>
+                      <li>the patient location (living close to CVS, Walgreens etc.)</li>
+                      <li>budget</li>
+                      <li>potential allergies or drug intolerance</li>
+                      <li>other drugs being taken currently (if any) that can cause drug interactions</li>
+                      <li>urgency of the situation (might influence the importance of the location)</li>
+                    </ul>
+                    <li>Review-score predictor: predict the rating of a review using the review test</li>
+                    <li>Review classifier: predict whether the review has a <strong>positive</strong>, <strong>neutral</strong>, or <strong>negative</strong>.</li>
+                  </ol>
                 <p>
-                  My <strong>Initial Goal</strong> was to
-                  <ul>
-                    <li>Build a natural language processing model to recommend the right medicine according to the user condition</li>
-                  </ul>
-                  with a <strong>Final Goal</strong> being
+                  For the drug-recommendation idea, I thought about some other resources which can be used to improve the predictive and analytic power of the application. For instance, a lot of us know that the brand drugs addressing a certain condition could be an order of magnitude more expensive than the generic drugs to the point that your insurance company might refuse to pay for the brand drug if prescribed by your primary care physician. So I thought about finding/creating a database that contains all the medical conditions with all different drugs addressing each condition. Here is the list of other potential development ideas:
                   <ul>
                     <li>Use other resources such as <strong><a href="https://www.drugbank.ca/">Drug Bank</a></strong> to make the model more robust by considering potential <strong><em>drug interactions, side effects</em></strong> etc.</li>
                     <li>Use other APIs such as <strong><a href="https://www.goodrx.com/">GoodRx</a></strong> to build a <strong>real-time model</strong> that considers other user-defined factors such as <strong><em>location, price range, and ease of transportation, weather condition, delivery options</em></strong> etc. to make a more calculated decision</li>
                     <li>Expand the usefulness of the app to <strong><em>medical professionals</em></strong> so that they can offer <strong><em>patients-customized solutions</em></strong> </strong></li>
                   </ul>
-                  </p>
+                </p>
+                <p>
+                  In the first part of the project, I will try different NLP models to find the model that can best predict the review score using the review text only. Here are some of the questions that are aimed to answer by doing this project:
+                  <ul>
+                    <li>Can we build a model to predict the review rating from the review text?</li>
+                    <li>Can features that are seemingly irrelevant to the review content, e.g., the review date, the medical condition etc. be incorporated towards making the sentiment analysis model more accurate?</li>
+                    <li>What vectorization methods are more effective in serving the purpose of this project?</li>
+                    <li>If the model does a good job in identifying the drug names using patient condition, can we use that to design a drug recommendation app?</li>
+                  </ul>
+                </p>
+                <h3>Table of Contents</h3>
+                <p>
+                  <ul>
+                    <li><a href="#data-exploration">Data Exploration</a></li>
+                    <ul>
+                    <li><a href="#loading-libraries">Loading the required libraries</a></li>
+                    <li><a href="#data_set">Data Set Information</a></li>
+                    <li><a href="#data_usage">Data Usage Policy</a></li>
+                    <li><a href="#attribute_information">Attribute Information</a></li>
+                    <li><a href="#basic_statistics">Basic Statistics of the Data</a></li>
+                    </ul>
+                    <li><a href="#data_exploration">Data Preprocessing and Imputation</a></li>
+                    <li><a href="#EDA">Exploratory Data Analysis</a></li>
+                    <ul>
+                    <li><a href="#user_rating_hist">User rating histogram for train and test data</a></li>
+                    <li><a href="#review_count_years">Variation of review count over the years</a></li>
+                    <li><a href="#weekday_ratings">Mean weekday, monthly, and annual ratings</a></li>
+                    <li><a href="#common_conditions">Most common medical conditions</a></li>
+                    <li><a href="#drugs_many_conditions">Drugs that are prescribed for many conditions</a></li>
+                    <li><a href="#conditions_many_drugs">Conditions that are treated using multiple different drugs</a></li>
+                    <li><a href="#usefulcount_rating">Variation of <code>usefulCount</code> with <code>rating</code></a></li>
+                    </ul>
+                    <li><a href="#sentiment_analysis">Sentiment Analysis</a></li>
+                    <ul>
+                    <li><a href="#data_preparation_for">Data preparation for sentiment analysis</a></li>
+                    <li><a href="#stopwords">Stopwords</a></li>
+                    <li><a href="#cleaning_tokenization">Cleaning, tokenization, and stemming</a></li>
+                    <li><a href="#wordcloud">WordCloud</a></li>
+                    <li><a href="#language_models">Language Models</a></li>
+                    <li><a href="#bag_of_words">Bag of words</a></li>
+                    <li><a href="#n-grams">n-grams</a></li>
+                    <ul>
+                    <li><a href="#visualizing_most_frequent">Visualizing most frequent <em>n-grams</em></h5></li>
+                    </ul>
+                    <li><a href="#feature_engineering">Feature Engineering</a></li>
+                    <li><a href="#correlation_plot">Correlation Plot</a></li>
+                  </ul>
+                </p>
+                <h3 id="data-exploration">Data Exploration</h3>
+                <p>We start off by importing some python libraries that are required for this project. Our first objective is to load and explore the data to get familiar with the features, data types, data distributions etc.</p>
                 <h3 id="loading-libraries">Loading the required libraries</h3>
                 <pre class="prettyprint lang-language"><code class="language-python">import os
 import re
@@ -139,6 +181,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import chart_studio.plotly as py 
 import plotly.graph_objs as go #importing graphical objects
+from textblob import TextBlob
 from matplotlib import cm as cm
 from IPython.display import Image
 from matplotlib import rc, rcParams
@@ -158,9 +201,8 @@ np.set_printoptions(precision=3)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 sns.set_style('white')
 sns.set(rc={"figure.dpi":100})</code></pre>
-                <h2 id="data-exploration">Data Exploration and Preprocessing</h2>
                 <p>The data was obtained from <a href="https://archive.ics.uci.edu/ml/datasets/Drug+Review+Dataset+%28Drugs.com%29#">UCI Drug Review Dataset (Drugs.com)</a>. The following is the data description provided by the reference:</p>
-                <h3>Data Set Information</h3>
+                <h3 id="data_set">Data Set Information</h3>
                 <p>
                   The dataset provides patient reviews on specific drugs along with related conditions and a 10 star patient rating reflecting overall patient satisfaction. The data was obtained by crawling online pharmaceutical review sites. The intention was to study
                 </p>
@@ -178,14 +220,14 @@ sns.set(rc={"figure.dpi":100})</code></pre>
                 <p>
                   The data is split into a train (75%) a test (25%) partition (see publication) and stored in two .tsv (tab-separated-values) files, respectively.
                 </p>
-                <h4>Data Usage Policy</h4>
+                <h4 id="data_usage">Data Usage Policy</h4>
                 <p>When using this dataset, you agree that you</p>
                 <ol>
                   <li>only use the data for research purposes</li>
                   <li>don't use the data for any commerical purposes</li>
                   <li>don't distribute the data to anyone else</li>
                 </ol>
-                <h4>Attribute Information</h4>
+                <h4 id="attribute_information">Attribute Information</h4>
                 <ol style="list-style-type: decimal">
                   <li><strong>uniqueID</strong>: the ID unique to each patient that has written the review</li>
                   <li><strong>drugName</strong> (categorical): name of the drug</li>
@@ -264,7 +306,7 @@ df_train.head()</code></pre>
                     </tr>
                   </tbody>
                 </table>
-                <h4>Basic Statistics of the Data</h4>
+                <h4 id="basic_statistics">Basic Statistics of the Data</h4>
                 <pre class="prettyprint lang-language"><code class="language-python">pd.concat([df_train.describe(),df_test.describe()], axis=1)</code></pre>
                 <table class="table table-striped">
                   <thead>
@@ -356,7 +398,7 @@ df_train.head()</code></pre>
                 <pre class="prettyprint lang-language"><code class="language-python">print(f'train and test shapes are {df_train.shape} and {df_test.shape}, respectively.')
 </code></pre>
                 <pre><code>train and test shapes are (161297, 7) and (53766, 7), respectively.</code></pre>
-                <h2>Data Exploration and Preprocessing</h2>
+                <h3 id="data_exploration">Data Preprocessing and Imputation</h3>
                 <p>
                   We can start by looking at the reviews. 
                 </p>
@@ -388,7 +430,6 @@ Name: review, Length: 161297, dtype: object</code></pre>
                 </p>
                 <pre class="prettyprint lang-language"><code class="language-python">df_test['condition']=df_test['condition'].astype(str).apply(remove_html)
 df_train['condition']=df_train['condition'].astype(str).apply(remove_html)</code></pre>
-                <h3 id="data-imputation">Data Imputation</h3>
                 <p>
                   We will examine the column to identify the missing values
                 </p>
@@ -443,7 +484,7 @@ for col in ['uniqueID', 'drugName', 'condition']:
                 <p>
                   Note that the total number of <code>uniqueID</code>s is equal to the sum of <code>uniqueID</code>s in the train and test data, meaning that each patient has written one review. We can now make some <em>observations</em> regarding some of the features of the dataset.
                 </p>
-                <h4>User rating histogram for train and test data</h4>
+                <h4 id="user_rating_hist">User rating histogram for train and test data</h4>
                 <pre class="prettyprint lang-language"><code class="language-python">sns.set(style="white", palette="muted")
 f, axes = plt.subplots(1, 2, figsize=(14, 7), sharex=False, sharey=False)
 sns.despine(left=False)
@@ -471,7 +512,7 @@ plt.show()</code></pre>
                 <div style="text-align: center;">
                   <a id="fig2" style="font-size: 1.5em;">Figure 2</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_23_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
                 </p>
                 <pre class="prettyprint lang-language"><code class="language-python">sns.set(style="white", palette="muted")
@@ -479,6 +520,7 @@ f, ax = plt.subplots(1, 1, figsize=(7, 7))
 sns.despine(left=False)
 df_all['year'] = df_all['date'].dt.year
 df_all['month'] = df_all['date'].dt.month
+df_all['weekday'] = df_all['date'].dt.weekday
 years=sorted(df_all['year'].unique())
 g = sns.distplot(df_all['year'],bins=len(years),
                  kde=False, 
@@ -494,11 +536,11 @@ plt.show()</code></pre>
                 <div style="text-align:center">
                 <a id="fig3" style="font-size: 1.5em;">Figure 3</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_24_0.png" style="width: 60%; display: block; margin: 10px auto 20px;"/>
                 </p>
                 
-                <h4>Variation of review count over the years</h4>
+                <h4 id="review_count_years">Variation of review count over the years</h4>
                 <pre class="prettyprint lang-language"><code class="language-python">sns.set(style="white", palette="muted")
 f, ax = plt.subplots(1, 1, figsize=(7, 7))
 sns.despine(left=False)
@@ -520,23 +562,49 @@ plt.show()</code></pre>
                 <div style="text-align:center">
                 <a id="fig4" style="font-size: 1.5em;">Figure 4</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_25_0.png" style="width: 60%; display: block; margin: 10px auto 20px;"/>
                 </p>
-                <h4>Mean monthly and annual ratings</h4>
-                <pre class="prettyprint lang-language"><code class="language-python">f, ax = plt.subplots(2, 1, figsize=(14, 14), sharex=False, dpi=200)
+                <h4 id="weekday_ratings">Mean weekday, monthly, and annual ratings</h4>
+                <pre class="prettyprint lang-language"><code class="language-python">weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+f, ax = plt.subplots(3, 1, figsize=(14, 14), sharex=False, dpi=200)
 g_y = sns.boxplot(x='year', y='rating',data=df_all, ax=ax[0], palette="Paired", showmeans=True)
 g_m = sns.boxplot(x='month', y='rating',data=df_all, ax=ax[1], palette="Paired", showmeans=True)
+g_d = sns.boxplot(x='weekday', y='rating',data=df_all, ax=ax[2], palette="Paired", showmeans=True)
+g_d.set_xticklabels(weekdays);
 g_m.set_xticklabels(month_names);
-plt.suptitle('Average user rating for each month and year', fontsize=22, y=0.92);</code></pre>
+plt.suptitle('Average user rating for each weekday, month, and year', fontsize=22, y=0.92);</code></pre>
                 <div style="text-align:center">
                   <a id="fig5" style="font-size: 1.5em;">Figure 5</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_26_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
                 </p>
                 <p>Hmmm... Drugs getting worse or user becoming more critical?</p>
-                <h4>Drugs that are prescribed for many conditions</h4>
+                <h4 id="common_conditions">Most common medical conditions</h4>
+                <pre class="prettyprint lang-language"><code class="language-python">fig, ax = plt.subplots(1, 1, figsize=(16, 6), dpi=200)
+n_conditions = 20
+g = sns.countplot(x='condition', 
+                  data=df_all, 
+                  order=df_all.condition \
+                              .value_counts() \
+                              .iloc[:n_conditions] \
+                              .index, 
+                  ax=ax)
+g.set_xlabel(g.get_xlabel(), fontsize=22)
+g.set_ylabel(g.get_ylabel(), fontsize=22, labelpad=10)
+ylabs = g.get_yticklabels()
+plt.setp(ax.get_xticklabels(), rotation=45, ha='right', fontsize=16)
+plt.setp(ax.get_yticklabels(), fontsize=16)
+g.set_title(f'Top {n_conditions} frequent medical conditions',y=1.05, fontsize=28)
+sns.despine(left=False)</pre></code>
+                <div style="text-align:center">
+                <a id="fig5_1" style="font-size: 1.5em;">Figure 6</a>
+                </div>
+                <p class="text-align: center;">
+                  <img src="output_new_1.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+                </p>
+                <h4 id="drugs_many_conditions">Drugs that are prescribed for many conditions</h4>
                 <p>
                   Another interesting observation is to look at the numebr of drugs that are used to address mutiple different medical conditions and see how the user ratings change for each condition. In other words, if a drug is known to be good for addressing condition 'A' does that mean it will do a good job in adressing condition 'B'?
                 </p>
@@ -581,12 +649,12 @@ plt.setp(ax.get_yticklabels(), fontsize=16)
 g.set_title('Drugs addressing the most unmber of unique medical conditions',y=1.05, fontsize=28)
 sns.despine(left=False)</pre></code>
                 <div style="text-align:center">
-                <a id="fig6" style="font-size: 1.5em;">Figure 6</a>
+                <a id="fig6" style="font-size: 1.5em;">Figure 7</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_27_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
                 </p>
-                  <h4>Conditions that are treated using multiple different drugs</h4>
+                  <h4 id="conditions_many_drugs">Conditions that are treated using multiple different drugs</h4>
                 <p>
                   Similar to previous analysis, we can take a look at the conditions that are treated using variety of drugs.
                 </p>
@@ -712,12 +780,12 @@ plt.setp(ax.get_yticklabels(), fontsize=16)
 g.set_title('Medical conditions with the most number of unique drugs addressing them',y=1.05, fontsize=28)
 sns.despine(left=False)</pre></code>
                 <div style="text-align:center">
-                <a id="fig7" style="font-size: 1.5em;">Figure 7</a>
+                <a id="fig7" style="font-size: 1.5em;">Figure 8</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_28_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
                 </p>
-                <h4>Variation of <code>usefulCount</code> with <code>rating</code></h4>
+                <h4 id="usefulcount_rating">Variation of <code>usefulCount</code> with <code>rating</code></h4>
                 <p>
                   One of the questions that I had was whether the positiveness/negativeness of the rating influence the number of peole that find the review useful?
                 <pre class="prettyprint lang-language"><code class="language-python">f, ax = plt.subplots(1, 1, figsize=(14, 6), dpi=200)
@@ -727,9 +795,9 @@ g = sns.boxplot(y='usefulCount', x='rating',data=df_all,
 g.set_title('The distribution of usefulCount for different drug ratings.'+
             '\n(outliers are not shown)', fontsize=24, y=1.02);</code></pre>
                 <div style="text-align:center">
-                  <a id="fig8" style="font-size: 1.5em;">Figure 8</a>
+                  <a id="fig8" style="font-size: 1.5em;">Figure 9</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_29_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
                 </p>
                 <p>
@@ -830,7 +898,7 @@ print("The dataset includes {0:d} positive and {1:d} negative reviews" \
                   </tbody>
                 </table>
                 <p>
-                  I use <a href="https://seaborn.pydata.org/index.html"><code>Seaborn</code></a>'s <a href="https://seaborn.pydata.org/generated/seaborn.boxenplot.html"><code>boxenplot()</code></a> (or <a href="https://vita.had.co.nz/papers/letter-value-plot.html">Letter-value plot</a>) for visualization. It can be thought of as an extension of boxplot that is more convenient for large data as it offers more precise estimates of quantiles beyond the quartiles which might be important but missed when using boxplot. Furthermore, I include two plots for this part where the first plot (<a href="#fig9">Figure 9</a>) shows the data where the top and bottom 0.01% of the population are removed and the second plot (<a href="#fig10">Figure 10</a>) shows the full data.
+                  I use <a href="https://seaborn.pydata.org/index.html"><code>Seaborn</code></a>'s <a href="https://seaborn.pydata.org/generated/seaborn.boxenplot.html"><code>boxenplot()</code></a> (or <a href="https://vita.had.co.nz/papers/letter-value-plot.html">Letter-value plot</a>) for visualization. It can be thought of as an extension of boxplot that is more convenient for large data as it offers more precise estimates of quantiles beyond the quartiles which might be important but missed when using boxplot. Furthermore, I include two plots for this part where the first plot (<a href="#fig9">Figure 10</a>) shows the data where the top and bottom 0.01% of the population are removed and the second plot (<a href="#fig10">Figure 11</a>) shows the full data.
                 </p>
                 <pre class="prettyprint lang-language"><code class="language-python">f, ax = plt.subplots(1, 1, figsize=(14, 14), dpi=200)
 sns.set_style('dark')
@@ -854,9 +922,9 @@ plt.legend(bbox_to_anchor=(0.5, 1.05), loc='center', borderaxespad=0., title='ra
 g.set_title('Distribution of usefulCount for positive and negative reviews in each year.\n'+
             '(outliers removed)', fontsize=24, y=1.1);</code></pre>
                 <div style="text-align:center">
-                <a id="fig9" style="font-size: 1.5em;">Figure 9</a>
+                <a id="fig9" style="font-size: 1.5em;">Figure 10</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_31_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
                 </p>
                 <pre class="prettyprint lang-language"><code class="language-python">f, ax = plt.subplots(1, 1, figsize=(14, 28), dpi=200)
@@ -879,9 +947,9 @@ plt.setp(ax.get_xticklabels(), fontsize=14)
 plt.setp(ax.get_yticklabels(), fontsize=14)
 g.set_title('Distribution of usefulCount for positive and negative reviews in each year', fontsize=24, y=1.04);</code></pre>
                 <div style="text-align:center">
-                  <a id="fig10" style="font-size: 1.5em;">Figure 10</a>
+                  <a id="fig10" style="font-size: 1.5em;">Figure 11</a>
                 </div>
-                <p class="text-align; center;">
+                <p class="text-align: center;">
                   <img src="output_35_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
                 </p>
                 <p>
@@ -910,12 +978,12 @@ print(f"{pct:.1f}%")</code></pre>
                     Note that the number of reviews that were useful, be it positive or negative, declines with time which is expected because the older reviews are read more and there are not a lot of new drugs joining the market every year.
                   </li>
                 </ul>
-                <h2>Sentiment Analysis</h2>
+                <h2 id="sentiment_analysis">Sentiment Analysis</h2>
                 <p>
                   <strong>Sentiment analysis</strong> is the process of analyzing text/voice data using <a href="/wiki/Natural_language_processing" title="Natural language processing">natural language processing (NLP)</a>, <a href="/wiki/Text_analytics" class="mw-redirect" title="Text analytics">text analysis</a>, and <a href="/wiki/Computational_linguistics" title="Computational linguistics">computational linguistics</a> to extract and determine the emotional tone, attitude, or opinion carried by the data. The use of sentiment analysis is common in areas such as healthcare, social media, and marketing to study surveys, reviews, user comments, customer text/voice etc.
                 </p>
-                <h3>Data preparation for sentiment analysis</h3>
-                <h4>Stopwords</h4>
+                <h3 id="data_preparation_for">Data preparation for sentiment analysis</h3>
+                <h4 id="stopwords">Stopwords</h4>
                 <p>
                    <strong>stopwords</strong> are words that we do not want them taking up space in our database, or taking up valuable processing time. For this, we can remove them easily by storing a list of words that we consider to be stop words. Even though when it comes to <strong><em>sentiment analysis</em></strong> the popular opinion is to remove <strong>stopwords</strong>, removing them is <strong>not always the best idea, especially if the context of the phrases may influence the performance of the algorithm</strong>. 
                 </p>
@@ -961,7 +1029,7 @@ print(f"{pct:.1f}%")</code></pre>
                     </tr>
                   </tbody>
                 </table>
-                <h4>Cleaning, tokenization, and stemming</h4>
+                <h4 id="cleaning_tokenization">Cleaning, tokenization, and stemming</h4>
                 <p>
                   We already scanned the reviews to remove unwanted <code class="language">html</code> characters using the <code>'html.parser'</code> of <code class="library">BeautifulSoup</code>. However, there is some further cleaning necessary besides the removal of unwanted characters. We also need to <strong>tokenize</strong> the <strong>reviews</strong>, i.e. <em>break it up to pieces</em> such as <strong>words, keywords, phrases, symbols</strong> etc. before sttempting to train the model for <em>Sentiment Analysis</em>.
                 </p>
@@ -1014,7 +1082,7 @@ def clean_review(raw_review, stopWords=stopWords, stemmer=Snowball_stemmer):
                 <p>
                   Note that not all the words are going to look meaningful since we see the stems.
                 </p>
-                <h4>WordCloud</h4>
+                <h4 id="wordcloud">WordCloud</h4>
                 <p>
                   <strong>wordcloud</strong> is a nice way to visually represent of words. I use python's <code class="library"><a href="https://amueller.github.io/word_cloud/">WordCloud</a></code> library for this purpose. We can take a look at most frequent words in positive and negative reviews using a customized wordcloud function.
                 </p>
@@ -1041,10 +1109,10 @@ def clean_review(raw_review, stopWords=stopWords, stemmer=Snowball_stemmer):
                title='Frequent words in positive reviews', 
                colormap='magma', 
                background_color='steelblue')</code></pre>
-               <div>
-                 <a id="fig11" style="font-size: 1.5em;">Figure 11</a>
+               <div style="text-align:center">
+                  <a id="fig11" style="font-size: 1.5em;">Figure 12</a>
                </div>
-               <p class="text-align; center;">
+               <p class="text-align: center;">
                  <img src="output_54_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
                </p>
                 <p>
@@ -1054,13 +1122,98 @@ def clean_review(raw_review, stopWords=stopWords, stemmer=Snowball_stemmer):
                stopWords=stopWords, 
                title='Frequent words in negative reviews', 
                colormap='autumn')</code></pre>
-               <div>
-                 <a id="fig12" style="font-size: 1.5em;">Figure 12</a>
-               </div>
-               <p class="text-align; center;">
-                 <img src="output_56_0.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
-               </p>
-               <h4>n-grams</h4>
+                <div style="text-align:center">
+                   <a id="fig12" style="font-size: 1.5em;">Figure 13</a>
+                </div>
+                <p class="text-align: center;">
+                  <img src="output_56_0.png" style="width: 100%; display: block; margin: 10px auto 20px;" />
+                </p>
+                <h3 id="language_models">Language Models</h3>
+                <h4 id="bag_of_words">Bag of words</h4>
+                <p>
+                  <strong>Bag of words</strong> is one of the simplest yet commonly used language models that represents a sentence as the <em>multiset</em> of the words forming the sentence. <em>multiset</em> meaning that even though the model disregards grammar and word order, it cares about the number of instances that each word is used in the sentence. The main idea behind this model is that the sentences sharing more words in common are more likely to belong to the same class, e.g., <em>positive vs. negative</em> classes.
+                </p>
+                <p>
+                  <code class="module">CountVectorizer</code> modules of <code class="library">sklearn</code> is one of the easiest way to build a bag-of-words model. Let's take a look at a simple demonstration:
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">docs = ['Today is a nice day.',
+        'I love reading science fiction books.',
+        'Are you coming to Al\'s wedding reception tonight?',
+        'We are going to analyze these documents',
+        'The storyline was not as great as the acts.',
+        'Nice job kids! Moving on to the next game!',
+        'I am good at things I never do!']
+docs_vectorizer = CountVectorizer()
+X = docs_vectorizer.fit_transform(docs) 
+# X is the vectorized matrix where each row corresponds to a sentence and each column 
+# corresponds to a word. Every elemnt X_ij shows the number of times word "j"
+# is used in document "i". In this case, we have 7 sentences.
+print(X.shape)</code></pre>
+<pre>(7, 41)</pre>
+                <pre class="prettyprint lang-language"><code class="language-python"># features
+print(docs_vectorizer.get_feature_names())</code></pre>
+                <pre>['acts', 'al', 'am', 'analyze', 'are', 'as', 'at', 'books', 'coming', 'day', 'do', 'documents', 'fiction', 'game', 'going', 'good', 'great', 'is', 'job', 'kids', 'love', 'moving', 'never', 'next', 'nice', 'not', 'on', 'reading', 'reception', 'science', 'storyline', 'the', 'these', 'things', 'to', 'today', 'tonight', 'was', 'we', 'wedding', 'you']</pre>
+                <p>
+                  Note that <code>CountVectorizer</code> doesn't care about the noisy words such as <code>["on", "at", "to", "am"]</code> etc. which appear a lot but don't help much with extraxting the emotions from the review.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python"># matrix
+X.toarray()</code></pre>
+                <pre>array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+        0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+        0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+       [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1],
+       [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0],
+       [1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+        0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+       [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]])
+      </pre>    
+                <p>
+                  Here's one way to see how the matrix represents the words in the documents:
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">doc1_binary_ids = X.toarray()[0,:]
+doc1_ids = np.where(doc1_binary_ids>0)
+features_arr = np.asarray(docs_vectorizer.get_feature_names())
+features_arr[doc1_ids]</pre></code>
+<pre>array(['day', 'is', 'nice', 'today'])</pre>
+                <p>
+                  We can see that <code>CountVectorizer</code> does not maintain the word order. In large datasets like our dataset, noisy words reflect very little insigh about the document contents. Therefore, using count data as is to train a classifier causes these frequent but useless terms shadow the frequencies of rarer yet relevant terms that carry a lot of information about the review context. <strong>Term-Frequency Inverse Document-Frequency (TF-IDF)</strong> is one way of handling such situations. $\text{tf-idf(t,d)}$ is TF-IDF of the term $t$ in the document $d$ and is defined as:
+                </p>
+$$
+\text{tf-idf(t,d)}=\text{tf(t,d)} \times \text{idf(t)}
+$$
+                <p>
+                  where <strong>Term Frequency (TF)</strong> $\text{tf(t,d)}$ is <strong>the number of times the term $t$ occurs in the document $d$</strong> and <strong>Inverse Document-Frequency (IDF)</strong> $\text{idf(t)}$ is computed as:
+                </p>
+$$
+\text{idf}(t) = \log{\dfrac{1 + n}{1+\text{df}(t)}} + 1.
+$$              
+                <p>
+                  <strong>Document Frequency</strong> $\text{df}(t)$ accounts for the count of those documents containing the term $t$ and $n$ is the total number of documents in the data. TF-IDF is usually normalized by the <strong>Euclidean norm</strong> as:
+                </p>
+$$
+\text{tf}^{\, L_2-\text{ norm}}(t,d) = \dfrac{\text{tf}(t,d)}{\sqrt{\sum\limits_{\text{term}}^{\text{all terms}} \text{tf}(\text{term},d)^2}}
+$$              
+                <p>
+                  <strong>Note</strong>: <code class="library">sklearn</code> slightly tweaks the definition of $\text{idf(t)}$ as:
+$$
+\text{idf}(t) = \log{\dfrac{n}{1+\text{df}(t)}}.
+$$  
+                </p>
+                <p>
+                  Finally, setting the <code class="arg">smooth_idf</code> argument of <code class="library">sklearn</code>'s <code class="module">TfidVectorizer</code> to <code class="bool">False</code> changes the above definition to:
+                </p>
+$$
+\text{idf}(t) = \log{\dfrac{n}{\text{df}(t)}}+1.
+$$ 
+
+<!-- The main limitation of this approach is that it does not take into account the relative position of words within the document. Here we are only using the frequency of occurence. Nevertheless, it works pretty well for this data set. -->
+               <h4 id="n-grams">n-grams</h4>
                 <p>
                    <strong>n-gram</strong> is a contiguous sequence of n items from a given sample of text or speech (<a href="https://en.wikipedia.org/wiki/N-gram">ref</a>). <strong>n-gram</strong>s are widely used in <strong>NLP</strong> for applications such as spelling correction, word breaking and text summarization. The following table shows the n-gram representation of <em>"This is a beautiful present!"</em> for n=1 (<em>unigram</em>), n=2 (<em>bigram</em>), n=3 (<em>trigram</em>), and n=4(<em>4</em>-gram). 
                 </p>
@@ -1122,10 +1275,203 @@ gen_n_grams('The beautiful moment that all of us have been waiting for has final
                 <p>
                   Note that the stopwords are removed before the <em>n-grams</em> are generated.
                 </p>
-                <h5>Visualizing most frequent <em>n-grams</em></h5>
+                <h5 id="visualizing_most_frequent">Visualizing most frequent <em>n-grams</em></h5>
+                <p>
+                  We first create a dictionary to store the n-grams of lengths 1 to 5.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">from collections import defaultdict
+import time
+frequency_dict = defaultdict(int)
+review_categories = ['positive', 'negative']
+grams = [1, 2, 3, 4, 5]
 
-                  
-                </h5>  
+# initialize the dictionaries
+for review_category in review_categories:
+    frequency_dict[review_category]={}
+    for n in grams:
+        frequency_dict[review_category][n]={}
+print(frequency_dict)</code></pre>
+                <pre>defaultdict(<class 'int'>, {'positive': {1: {}, 2: {}, 3: {}, 4: {}, 5: {}}, 'negative': {1: {}, 2: {}, 3: {}, 4: {}, 5: {}}})</pre>
+                <p>
+                  Now we can populate the dictionary with the n-grams as keys and the number of times they have been observed as the values.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">for review_category in review_categories:
+    start = time.time()
+    for [review,rating] in df_all[df_all['rating_binary']==review_category].iloc[:,[3,4]].values:
+        for n in grams:
+            for ngram in gen_n_grams(clean_review(review), n):
+                frequency_dict[review_category][n][ngram] = frequency_dict[review_category][n].get(ngram, np.array([1,rating])) + np.array([1,rating]) 
+    print(f"done with {review_category} reviews. took {time.time()-start:.2f} seconds!")
+# save the dictionary
+f = open("grams_dict.pkl", "wb")
+pickle.dump(frequency_dict, f)
+f.close()</code></pre>
+                <pre>done with positive reviews. took 360.87 seconds!
+done with negative reviews. took 147.21 seconds!</pre>
+                <p>Finally, we can visualize the most frequent n-grams for different values of n.</p>
+<pre class="prettyprint lang-language"><code class="language-python">sns.set(rc={'axes.facecolor':'whitesmoke', 'figure.facecolor':'silver', 'legend.facecolor':'white'})
+fig, ax = plt.subplots(5, 2, figsize=(12,20), dpi=400)
+review_categories = ['positive', 'negative']
+grams = [1, 2, 3, 4, 5]
+n_most_frequent = 10
+colors = ['g', 'r']
+fig.tight_layout()
+plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=1.2, hspace=0.4)
+for i,review_category in enumerate(review_categories):
+    for j,gram in enumerate(grams):
+        
+        values = np.asarray(sorted(frequency_dict[review_category][gram].items(), 
+                                   key=lambda x: x[1][0], reverse=True)[:n_most_frequent])
+        val_data = np.hstack([values[:,0].reshape(-1,1), 
+                   np.vstack(
+                       [values[:,1].reshape(-1,1).flatten()[i] for i in range(n_most_frequent)])]
+                 )
+        data=pd.DataFrame(data=val_data, columns=['review','review count','total rating'])
+        data['avg_rating']=data['total rating']/data['review count']
+        data['binray_review']=[review_category]*len(data)
+        sns.set_color_codes("pastel")
+        sns.barplot(x="review count", y="review", data=data,
+                    color=colors[i], ax=ax[j][i])
+        ax[j][i].set_ylabel('')
+        ax[j][i].set_title(f"{gram}-grams ({review_category} reviews)", y=1.02, fontsize=20)
+        ax[j][i].set_xlabel(ax[j][i].get_xlabel(), fontsize=18)
+        plt.setp(ax[j][i].get_xticklabels(), fontsize=16)
+        plt.setp(ax[j][i].get_yticklabels(), fontsize=16)
+plt.suptitle('Most frequent n-grams in positive and negative reviews', fontsize=24, y=1.05)</code></pre>
+                <div style="text-align:center">
+                   <a id="fig14" style="font-size: 1.5em;">Figure 14</a>
+                </div>
+                <p class="text-align: center;">
+                  <img src="fig14.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+                </p>
+                <p>
+                  By looking at <a href="#fig14">Figure 14</a> above, we note that 4-grams are the shortest of the n-grams to differentiate between the positive and negative reviews. For instance, we notice that the group of phrases such as <code>[<em>'month', 'take', 'day', 'not', ...</em>]</code> in 1-grams, <code>[<em>'side effect', 'birth control', 'mood swing', ...</em>]</code> in 2-grams, and <code>[<em>'no side effect', 'bad side effect', 'birth control pill', ...</em>]</code> in 3-grams are common among the most frequent $n$-grams in both positive and negative reviews. Looking at 5-grams shows that they could be a good candidate to train a neural network model, as we will see later in the project. 
+                </p>
+                <h4 id="feature_engineering">Feature Engineering</h4>
+                <p>
+                  We extracted month, year and weekday from review data as a part of <strong>Feature Engineering</strong> and to visually inspect the potential correlations between these features and the review qulity. 
+
+                  Before building the models, we do some extra bit of <strong>Feature Engineering</strong> by including some characteristics of the patient reviews as new features. The new features include the review word count (<code>review_w_count</code>), the number of unique words (<code>unique_w_count</code>), and the mean word length (<code>mean_word_len</code>). Even though it makes more sense to calculate both features from raw review, we calculate them using the cleaned review for the sake of time.
+                </p>
+<pre class="prettyprint lang-language"><code class="language-python">df_all['review_w_count']=df_all["review"].apply(lambda review: len(review.split()))
+df_all['unique_w_count']=df_all["review"].apply(lambda review: len(set(review.split())))
+df_all["mean_w_len"] = df_all["review"].apply(lambda review: np.mean([len(word) for word in review.split()]))</code></pre>
+                <p>
+                  Next, we drop the <code>date</code> column because it's redundant. We also remove the <code>uniqueID</code> because it's useless in the context of this project.
+                </p>
+<pre class="prettyprint lang-language"><code class="language-python">df_all.drop(columns=['date','uniqueID'], inplace=True)</code></pre>
+                <p>
+                  Finally, I also decided to quantify the reviews using the <code class="module">sentiment.polarity</code> module of <code class="library">textblob</code> library. The outcomes area number between 0 and 1 so I rescale them to an integer in the range 1 to 10. I do this so that I can assess how it correlates with the review ratings in the next part.
+                </p>
+<pre class="prettyprint lang-language"><code class="language-python">df_all['tb_sentiment_polarity'] = df_all['review'].apply(lambda review: TextBlob(review).sentiment.polarity)</code></pre>
+                <h5 id="correlation_plot">Correlation Plot</h5>
+                <p>
+                  We can now look at the potential correlation between the numerical variables of the model. We digitize the <code>rating_binary</code> column so that we can include it in the matrix. 
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">df_all['rating_binary'] = df_all['rating'].apply(lambda rating: 1 if rating > 5 else 0)
+fig, ax = plt.subplots(1, 1, figsize=(14,14))
+corr = df_all.select_dtypes(include = 'int64').corr()
+g = sns.heatmap(
+    corr, 
+    vmin=-1, vmax=1, center=0,
+    cmap='Spectral',
+    square=True,
+    ax=ax,
+    cbar_kws={'shrink': 0.8}
+)
+plt.setp(ax.get_xticklabels(), rotation=45, horizontalalignment='right')
+ax.set_title('Correlation Matrix', fontsize=18, y=1.02);</code></pre>
+                <div style="text-align:center">
+                   <a id="fig15" style="font-size: 1.5em;">Figure 15</a>
+                </div>
+                <p class="text-align: center;">
+                  <img src="fig15.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+                </p>
+                <p>
+                  Let's go through the correlations that we see in <a href="#fig15">Figure 15</a> one by one:
+                  <ul>
+                    <li>The strong correlations between <code>rating_binary</code> and <code>rating</code> is expected as the former is derived from the latter</li>
+                    <li>As expected, the sentiment polarity score from <code>TextBlob</code> shows a semi strong correlation with the <code>rating</code> of the review.</li>
+                    <li>The strong correlation between <code>review_w_count</code> and <code>unique_w_count</code> is not surprising when looking at their definitions</li>
+                    <li>The weak anti-correlation between <code>year</code> and <code>rating</code> is something we observed previously in <a href="#fig5">Figure 5</a></li>
+                    <li>The weak correlation of <code>year</code> with <code>unique_w_count</code> and <code>unique_w_count</code> that we are able to see thanks to feature engineering. It implies that the newer reviews are longer?!</li>
+                  </ul>
+                </p>
+                <h3>Machine learning sentiment analysis models</h3>
+                <p>
+                  We start off by asessing the performance of a simple Bayesian classifier in <strong>identifying  positive and negative</strong> reviews, simply by knowing the review column as feature. The target variable in this case would be the column <code>rating_binary</code>.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python"># split the feature-engineered data
+X_train, X_test, y_train, y_test = train_test_split(df_all.review, 
+                                                    df_all.rating_binary, 
+                                                    test_size=0.2)
+# Pipeline to serialize the vectorizer and classifier
+estimator = Pipeline([('vectorizer', TfidfVectorizer()),
+                      ('classifier', MultinomialNB())])
+# fit
+now = time()
+estimator.fit(X_train, y_train)
+print(f"took {time()-now:.2f} seconds!\nAccuracy: {estimator.score(X_test, y_test)*100:.2f}%")</code></pre>
+                <pre>took 8.77 seconds!
+Accuracy: 75.72%</pre>
+                <pre class="prettyprint lang-language"><code class="language-python">fig, ax = plt.subplots(1, 1, figsize=(6,6), dpi=100)
+labels = ["Negative", "Positive"]
+y_pred = estimator.predict(X_test)
+conf_mat = confusion_matrix(y_test, y_pred)
+sns.heatmap(conf_mat, xticklabels=labels, 
+            yticklabels=labels, cmap="turbo", 
+            annot=True, annot_kws={'fontsize':'large'}, 
+            fmt="d", ax=ax, cbar=False);
+ax.set_title('Confusion matrix of the Naive Bayes classifier', fontsize=18, y=1.05)
+ax.set_ylabel('True class', fontsize=16, labelpad=10)
+ax.set_xlabel('Predicted class', fontsize=16, labelpad=10)
+plt.setp(ax.get_xticklabels(), fontsize=14)
+plt.setp(ax.get_yticklabels(), fontsize=14)
+plt.show()</code></pre>
+                <div style="text-align: center;">
+                  <a id="fig_output_100_0" style="font-size: 1.5em;">Figure 16</a>
+                </div>
+                <p class="text-align: center;">
+                  <img src="output_100_0.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+                </p>
+                <p>
+                  Not horrible! We now advance to the next step which is using a more sophisticated classifier to perform the same task. I use <code class="module">RandomForestClassifier()</code> of <code class="library">sklearn</code> in this part.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python"># Pipeline to serialize the vectorizer and classifier
+estimator = Pipeline([('vectorizer', TfidfVectorizer()),
+                      ('classifier', RandomForestClassifier(n_estimators=100, 
+                                                            random_state=42, 
+                                                            max_depth = 10000, 
+                                                            min_samples_split = 0.001))
+                     ]
+                    )
+# fit
+now = time()
+estimator.fit(X_train, y_train)
+print(f"took {time()-now:.2f} seconds!\nAccuracy: {estimator.score(X_test, y_test)*100:.2f}%")</code></pre>
+                <pre>took 208.50 seconds!
+    Accuracy: 83.86%</pre>
+                <pre class="prettyprint lang-language"><code class="language-python">from sklearn.metrics import confusion_matrix
+fig, ax = plt.subplots(1, 1, figsize=(6,6), dpi=100)
+labels = ["Negative", "Positive"]
+y_pred = estimator.predict(X_test)
+conf_mat = confusion_matrix(y_test, y_pred)
+sns.heatmap(conf_mat, xticklabels=labels, 
+            yticklabels=labels, cmap="tab20", 
+            annot=True, annot_kws={'fontsize':'large'}, 
+            fmt="d", ax=ax, cbar=False);
+ax.set_title('Confusion matrix of the RandomForest classifier', fontsize=18, y=1.05)
+ax.set_ylabel('True class', fontsize=16, labelpad=10)
+ax.set_xlabel('Predicted class', fontsize=16, labelpad=10)
+plt.setp(ax.get_xticklabels(), fontsize=14)
+plt.setp(ax.get_yticklabels(), fontsize=14)
+plt.show()</code></pre>
+                <div style="text-align:center">
+                  <a id="fig_output_103_0" style="font-size: 1.5em;">Figure 17</a>
+                </div>
+                <p class="text-align: center;">
+                  <img src="output_103_0.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+                </p>
              </p></div></div></section>
 
         </div><!-- End .row -->
@@ -1162,11 +1508,10 @@ gen_n_grams('The beautiful moment that all of us have been waiting for has final
           <div class="col-lg-4 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About Me</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Projects</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Notes</a></li>
-              <!-- <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li> -->
+                <li><i class="bx bx-chevron-right"></i> <a href="../../index.html">Home</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../about.html">About Me</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../projects.html">Projects</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../tutorials.html">Tutorials</a></li>
             </ul>
           </div>
 <!-- 
@@ -1236,8 +1581,16 @@ gen_n_grams('The beautiful moment that all of us have been waiting for has final
   <script type="text/javascript" src="../../assets/vendor/prism/prism.js"></script>
   <script type="text/javascript" src="../../assets/vendor/aos/aos.js"></script>
                                                                 <!-- Template Main JS File -->
-  <script src="../../assets/js/main.js"></script>
-                                                                <cript type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mMathJax.Hub.Config({
-tex2jax: {
-inlineMath: [["$", "$"], ["\\(", "\\)"]],
-processEscapes: true
+  <!-- Template Main JS File -->
+    <script src="../../assets/js/main.js"></script>
+    <!-- MathJax JS File -->
+    <script type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+      MathJax.Hub.Config({
+      tex2jax: {
+      inlineMath: [["$", "$"], ["\\(", "\\)"]],
+      processEscapes: true
+      }
+      });
+    </script>
+  </body>
+</html>

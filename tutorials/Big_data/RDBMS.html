@@ -1,0 +1,11 @@
+RDBMS Relational DataBase Management System (RDBMS)
+
+A relational database management system (RDBMS) is a database engine/system based on the relational model. Most modern commercial and open-source database applications are relational in nature. The most important relational database features include an ability to use tables for data storage while maintaining and enforcing certain data relationships.
+
+In 1970, Edgar F. Codd, a British computer scientist with IBM, published <b><em>“A Relational Model of Data for Large Shared Data Banks.”</em></b> At the time, the renowned paper attracted little interest, and few understood how Codd’s groundbreaking work would define the basic rules for relational data storage, which can be simplified as:
+<li>Data must be stored and presented as relations, i.e., tables that have relationships with each other, e.g., primary/foreign keys.</li>
+<li>To manipulate the data stored in tables, a system should provide relational operators - code that enables the relationship to be tested between two entities. A good example is the WHERE clause of a SELECT statement, i.e., the SQL statement
+```sql
+SELECT * FROM CUSTOMER_MASTER WHERE CUSTOMER_SURNAME = ’Smith’```
+will query the CUSTOMER_MASTER table and return all customers with a surname of Smith.
+Codd later published another paper that outlined the 12 rules that all databases must follow to qualify as relational. Many modern database systems do not follow all 12 rules, but these systems are considered relational because they conform to at least two of the 12 rules. This include well-known applications, e.g., Oracle DB (Oracle Corporation); SQL Server (Microsoft) and MySQL and Postgres (open source).

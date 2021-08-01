@@ -34,10 +34,10 @@
           <ul>
             <li><a href="../../index.html">Home</a></li>
             <li><a href="../../projects.html">Projects</a></li>
-            <li class="active drop-down"><a href="../../notes.html">Tutorials</a>
+            <li class="active drop-down"><a href="../../tutorials.html">Tutorials</a>
             <ul>
-              <li><a href="../../notes.html#Pandas">Pandas</a></li>
-              <li class="drop-down"><a href="../../notes.html#Machine-Learning">Machine Learning</a>
+              <li><a href="../../tutorials.html#Pandas">Pandas</a></li>
+              <li class="drop-down"><a href="../../tutorials.html#Machine-Learning">Machine Learning</a>
               <ul>
                 <li><a href="linear_regression.html">Linear Regression</a></li>
                 <li><a href="linear_regression.html">Support Vector Machines</a></li>
@@ -46,18 +46,18 @@
                 <li><a href="linear_regression.html">Ensemble Methods</a></li>
               </ul>
               </li>
-              <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
-              <li><a href="../../notes.html#Visualization">Visualization</a></li>
-              <li><a href="../../notes.html#Jupyter-Notebook">Jupyter Notebook</a></li>
-              <li><a href="../../notes.html#Git">Git</a></li>
-              <li><a href="../../notes.html#Bash">Bash</a></li>
-              <li><a href="../../notes.html#Deep-Learning">Deep Learning</a></li>
-              <li><a href="../../notes.html#Conda">Conda</a></li>
-              <li><a href="../../notes.html#Numerical-Methods">Numerical Methods</a></li>
-              <li><a href="../../notes.html#Big-Data">Big Data</a></li>
-              <li><a href="../../notes.html#Classification">Classification</a></li>
-              <li><a href="../../notes.html#Pattern-Recognition">Pattern Recognition</a></li>
-              <li><a href="../../notes.html#SQL">SQL</a></li>
+              <li><a href="../../tutorials.html#Linear-Algebra">Linear Algebra</a></li>
+              <li><a href="../../tutorials.html#Visualization">Visualization</a></li>
+              <li><a href="../../tutorials.html#Jupyter-Notebook">Jupyter Notebook</a></li>
+              <li><a href="../../tutorials.html#Git">Git</a></li>
+              <li><a href="../../tutorials.html#Bash">Bash</a></li>
+              <li><a href="../../tutorials.html#Deep-Learning">Deep Learning</a></li>
+              <li><a href="../../tutorials.html#Conda">Conda</a></li>
+              <li><a href="../../tutorials.html#Numerical-Methods">Numerical Methods</a></li>
+              <li><a href="../../tutorials.html#Big-Data">Big Data</a></li>
+              <li><a href="../../tutorials.html#Classification">Classification</a></li>
+              <li><a href="../../tutorials.html#Pattern-Recognition">Pattern Recognition</a></li>
+              <li><a href="../../tutorials.html#SQL">SQL</a></li>
             </ul>
             </li>
             <li><a href="../../about.html">About Me</a></li>
@@ -1944,7 +1944,7 @@ weighted avg      0.854     0.886     0.845     13549</pre>
               $$
 
               <p>
-                You can check <a href="https://pydatascientist.com/notes/ML/classification_metrics_1.html">here</a> for a rather more comprehensive overview of different classification metrics. 
+                You can check <a href="https://pydatascientist.com/tutorials/ML/classification_metrics_1.html">here</a> for a rather more comprehensive overview of different classification metrics. 
               </p>
     
               <p>
@@ -1958,6 +1958,7 @@ weighted avg      0.854     0.886     0.845     13549</pre>
               <p>
                 Precision and recall are a tradeoff. Typically, an increase in precision for a given classifier implies lowering recall, though this depends on the PR curve of the model. We may get lucky by finding a threshold where both precision and recall increase. Generally, if you want higher precision you need to restrict the positive predictions to those with highest certainty in the classifier, which means predicting fewer positives overall (which, in turn, usually results in a lower recall). Before introducing the PR curve, let's cross-validate the classifiers using average-precision as the scoring metric.
               </p>
+
               <pre class="prettyprint lang-language">
 <code class="language-python">from sklearn.model_selection import StratifiedKFold
 
@@ -2000,7 +2001,7 @@ RF model gives an AP of 40.39% with a standard deviation 1.31 (took 58.0 seconds
               </p>
               <h3>Precision-Recall curve</h3>
               <p>
-                PR curve plots the precision and recall for different <strong>thresholds</strong>.  Threshold is a measure of certainty level of the classifier. In binary classification, the intuitive certainty level for the classifier is 0.5 (50%). In other words, if we calculate the probability of the predictions (Using Bayes theorem for example) rather than class labels (where the outcome is either 0 or 1), for each test case, we get two probabilities ($[p_0, p_1]$ where $0 \leq p_0, p_1 \leq 1$ and $p_0+p_1=1$), each of which denotes the chances of that specific test case belonging to class 0 ($p_0$) or 1 ($p_1$). 
+                PR curve plots the precision and recall for different <strong><a class="header_arg" id="threshold"></a>thresholds</strong>.  Threshold is a measure of certainty level of the classifier. In binary classification, the intuitive certainty level for the classifier is 0.5 (50%). In other words, if we calculate the probability of the predictions (Using Bayes theorem for example) rather than class labels (where the outcome is either 0 or 1), for each test case, we get two probabilities ($[p_0, p_1]$ where $0 \leq p_0, p_1 \leq 1$ and $p_0+p_1=1$), each of which denotes the chances of that specific test case belonging to class 0 ($p_0$) or 1 ($p_1$). 
               </p>
 
 
@@ -2139,7 +2140,7 @@ from sklearn.metrics import average_precision_score
 classifier = GaussianNB(var_smoothing=1e-9)
 precisions = [] # true positive rates
 recalls = [] # true positive rates
-aucs = [] # area under ROC curves
+aucs = [] # area under PR curves
 labels = []
 
 # StratifiedShuffleSplit
@@ -2415,7 +2416,7 @@ cm_plot.plot(ax=ax, cmap='YlGn');</code></pre>
 <code class="language-python">classifier = LogisticRegression(C=100.0, penalty='l2', solver='newton-cg')
 precisions = [] # true positive rates
 recalls = [] # true positive rates
-aucs = [] # area under ROC curves
+aucs = [] # area under PR curves
 labels = []
 
 # StratifiedKFold
@@ -2584,7 +2585,7 @@ NB model gives an AP of 43.17% with a standard deviation 2.57 (took 1.0 seconds)
               </p>
               <h3>Finding the Optimal Threshold for PR Curve</h3>
               <p>
-                Finally, we'd like to find the threshold that gives the best balance of precision and recall. We could locate this threshold using the <strong>Harmonic Mean</strong> of the two. <strong>Harmonic Mean</strong> or <strong>H-Mean</strong> of precision and recall is called <strong>F-measure</strong> or <strong>F-score</strong> which when optimized, will seek a balance between the precision and recall. 
+                Finally, we'd like to find the threshold that gives the best balance of precision and recall. We could locate this threshold using the <strong>Harmonic Mean</strong> of the two. <strong>Harmonic Mean</strong> or <strong>H-Mean</strong> of precision and recall is called <a id="fscore"><strong>F-measure</strong></a> or <strong>F-score</strong> which when optimized, will seek a balance between the precision and recall. The highest possible value of an F-score is 1.0, indicating perfect precision and recall, and the lowest possible value is 0, which happens if either of the precision or the recall is zero. 
               </p>
 $$
 \text{F-score} = \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
@@ -2745,10 +2746,10 @@ plt.show();</code></pre>
             <div class="col-lg-4 col-md-6 footer-links">
               <h4>Useful Links</h4>
               <ul>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">About Me</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Projects</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Tutorials</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../index.html">Home</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../about.html">About Me</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../projects.html">Projects</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../tutorials.html">Tutorials</a></li>
               </ul>
             </div>
             <div class="col-lg-4 col-md-6 footer-contact">

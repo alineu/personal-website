@@ -1,5 +1,6 @@
 **/.ipynb_checkpoints
 **/*.ipynb
+*.bak
 *.tex
 *.md
 !Readme.md

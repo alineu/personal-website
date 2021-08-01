@@ -665,7 +665,7 @@ Notes cards
 --------------------------------------------------------------*/
 #hero {
   width: 100%;
-  height: 110vh;
+  height: 40vh;
   overflow: hidden;
   position: relative;
 }
@@ -676,7 +676,7 @@ Notes cards
   left: 50%;
   top: 0%;
   width: 130%;
-  height: 95%;
+  height: 90%;
   /*background: linear-gradient(to right, rgba(30, 67, 86, 0.8), rgba(30, 67, 86, 0.6)), url("../img/hero-bg.jpg") center top no-repeat;*/
   background: linear-gradient(to top, rgba(30, 67, 86, 1), rgba(30, 67, 86, 0.75)), url("../img/main-wallpaper.jpg") center top no-repeat;
   z-index: 0;
@@ -690,7 +690,7 @@ Notes cards
   left: 50%;
   top: 0;
   width: 130%;
-  height: 97%;
+  height: 91%;
   background: #68A4C4;
   opacity: 0.4;
   z-index: 0;
@@ -713,7 +713,7 @@ Notes cards
 #hero h2 {
   color: #fff;
   margin-bottom: 30px;
-  font-size: 48px;
+  font-size: 36px;
   font-weight: 700;
 }
 

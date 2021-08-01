@@ -8,7 +8,6 @@
     <meta content="" name="keywords">
     <!-- Favicons -->
     <link href="../../assets/img/web-icon.png" rel="icon">
-    <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
     <!-- Vendor CSS Files -->
@@ -34,10 +33,10 @@
           <ul>
             <li><a href="../../index.html">Home</a></li>
             <li class="active"><a href="../../projects.html">Projects</a></li>
-            <li class="drop-down"><a href="../../notes.html">Tutorials</a>
+            <li class="drop-down"><a href="../../tutorials.html">Tutorials</a>
             <ul>
-              <li><a href="../../notes.html#Pandas">Pandas</a></li>
-              <li class="drop-down"><a href="../../notes.html#Machine-Learning">Machine Learning</a>
+              <li><a href="../../tutorials.html#Pandas">Pandas</a></li>
+              <li class="drop-down"><a href="../../tutorials.html#Machine-Learning">Machine Learning</a>
               <ul>
                 <li><a href="linear_regression.html">Linear Regression</a></li>
                 <li><a href="linear_regression.html">Support Vector Machines</a></li>
@@ -46,18 +45,18 @@
                 <li><a href="linear_regression.html">Ensemble Methods</a></li>
               </ul>
               </li>
-              <li><a href="../../notes.html#Linear-Algebra">Linear Algebra</a></li>
-              <li><a href="../../notes.html#Visualization">Visualization</a></li>
-              <li><a href="../../notes.html#Jupyter-Notebook">Jupyter Notebook</a></li>
-              <li><a href="../../notes.html#Git">Git</a></li>
-              <li><a href="../../notes.html#Bash">Bash</a></li>
-              <li><a href="../../notes.html#Deep-Learning">Deep Learning</a></li>
-              <li><a href="../../notes.html#Conda">Conda</a></li>
-              <li><a href="../../notes.html#Numerical-Methods">Numerical Methods</a></li>
-              <li><a href="../../notes.html#Big-Data">Big Data</a></li>
-              <li><a href="../../notes.html#Classification">Classification</a></li>
-              <li><a href="../../notes.html#Pattern-Recognition">Pattern Recognition</a></li>
-              <li><a href="../../notes.html#SQL">SQL</a></li>
+              <li><a href="../../tutorials.html#Linear-Algebra">Linear Algebra</a></li>
+              <li><a href="../../tutorials.html#Visualization">Visualization</a></li>
+              <li><a href="../../tutorials.html#Jupyter-Notebook">Jupyter Notebook</a></li>
+              <li><a href="../../tutorials.html#Git">Git</a></li>
+              <li><a href="../../tutorials.html#Bash">Bash</a></li>
+              <li><a href="../../tutorials.html#Deep-Learning">Deep Learning</a></li>
+              <li><a href="../../tutorials.html#Conda">Conda</a></li>
+              <li><a href="../../tutorials.html#Numerical-Methods">Numerical Methods</a></li>
+              <li><a href="../../tutorials.html#Big-Data">Big Data</a></li>
+              <li><a href="../../tutorials.html#Classification">Classification</a></li>
+              <li><a href="../../tutorials.html#Pattern-Recognition">Pattern Recognition</a></li>
+              <li><a href="../../tutorials.html#SQL">SQL</a></li>
             </ul>
             </li>
             <li><a href="../../about.html">About Me</a></li>
@@ -113,6 +112,7 @@
                 <li><a href="#helper_funcs">Helper functions for CV</a></li>
                 <li><a href="#hyper_param_groups">Dividing the hyperparameters into orthogonal groups</a></li>
                 <li><a href="#gs1">Gridsearch for parameter group 1</a></li>
+                <li><a href="#bias-variance">Acceptance threshold in the context of bias-variance trade-off</a></li>
                 <li><a href="#gs2">Gridsearch for parameter group 2</a></li>
                 <li><a href="#gs3">Gridsearch for parameter group 3</a></li>
                 <ul>
@@ -130,12 +130,13 @@
                   <li><a href="#gs5_notes_1">How <strong>Early Stopping</strong> influences the optimal <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">learning_rate</code></a></li>
                   <li><a href="#gs5_notes_2">Variation of <code>logloss</code> and <code>PR-AUC</code> for <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">alpha=0.001</code> and different values of <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">gamma</code></a></li>
                 </ul>
-                </ul>
+                <li><a href="#best_threshold">Plotting the PR curves and finding the best threshold for the winner model</a></li>
+                <li><a href="#baseline">Comparison with the baseline model</a></li>
                 <li><a href="#conclusion">Summary and Conclusion</a></li>
                 </ul>
               <h3><a class="header_arg" id="intro"></a>Introduction</h3>
               <p>
-                Credit card fraud comes in different forms; phishing, skimming and identity theft to name a few. This project focuses on developing a supervised machine learning model that will provide the best results in revealing and preventing fraudulent transactions. Part 1 of the project compares the accuracy of different
+                Credit card fraud comes in different forms; phishing, skimming and identity theft to name a few. This project focuses on developing a supervised machine learning model that will provide the best results in revealing and preventing fraudulent transactions. Part 1 of the project compares the accuracy of different machine learning models in classifying the credit card transaction data into valid and fraud transactions.
               </p>
               <h3><a class="header_arg" id="summary"></a>Project Summary</h3>
 
@@ -147,7 +148,8 @@
                 <li>Choosing the right performance metric</li>
                 <li>Train and evaluate the models</li>
                 <li>Comparing the model performances to find the winner model</li>
-                <li>Hypertune the winner model's parameters</li>
+                <li>Hypertuning the winner model's parameters</li>
+                <li>Comparing the winner model with the baseline model</li>
               </ul>
               
               <h4><a class="header_arg" id="part2"></a>Part 2: Compare the accuracy of the winner of Part 1 with other algorithms that are specialized for rare-event analysis</h4>
@@ -1241,7 +1243,7 @@ plt.suptitle('Kernel Density Estimate (KDE) plot of class distributions for \n 5
                   Due to the extreme class imbalance in the dataset, we take advantage of the <code class="library">sklearn</code>'s <strong>Stratified K-Folds cross-validator</strong> (<code class="method">StratifiedKFold</code>) to ensure that the observations are distributed with a similar class ratio $\bigg(\dfrac{\text{positive class count}}{\text{negative class count}}\bigg)$ across the folds.
                 </li>
                 <li>
-                  We choose <code class="arg">scoring='average_precision'</code> as the model evaluation criteria. Ideally we'd want to use <strong>Precision-Recall Area Under Curve (PR-AUC)</strong> as the criteria but since it is not provided by <code class="library">sklearn</code>, we use <code class="arg">average_precision</code> (<strong>AP</strong>) which <em>summarizes a precision-recall curve as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight</em>:
+                  We choose <code class="arg">scoring='average_precision'</code> as the model evaluation criteria. Ideally we'd want to use <a id="prcurve"><strong>Precision-Recall Area Under Curve (PR-AUC)</strong></a> as the criteria but since it is not provided by <code class="library">sklearn</code>, we use <code class="arg">average_precision</code> (<strong>AP</strong>) which <em>summarizes a precision-recall curve as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight</em>:
                 </li>
               $$
               \text{AP} = \sum_n (R_n - R_{n-1}) P_n,
@@ -1416,7 +1418,7 @@ model_dict = {'CT':[DecisionTreeClassifier()],
                   We split the data into training and test splits while maintaining the class ratio (exactly what we did in the <a href="#modelselection">model selection</a>)
                 </li>
                 <li>
-                  Model performance on the test data <code>(X_test, y_test)</code> is not going to be assessed until the final model evaluation where both the baseline classifier and the tuned model are going to be tested against the <em>so-far-unseen</em> test data
+                  Model performance on the test data <code>(X_test, y_test)</code> is not going to be assessed until the final model evaluation where both the baseline classifier and the tuned model are going to be tested against the <em>unseen</em> test data
                 </li>
                 <li>
                   We use <code class="method"><a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html">RepeatedStratifiedKFold()</a></code> which repeats the <code class="method"><a href="http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html">StratifiedKFold()</a></code> $n_{\mathrm{repeats}}$ times ($3\leq n_{\mathrm{repeats}} \leq 10$) and outputs the model performance-metric (PR-AUC in this case) as the mean across all folds and all repeats. This improves the estimate of the mean model performance-metric with the downside of increased model-evaluation cost. We use $n_{\mathrm{repeats}}=5$ in this work.
@@ -1525,13 +1527,24 @@ np.set_printoptions(threshold=5)
 Early_Stop_Rounds = 400
 Num_Boosting_Rounds = 4000
 
+from sklearn.metrics import average_precision_score
+from datetime import datetime, timedelta
+from itertools import product
+from pprint import pprint
+import random
+np.set_printoptions(threshold=5)
+
+Early_Stop_Rounds = 400
+Num_Boosting_Rounds = 4000
+
 def cv_summary(X_data, y_data, params, feature_names, cv, 
                objective_func='binary:logistic', 
                eval_metric='aucpr', 
                spit_out_fold_results=False, 
                spit_out_summary=True, 
                num_boost_rounds=Num_Boosting_Rounds, 
-               early_stop_rounds=Early_Stop_Rounds):
+               early_stop_rounds=Early_Stop_Rounds, 
+               save_fold_preds=False):
     """
     Returns cv results for a given set of parameters
     """
@@ -1549,6 +1562,7 @@ def cv_summary(X_data, y_data, params, feature_names, cv,
     
     # track eval results
     eval_results = []
+    fold_preds = {'train':[], 'eval':[]}
         
     for i, (train_index, valid_index) in enumerate(cv.split(X_data, y_data)):
         
@@ -1606,6 +1620,7 @@ def cv_summary(X_data, y_data, params, feature_names, cv,
             # the size of the training data
             
             best_num_estimators[i] = int(clf.best_ntree_limit / (1 - 1 / num_splits))
+#           clf.setattr("best_ntree_limit", best_num_estimators[i])
             
             y_pred_tr = clf.predict(xgb.DMatrix(X_train[train_index,:], 
                                                 feature_names=feature_names))
@@ -1624,10 +1639,13 @@ def cv_summary(X_data, y_data, params, feature_names, cv,
             y_pred_vl = clf.predict(xgb.DMatrix(X_train[valid_index,:], 
                                                 feature_names=feature_names), 
                                                 ntree_limit=0)
-                             
+        
         train_scores[i] = average_precision_score(y_train[train_index], y_pred_tr)
         valid_scores[i] = average_precision_score(y_train[valid_index], y_pred_vl)
         
+        if save_fold_preds:
+            fold_preds['train'].append([y_train[train_index], y_pred_tr])
+            fold_preds['eval'].append([y_train[valid_index], y_pred_vl])
 
         
         if spit_out_fold_results:
@@ -1653,48 +1671,52 @@ def cv_summary(X_data, y_data, params, feature_names, cv,
         if early_stop_rounds is not None:
             print(f" average number of boosting rounds tr = {np.average(best_num_estimators):<.0f}")
     out = [(np.average(x), np.std(x)) for x in [train_scores, valid_scores, best_num_estimators]]
-    return  out, eval_results
-
+    return out, eval_results, fold_preds, clf
+    
 def cv_search_params(X_data, y_data, param_dict, feature_names, cv, 
                      objective_func='binary:logistic', eval_metric='aucpr', 
                      spit_out_fold_results=False, spit_out_summary=True, 
                      num_boost_rounds=Num_Boosting_Rounds, 
-                     early_stop_rounds=None):
+                     early_stop_rounds=None, random_grid_search = False, 
+                     save_fold_preds=False,
+                     num_random_search_candidates=10):
     """
     Returns the cv_summary() for all the combinations of the given parameter dictionary
     """
     
     search_results = []
-    print("Grid search on:\n")
-    
-    pprint(param_dict)
-    print(f"\nstarted at {datetime.now()}")   
     param_values = [
         x if (isinstance(x, list) or isinstance(x, type(np.linspace(1,2,2))))
           else [x] for x in param_dict.values()
                  ]
     param_dict = dict(zip(tuple(param_dict.keys()), param_values))
-    print(f"Total number of hyperparameter candidates = {len(list(product(*param_values)))}")   
-    
-    evals = [[] for i in range(len(list(product(*param_values))))]
+    num_search_candidates = len(list(product(*param_values)))
+    all_search_params = []
+    num_rand_search_candidates = num_random_search_candidates
+    random_sample_ids = random.sample(range(num_search_candidates), num_rand_search_candidates)
+    all_search_params = []
     for i, search_params in enumerate(product(*param_values)):
-    
-        start_time = datetime.now()
         current_params = dict(zip(tuple(param_dict.keys()), search_params))
-        if len(evals)>1:
-            print(f'\nCV {i+1} on:\n')
-            pprint({k: v for k, v in current_params.items() if len(param_dict[k])>1})
-            print('\n started!')
-        else:
-            print('\nCV started!')
-        results, evals[i] = cv_summary(X_data, y_data, 
-                                       current_params, feature_names, 
-                                       cv, objective_func=objective_func, 
-                                       eval_metric=eval_metric, 
-                                       spit_out_fold_results=spit_out_fold_results, 
-                                       spit_out_summary=spit_out_summary, 
-                                       early_stop_rounds=early_stop_rounds, 
-                                       num_boost_rounds=num_boost_rounds)
+        all_search_params.append(current_params)
+    if random_grid_search:
+        all_search_params = list(np.array(all_search_params)[random_sample_ids])
+    evals = [[] for i in range(len(all_search_params))]
+    print(f"Grid search started at {datetime.now()}")   
+    print(f"Total number of hyperparameter candidates = {len(evals)}")     
+    for i, search_params in enumerate(all_search_params):
+        start_time = datetime.now()
+        current_params = search_params
+        print(f'\nCV {i+1} on:\n')
+        pprint({k: v for k, v in current_params.items() if len(param_dict[k])>1})
+        print('\n started!')
+        results, evals[i], _, _ = cv_summary(X_data, y_data, 
+                                             current_params, feature_names, 
+                                             cv, objective_func=objective_func, 
+                                             eval_metric=eval_metric, 
+                                             spit_out_fold_results=spit_out_fold_results, 
+                                             spit_out_summary=spit_out_summary, 
+                                             early_stop_rounds=early_stop_rounds, 
+                                             num_boost_rounds=num_boost_rounds)
         end_time = datetime.now()
         time_taken = f"{(end_time-start_time).total_seconds():.2f}"
         if len(evals)>1:
@@ -2001,6 +2023,50 @@ cur_params = param_df[param_df['diff']&#60;acceptance_threshold] \
 </table>
               <p>
                 <code class="arg">max_depth=3</code> and <code class="arg">min_child_weight=30</code> gives a reasonable PR-AUC while ensuring that the model's performance on the test data remains close to that of the training data. Note that using <code class="arg">max_depth=4</code> gives the same performance as <code class="arg">max_depth=3</code> so we move forward with the latter to reduce the complexity of the model. Next, we examine the second hyperparameter group.
+              </p>
+              <h4><a class="header_arg" id="bias-variance"></a>Acceptance threshold in the context of bias-variance trade-off</h4>
+              <p>
+                We can think of <a href="#acceptance_condition">acceptance condition</a> in the context of <strong>bias-variance trade-off</strong>. 
+              </p>
+              <p>
+                We say a model has a <strong>high bias</strong> if it fails to use all the data in the observations. Such model relies mostly on the general information without taking into account the specifics. In contrast, we say a model has a <strong>high variance</strong> if it over-use theinformation in the data, i.e., relies too much on the specific data that is being trained on. Such model usually fails to generalize what it has learnt and reproduce its high performance when predicting the outcome for new, <em>unseen data</em>.
+              </p>              
+              <p>
+                We can demonstrate this using an example relevant to our problem. The table below shows <code>aucpr</code> for two models I and II. When comparing the two models, model I exhibits a very high <code>aucpr</code> on the training data (<strong>low bias</strong>) but a significant difference in performance when tested on the test data (<strong>high variance</strong>); Model II on the other hand gives a comparatively lower <code>aucpr</code> on both the training and test data (<strong>high bias</strong>) but the model's performance on both datasets is quite similar (<strong>low variance</strong>)
+              </p>
+              <table class="table table-borderless">
+                <thead>
+                  <tr style="text-align: center;">
+                    <th rowspan="3" style="background-color: white;"></th>
+                    <th colspan="2" style="background-color: #fce986;">Model I</th>
+                    <th colspan="2" style="background-color: #fcf4c5;">Model II</th>
+                  </tr>
+                  <tr style="text-align: center;">
+                    <th>train</th>
+                    <th>test</th>
+                    <th>train</th>
+                    <th>test</th>
+                  </tr>
+                  <tr style="text-align: center;">
+                    <th>0.99</th>
+                    <th style="background-color: #ffe4de;">0.8</th>
+                    <th>0.75</th>
+                    <th style="background-color: #ffe4de;">0.73</th>
+                  </tr>
+                  <tr style="text-align: center;">
+                    <th style="background-color: #fce986;">Bias</th>
+                    <th colspan="2" style="background-color: #faeeeb;">low</th>
+                    <th colspan="2" style="background-color: #ff957a;">high</th>
+                  </tr>
+                  <tr style="text-align: center;">
+                    <th style="background-color: #fcf4c5;">Variance</th>
+                    <th colspan="2" style="background-color: #ff957a;">high</th>
+                    <th colspan="2" style="background-color: #faeeeb;">low</th>
+                  </tr>
+                </thead>
+              </table>
+              <p>
+                <strong>high bias </strong> and <strong>high variance</strong> both lead to errors in model performance. Ideally we would want the model to have low bias (less error on training data) and low variance (less difference between the model performance between the train and testing data). <strong>Bias-variance trade-off</strong> is the <strong>sweet spot</strong> where the model performs between the errors introduced by the bias and the variance. In this project, I used <a href="#acceptance_condition">acceptance condition</a> to set a value for <strong>Bias-variance trade-off</strong>; however, depending on the business goal, one may use a totally different criteria to find the best model hyperparameters.
               </p>
               <h4><a class="header_arg" id="gs2"></a>Gridsearch for parameter group 2: <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">colsample_bylevel</code>, <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">colsample_bytree</code>, and  <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">subsample</code></h4>
               <p>
@@ -3838,7 +3904,8 @@ df_es = pd.concat(dfs, axis=0)
 df_es = df_es[df_es['diff']&#60;acceptance_threshold].sort_values('val_avg', ascending=False)
 df_es = df_es.reset_index(drop=True)
 df_es[['tr_avg','val_avg','time_taken','early_stop','learning_rate']].iloc[:,:10]</code></pre>
-              <table class="table table-striped">
+              <div>
+               <table class="table table-striped">
                 <thead>
                   <tr style="text-align: left;">
                     <th></th>
@@ -3942,17 +4009,453 @@ df_es[['tr_avg','val_avg','time_taken','early_stop','learning_rate']].iloc[:,:10
                     <td>1.58e-03</td>
                   </tr>
                 </tbody>
-              </table>
+               </table>
+              </div>
               <p>
-                Note that the value that we chose for <em>Early Stopping</em> gives the second best performance among all the combinations with only 0.1% lower accuracy than the best performance for <code>val_avg</code>. However, it takes rouhgly half the time that takes to train a model with <code>(Estop=400, lr=2.51e-3)</code> than the time that takes to trian <code>(Estop=1000, lr=1.58e-3)</code>. 
+                Note that the value that we chose for <em>Early Stopping</em> gives the second best performance among all the combinations with only 0.1% lower accuracy than the best performance for <code>val_avg</code>. However, it takes rouhgly half the time that takes to train a model with <code>(Estop=400, lr=2.51e-3)</code> than the time that takes to train using <code>(Estop=1000, lr=1.58e-3)</code>. We keep the early stopping value to be $400$ and move on to the last part of the project with <code class="arg" style="font-size: 0.8em; background-color: #17b8a138;">lr=2.51e-3</code>.
               </p>
-<h3><a class="header_arg" id="conclusion"></a>Summary and Conclusion</h3>
+              <h3><a class="header_arg" id="best_threshold"></a>Plotting the PR curves and finding the best threshold for the winner model</h3>
+              <p>
+                In this part, we will find the <a href="../bank_marketing_data_analysis/project.html#threshold">threshold</a> that gives the best balance of precision and recall. In addition, we plot the <a href="../bank_marketing_data_analysis/project.html#pr_curve">precision-recall curve</a> for the training, validation, and test data. We could locate the threshold that gives the optimal balance between precision and recall using the <strong>Harmonic Mean</strong> of the two. <strong>Harmonic Mean</strong> or <strong>H-Mean</strong> of precision and recall is called <strong>F-measure</strong> or <a href="../bank_marketing_data_analysis/project.html#fscore"><strong>F-score</strong></a> which when optimized, will seek a balance between the precision and recall. 
+              </p>
+$$
+\text{F-score} = \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+$$
+              or
+$$
+\frac{1}{\text{F-score}} = \frac{1}{\dfrac{1}{2}\big(\dfrac{1}{\text{Precision}} + \dfrac{1}{\text{Recall}}\big)}
+$$
+              <p>
+                One way to think about why optimizing F-score gives the best balance between precision and recall is that we can not get a high F-score if either one is very low. The threshold that gives the highest F-score is what we're looking for. First thing, we re-evaluate the model using the winner hyperparameters. This time, we also return the <code class="object">clf</code> so that we can make predictions on the test data. Finally, we also need <code>fold_preds</code> so that we can plot the curves.
+              </p>
+<pre class="prettyprint lang-language"><code class="language-python">winner_params = {
+    'max_depth': 3,
+    'min_child_weight': 30,
+    'subsample': 1,
+    'colsample_bytree': 1,
+    'colsample_bylevel': 1,
+    'alpha': 1e-3,
+    'gamma': 3,
+    'scale_pos_weight': 1.2,
+    'learning_rate': 2.51e-3,
+}
+
+final_eval_df, evals, fold_preds, clf = cv_summary(X_train, y_train, winner_params, all_features, rskf, 
+                                                   eval_metric=['logloss','aucpr'], spit_out_fold_results=True,
+                                                   num_boost_rounds=1963, early_stop_rounds=None, save_fold_preds=True)</code></pre>
+<pre> Repeat 1, Fold 1 - PR-AUC tr = 0.807, PR-AUC vl = 0.776 (diff = 0.0314)
+ Repeat 1, Fold 2 - PR-AUC tr = 0.809, PR-AUC vl = 0.748 (diff = 0.0611)
+ Repeat 1, Fold 3 - PR-AUC tr = 0.809, PR-AUC vl = 0.772 (diff = 0.0366)
+ Repeat 1, Fold 4 - PR-AUC tr = 0.786, PR-AUC vl = 0.848 (diff = -0.0613)
+ Repeat 2, Fold 1 - PR-AUC tr = 0.800, PR-AUC vl = 0.787 (diff = 0.0131)
+ Repeat 2, Fold 2 - PR-AUC tr = 0.791, PR-AUC vl = 0.718 (diff = 0.0725)
+ Repeat 2, Fold 3 - PR-AUC tr = 0.816, PR-AUC vl = 0.787 (diff = 0.0291)
+ Repeat 2, Fold 4 - PR-AUC tr = 0.800, PR-AUC vl = 0.800 (diff = -0.0006)
+ Repeat 3, Fold 1 - PR-AUC tr = 0.809, PR-AUC vl = 0.745 (diff = 0.0640)
+ Repeat 3, Fold 2 - PR-AUC tr = 0.811, PR-AUC vl = 0.747 (diff = 0.0637)
+ Repeat 3, Fold 3 - PR-AUC tr = 0.803, PR-AUC vl = 0.802 (diff = 0.0007)
+ Repeat 3, Fold 4 - PR-AUC tr = 0.787, PR-AUC vl = 0.854 (diff = -0.0669)
+ Repeat 4, Fold 1 - PR-AUC tr = 0.809, PR-AUC vl = 0.734 (diff = 0.0756)
+ Repeat 4, Fold 2 - PR-AUC tr = 0.791, PR-AUC vl = 0.771 (diff = 0.0203)
+ Repeat 4, Fold 3 - PR-AUC tr = 0.793, PR-AUC vl = 0.837 (diff = -0.0434)
+ Repeat 4, Fold 4 - PR-AUC tr = 0.802, PR-AUC vl = 0.765 (diff = 0.0375)
+ Repeat 5, Fold 1 - PR-AUC tr = 0.800, PR-AUC vl = 0.774 (diff = 0.0262)
+ Repeat 5, Fold 2 - PR-AUC tr = 0.805, PR-AUC vl = 0.776 (diff = 0.0294)
+ Repeat 5, Fold 3 - PR-AUC tr = 0.797, PR-AUC vl = 0.818 (diff = -0.0212)
+ Repeat 5, Fold 4 - PR-AUC tr = 0.805, PR-AUC vl = 0.782 (diff = 0.0228)
+Summary:
+ mean PR-AUC training =  0.801
+ mean PR-AUC validation = 0.782
+ mean PR-AUC difference = 0.0195</pre>
+<pre class="prettyprint lang-language"><code class="language-python"># making predictions on the train and test data
+# Winner model parameters
+param_dict = {'tree_method':'gpu_hist'
+              'objective':'binary:logistic'
+              'eval_metric':'aucpr'}
+param_dict.update(winner_params)
+# train data into xgb.DMatrix
+xg_train = xgb.DMatrix(X_train, feature_names=all_features, label=y_train)
+# train
+clf = xgb.train(param_dict, xg_train, num_boost_round=1977)
+# predict train
+y_pred_train = clf.predict(xg_train)
+# predict test
+y_pred_test = clf.predict(xgb.DMatrix(X_test, feature_names=all_features))
+
+# chnage key names and update with train and test predictions
+fold_preds['cv-train'] = fold_preds.pop('train')
+fold_preds['cv-val'] = fold_preds.pop('eval')
+fold_preds['train'] = [[y_train, y_pred_train]]
+fold_preds['test'] = [[y_test, y_pred_test]]
+</code></pre>
+<h4>Plotting the PR curves</h4>
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig9code" aria-expanded="false" aria-controls="fig9code">
+</button>  
+<div class="collapse" id="fig9code" aria-expanded="false" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python">def col_to_hex(colmap, n):
+    """colormap to n hex colors"""
+    out = []
+    for i in range(n):
+        r,g,b,_ = plt.cm.get_cmap(colmap,n)(i)
+        out.append(f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}")
+    return out
+
+def f_score(re,pr):
+    return 2*re*pr/(re+pr)
+
+sns.set(rc={'axes.facecolor':'whitesmoke', 'figure.facecolor':'silver', 'legend.facecolor':'white'})
+fig, axes = plt.subplots(4, 1, figsize=(8,30), dpi=150)
+axes = axes.flat
+dataset_labels = list(fold_preds.keys())
+n_divs = 1000
+for i,ax in enumerate(axes):
+    data = fold_preds[dataset_labels[i]]
+    cols = col_to_hex('tab20', len(data))
+    aucs = []
+    pr_interp = []
+    fs_best_ = []
+    for j,fold_data in enumerate(data):
+        y_true = fold_data[0]
+        y_pred = fold_data[1]
+        pr, re, thr = precision_recall_curve(y_true,y_pred,pos_label=1)
+        pr_auc = average_precision_score(y_true,y_pred)
+        aucs.append(pr_auc)
+        # approximate AUC
+        x_range = np.linspace(0, 1, n_divs)
+        yinterp_pr = np.interp(x_range, re[::-1],pr[::-1])
+        # threshold = 0.5
+        thr_50_id = np.where(thr>0.49999)[0][0]
+        # fs(threshold=0.5)
+        fs_50 = f_score(re[thr_50_id],pr[thr_50_id])
+        pr_interp.append(yinterp_pr)
+        interp_auc=  auc(x_range[::-1],yinterp_pr)
+        # best fs and best threshold
+        f_scores = [(re[:-1][i],pr[:-1][i],t) for i,t in enumerate(thr)]
+        best_r, best_p, best_t = sorted(f_scores, key=lambda x: -f_score(x[0],x[1]))[0]
+        fs_best = f_score(best_r, best_p)
+        fs_best_.append(fs_best)
+        # show recall and precision that gives the best fs
+        if j==0: # cv-train or cv-val
+            if len(data)>1:
+                ax.scatter(re[thr_50_id],pr[thr_50_id], s=30, lw=1, marker="x", color='black',label=r'$\theta$=0.5')
+            else:
+                ax.scatter(re[thr_50_id],pr[thr_50_id], s=30, lw=1, marker="x", color='black',label=r'$\theta$=0.5 (FS=%.2f)'%(f_score(re[thr_50_id],pr[thr_50_id])))
+        else: # test or train
+            ax.scatter(re[thr_50_id],pr[thr_50_id], s=30, lw=1, marker="x", color='black')
+        # show recall and precision at threshold=0.5
+        ax.scatter(best_r,best_p, s=30, lw=1, marker="+", color=cols[j], zorder=10)
+        # plot PR curve
+        lab = r'AUC=%.2f'%(aucs[-1])
+        if len(data)>1:
+            lab += r'(%.2f) - FS$_{\max}$=%.2f($\theta_{\mathrm{best}}$=%.2f)'%(interp_auc,fs_best,best_t)
+        ax.plot(re,pr,':',linewidth=1, color=cols[j], label=lab, zorder=-1)
+    if len(data)>1:  # cv-train or cv-val  
+        # mean PR curve with std shown by averaging over folds
+        mean_pr = np.mean(pr_interp, axis=0)
+        std_pr = np.std(pr_interp, axis=0)
+        std_auc = np.std(aucs)
+        precisions_upper = np.minimum(mean_pr + std_pr, 1)
+        precisions_lower = np.maximum(mean_pr - std_pr, 0)
+        # AUC of the mean PR curve
+        mean_prauc = auc(x_range[::-1],mean_pr[::-1])
+        # plot mean PR curve and add relevant info to the legend
+        ax.plot(x_range[::-1],mean_pr[::-1],linewidth=2,linestyle='--',
+                label=r'AUC=%.2f - AUC($\hat{\mathrm{cv}}$)=%.2f $\pm$ %0.3f'%(mean_prauc,np.mean(aucs),np.std(aucs)))
+        ax.fill_between(x_range[::-1], precisions_lower[::-1], precisions_upper[::-1], color='red', alpha=.2, label=r'$\pm$ 1 std. dev. (precision)')    
+        # best fscore of the mean PR curve
+        f_scores = [(i, f_score(x_range[::-1][i],pr)) for i,pr in enumerate(mean_pr[::-1])]
+    else: # test or train
+        f_scores = [(i, f_score(re[i],pr[i])) for i,_ in enumerate(pr)]
+    best_id, fs_best = sorted(f_scores, key=lambda x: -x[1])[0]        
+    # annotate the recall and precision that lead to the best fscore and add relevant info to the legend
+    if len(data)>1: # cv-train or cv-val  
+        ax.scatter(x_range[::-1][best_id], mean_pr[::-1][best_id],s=100, 
+                      lw=1, marker="*", color='orange',edgecolor='red', zorder=20,
+                   label=r'FS$_{\max}$=%.2f - FS$_{\max}$($\hat{\mathrm{cv}}$)=%.2f $\pm$ %0.3f'%(fs_best,np.mean(fs_best_),np.std(fs_best_)))
+    else: # test or train
+        ax.scatter(re[best_id], pr[best_id],s=100, lw=1, marker="*", color='orange',edgecolor='red',zorder=20,
+                   label=r'FS$_{\max}$=%.2f($\theta_{\mathrm{best}}$=%.2f)'%(fs_best,thr[best_id]))
+    # perfect classifier
+    ax.scatter(1, 1, s=20, marker="o", color='green', label='perfect classifier')
+    ax.plot([0, 1, 1], [1, 1, 0],color='green', linestyle=":", lw=2, alpha=0.6)
+    # no-skill classifier
+    no_skill = len(y[y==1]) / len(y) # Taking the positive class to be "fraud"/1
+    ax.plot([0, 1], [no_skill, no_skill], linestyle='--', lw=1, color='r', label='no-skill classifier')
+    ax.legend(bbox_to_anchor=(1,1.01,0,0), fontsize=7)
+    ax.set_xlabel("recall", fontsize=12)
+    ax.set_ylabel("precision", fontsize=12)
+    ax.set_title(f"PR curve for {dataset_labels[i]} data", fontsize=20)
+plt.show()</code></pre></div>
+              <div style="text-align:center">
+                 <a id="fig12" style="font-size: 1.5em;">Figure 11</a>
+              </div>
+              <p class="text-align: center;">
+                <img src="prcurves.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p>
+              <p>
+                <strong>Notes:</strong>
+                <ul>
+                  <li><a href="#fig12">Figure 11</a> shows the precision-recall curve for <code>cv-train</code>, <code>cv-val</code>, <code>train</code>, and <code>test</code>, where <code>cv</code> denotes the plots of all the folds in cross-validation folds.</li>
+                  <li>For cv curves, the mean PR curve is calculated by averaging over the folds. Because the number of data points in each fold and the corresponding PR curve is different, these curves are approximated using <code>np.interp()</code> so that they have the same shape and therefore could be averaged. <code>Area1</code> and <code>Area2</code> in cv plot legends <code>AUC=Area1(Area2)</code> denote the <a href="#prcurve">PR-AUC</a> of the actual and approximated curves, respectively. </li>
+                  <li>For cv curves, the average PR curve is shown using a thick, blue dashed line <hr style="border-top: dashed 5px; width: 40px; display:inline-table; color: #4C72B0;" /> </li>
+                  <li>Note that there's a negligible difference between the
+                  <ul>
+                    <li>AUC of the approximated curves and the actual curves</li>
+                    <li>AUC($\hat{\mathrm{cv}}$) (average over cv AUCs) and the AUC of the mean PR curve</li>
+                  </ul>
+                  </li>
+                  <li><span style="color: black; font-size:20px;">&times;</span> and colored <span style="color: black;  font-size:20px;">&plus;</span> (in cv plots) show the precision and recall calculated at $\theta=0.5$ and $\theta=\theta_{\mathrm{best}}$, respectively, where $\theta=\theta_{\mathrm{best}}$ is the threshold that maximizes the <a href="../bank_marketing_data_analysis/project.html#fscore">F-score</a>. FS$_{\max}$ is the F-score calculated at $\theta=\theta_{\mathrm{best}}$.</li>
+                  <li>By looking at the cv-val plot, we notice that in some folds, there's a <strong>significant drop in precision at threshold values close to 1 (top left)</strong>. I reproduced those instances in the figure below:
+              <div style="text-align:center">
+                 <a id="fig15" style="font-size: 1.5em;">Figure 12</a>
+              </div>
+              <p class="text-align: center;">
+                <img src="prcurves_3.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p>                
+                  <p>
+                    Considering that the positive class includes that fraudulent transactions, this shows that the model is mistakenly classifying a lot of valid transactions as fraud ($\text{FP}$), causing the sudden drop in precision. This can mean that these specific folds contain a lot of observations from the positive class (fraud) that are hard to predict (close to the decision boundary). 
+                  </p>
+                  <p>
+                    For the sake of clarity, let's focus on the green curve in <a href="#fig15">Figure 12</a> where a slight decrease in threshold from $0.9047$ to $0.9039$ leads to an increase in <code>(recall,precision)</code> from <code>(0.01,0.33)</code> to <code>(0.09,0.82)</code>. We can translate this into something even more clear; For every observation $X_i$, model prediction is a probability $p_i$ that measures the chance of $X_i$ belonging to the positive class, where $0 \leq p_i \leq 1$. What $\theta_1=0.9047$ means is that at this threshold, $X_i$ will be classified positive (fraud transaction) only if $p_i>0.9047$ and otherwise it will be classified as negative (valid transaction). 
+                  </p>             
+
+$$
+\begin{align}
+\text{Recall}&=\dfrac {\text{TP}}{\text{TP+FN}}\\[2ex]
+\text{Precision}&=\dfrac {\text{TP}}{\text{TP+FP}}
+\end{align}
+$$
+                  <p>
+                    The fact that there are roughly 100 positive observations in each fold and the recall value $0.01$ at $\theta_1=0.9047$ means that of the $\approx$100 fraud observations, there's only one observaation that the model can classifiy as fraud with a probability higher than $0.9047$, i.e., $\text{TP}=1$. Noting that $\text{Precision}=0.33\approx \dfrac{1}{3}$, this means $\text{FP}=2$. 
+                  </p>
+                  <p>
+                    Similarly, at the slightly lower threshold $\theta_1=0.9039$, the recall value $0.09$ means that with the new threshold, the model can correctly identify 9 fraud instances $X_j$ with $p_i>0.9039$ while the rest of the fraud observations $X_j$ will be classified as valid because $p_j\leq0.9039$. Noting that $\text{Precision}=0.82\approx \dfrac{9}{11}$, this means that $\text{FP}$ remains unchanged at 2.
+                  </p>
+                  </p>
+
+                </li>
+                </ul>
+              </p>
+              <h3><a class="header_arg" id="baseline"></a>Comparison with the baseline model</h3>
+              <p>
+                In this last part, we compare the performance of <em>hypertuned model</em> with that of the <em>baseline</em> model. First, let's take a look at the hyperparameter values of the two models:
+              </p>
+              <div>
+              <table class="table table-striped" style="display: contents;">
+                <thead>
+                  <tr style="text-align:left;">
+                    <th style="text-align:left; background-color: #ffebe6;">Parameter</th>
+                    <th style="text-align:left; background-color: #ffebe6;">Baseline Model</th>
+                    <th style="text-align:left; background-color: #ffebe6;">hypertuned Model</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><code class="arg">n_estimator</code></th>
+                    <td>100</td>
+                    <td>1963</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">max_depth</code></th>
+                    <td>6</td>
+                    <td>3</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">min_child_weight</code></th>
+                    <td>1</td>
+                    <td>30</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">subsample</code></th>
+                    <td>1</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">colsample_bytree</code></th>
+                    <td>1</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">colsample_bylevel</code></th>
+                    <td>1</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">alpha</code></th>
+                    <td>0</td>
+                    <td>1e-3</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">gamma</code></th>
+                    <td>1</td>
+                    <td>3</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">scale_pos_weight</code></th>
+                    <td>1</td>
+                    <td>1.2</td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><code class="arg">learning_rate</code></th>
+                    <td>0.3</td>
+                    <td>2.51e-3</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+              <p>
+                Notice that the biggest differences in parameter values are for <code class="arg">n_estimators</code>, <code class="arg">max_depth</code>, <code class="arg">min_child_weight</code>, and <code class="arg">learning_rate</code>. We first train and test the baseline model. Next, we apply the best thresholds that we obtained for the training and test data and save them while also saving them using the default threshold $\theta=0.5$. This can shed light on the importance of finding $\theta_{\mathrm{best}}$ that maximizes the F-score. Finally, we make comparisons with the winner model regarding the performance of the models where we use <code class="library">sklearn</code>'s <code class="method">classification_report</code> and <code class="method">confusion_matrix</code> as our tools. These comparisons can help us assess how well the winner model parameters generalize and categorize the unseen data. 
+              </p>
+              <h4>Training and testing the baseline model</h4>
+              <pre class="prettyprint lang-language"><code class="language-python"># Baseline model parameters
+param_dict = {'tree_method':'gpu_hist'
+              'objective':'binary:logistic'
+              'eval_metric':'aucpr'}
+# fit and predict baseline
+baseline_XGBoost = xgb.XGBClassifier(**param_dict)
+baseline_XGBoost.fit(X_train, y_train)
+y_pred_train_baseline = baseline_XGBoost.predict(X_train)
+y_pred_test_baseline = baseline_XGBoost.predict(X_test)</code></pre>
+              <h4>Applying PR curve optial thresholds and isualizing the classification report</h4>
+              <p>
+                First, let's measure <code>aucpr</code>:
+              </p>
+<pre class="prettyprint lang-language"><code class="language-python">preds = [y_pred_train, y_pred_test, 
+         y_pred_train_50, y_pred_test_50,
+         y_pred_train_baseline, y_pred_test_baseline]
+trues = [y_train, y_test]
+for i,pred in enumerate(preds):
+    print(f"{average_precision_score(trues[i%2],pred):.2f}")</code></pre>
+<pre>0.81
+0.84
+0.66
+0.73
+1.00
+0.81</pre>
+              <p>
+                Next, we apply the best thresholds to the winner model predictions:
+              </p>
+              <pre class="prettyprint lang-language"><code class="language-python"># threshold=0.5
+y_pred_train_50 = np.round(y_pred_train)
+y_pred_test_50 = np.round(y_pred_test)
+
+# apply threshold
+
+y_tr_pred[y_tr_pred&#60;0.297]=0
+y_tr_pred[y_tr_pred&#62;=0.297]=1
+
+y_test_pred[y_test_pred&#60;0.257]=0
+y_test_pred[y_test_pred&#62;=0.257]=1</code></pre>
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig13code" aria-expanded="false" aria-controls="fig13code">
+</button>  
+<div class="collapse" id="fig13code" aria-expanded="false" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python">from sklearn.metrics import classification_report
+from matplotlib import gridspec
+sns.set(rc={'axes.facecolor':'silver', 'figure.facecolor':'gainsboro', 'legend.facecolor':'white'})
+fig = plt.figure(figsize=(12, 12), dpi=80)
+gs = gridspec.GridSpec(2, 2, width_ratios=[4, 5]) # because colorbar takes space!
+plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0.1, hspace=0.25)
+model_labels = ['hypertuned', 'hypertuned', 'baseline', 'baseline']
+dataset_labels = ['train', 'test']*2
+observation_labels = ['valid', 'fraud']
+preds = [y_pred_train, y_pred_test, y_pred_train_baseline, y_pred_test_baseline]
+trues = [y_train, y_test]
+cbars = [False, True]
+y_ticklabel_visibility = [True, False]
+
+for i,pred in enumerate(preds):
+    ax = plt.subplot(gs[i])
+    clf_report = classification_report(trues[i%2], pred, labels=[0, 1], target_names=observation_labels, output_dict=True)    
+    sns.heatmap(pd.DataFrame(clf_report).iloc[:-1, :].T,cmap="gist_heat", vmin=0, vmax=1, annot=True, 
+                annot_kws={'fontsize':'large'}, fmt=".3f", ax=ax, cbar=cbars[i%2], 
+                cbar_kws = dict(use_gridspec=False, location="right"))
+    ax.set_title(f'{model_labels[i]} model ({dataset_labels[i]} data)', fontsize=18, y=1.1)
+    ax.xaxis.tick_top()
+    plt.setp(ax.get_xticklabels(), fontsize=14)
+    plt.setp(ax.get_yticklabels(), fontsize=14, rotation=0, visible=y_ticklabel_visibility[i%2])
+plt.suptitle('Classification report', fontsize=26, y=1.11, x=0.45)</code></pre></div>
+              <div style="text-align:center">
+                 <a id="fig13" style="font-size: 1.5em;">Figure 13</a>
+              </div>
+              <p class="text-align: center;">
+                <img src="clf_report.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p>
+              
+<h4>Visualizing the confusion matrix for the baseline and winner model predictions (using $\theta=0.5$ and $\theta=\theta_{\mathrm{best}}$)</h4>
+<button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#fig14code" aria-expanded="false" aria-controls="fig14code">
+</button>  
+<div class="collapse" id="fig14code" aria-expanded="false" style="height: 0px;">
+<pre class="prettyprint lang-language"><code class="language-python">from sklearn.metrics import confusion_matrix
+fig, ax = plt.subplots(3, 2, figsize=(10,15), dpi=200)
+ax = ax.flat
+plt.tight_layout(h_pad=8, w_pad=5)
+trues = [y_train, y_test]
+pred_dict = {r'Tuned train data($\theta=0.5$)': y_pred_train_50, 
+             r'Tuned test data($\theta=0.5$)': y_pred_test_50,
+             r'Tuned train data($\theta=\theta_{best}$)': y_pred_train, 
+             r'Tuned test data($\theta=\theta_{best}$)': y_pred_test,
+             'Baseline train data': y_pred_train_baseline,
+             'Baseline test data': y_pred_test_baseline
+             }
+labels = ["Valid", "Fraud"]
+for i, (model_, pred) in enumerate(pred_dict.items()):
+    true = trues[i%2]
+    conf_mat = confusion_matrix(true, pred)
+    sns.heatmap(conf_mat, xticklabels=labels, 
+                yticklabels=labels, cmap="Accent_r", 
+                annot=True, annot_kws={'fontsize':'x-large'}, fmt="d", ax=ax[i], cbar=False);
+    ax[i].set_title(r'{0} model for {1} {2}'.format(*model_.split()), fontsize=14, y=-0.1)
+    ax[i].set_ylabel('True class', fontsize=14, labelpad=10)
+    ax[i].set_xlabel('Predicted class', fontsize=14, labelpad=15)
+    ax[i].xaxis.set_ticks_position('top')
+    ax[i].xaxis.set_label_position('top')
+    plt.setp(ax[i].get_xticklabels(), fontsize=12)
+    plt.setp(ax[i].get_yticklabels(), fontsize=12)
+plt.suptitle('Confusion matrix', fontsize=22, y=1.05)
+plt.show()</code></pre></div>
+              <div style="text-align:center">
+                 <a id="fig14" style="font-size: 1.5em;">Figure 14</a>
+              </div>
+              <p class="text-align: center;">
+                <img src="conf_mat.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+              </p>
+
+              <p>
+                <strong>Notes:</strong>
+                <ul>
+                  <li>
+                    The baseline model is severly overfitting. This is evident in both Figures <a href="#fig13">13</a> and <a href="#fig14">14</a> when comparing the training and test results (<code>aucpr train=1.00, aucpr train=0.81</code>). In fact, according to the acceptance criteria, the baseline model needs to be discarded.
+                  </li>
+                  <li>
+                    The hypertuned model with the optimal threshold has a lower <strong>Type II error</strong> (#False negative) compared to the model with $\theta=0.5$; This comes at the cost of a higher <strong>Type I error</strong> (#$\mathrm{FN}$). For the credit card data, however, one would naturally care much more about reducing the <em>Type II error</em> than the <em>Type I error</em>.
+                  </li>
+                  <li>
+                    Depending on the business objective, the success/failure of the model can be phrased differently. For instance, if we consider <strong>the ability to detect all fraud transactions (regardless of some valid transactions labeled as fraud)</strong> we can say the hypertuned and baseline models were $84.7$% and $87.7$% successful, respectively. This success measure chnage to $99.806$% and $99.815$% if the business cares about the success in predicting valid transactions only. In real life scenarios, the model evaluation function is persumably more complicated than this. Realisticly, the business objective should be combination of
+                    <ul>
+                      <li>Minimizing the losses due to fraud transactions</li>
+                      <li>Minimizing the model complexity</li>
+                      <li>Minimizing the customer churn</li>
+                      <li>Maximizing the business profit</li>
+                      <li>Minimizing the Type II error</li>
+                      <li>...</li>
+                    </ul>
+                  </li>
+                </ul>
+              </p>
+              
+              <h3><a class="header_arg" id="conclusion"></a>Summary and Conclusion</h3>
               <ul>
                 <li>In this project, we went through the process of finding the best supervised model to identify fraudulent transactions in a credit card transaction data</li>
                 <li>The dataset was extremely imbalance with a valid-to-fraudulent class ratio of 581 to 1</li>
                 <li>Our analysis found the <code class="method">XGBClassifier()</code> to be the model that best performs on this specific data set and assuming the PR-AUC to be the performance criteria.</li>
                 <li>Due to the large number of parameters that <code class="library">XGBoost</code> takes, we employed a sequential grid search to find the optimal hyperparameters of the model.</li>
-                <li>We learned that early stoppping can benefits the training and tuning process by <strong>reducing the overfitting</strong> and <strong>reducing the computation cost</strong>.
+                <li>The sequential search was performed in 5 steps where at each step, the optimal value for a single or a group of hyperparameters was obtained via cross validation.</li>
+                <li>We used <code>RepeatedStratifiedKFold</code> to reduce the error in the estimate of mean model performance.</li>
+                <li>We learned that early stoppping can benefits the training and tuning process by <strong>reducing the overfitting</strong> and <strong>reducing the computation cost</strong>.</li>
+                <li>We defined a $2%$ threshold as the maximum allowed difference between the train and validation PR-AUC. We did this so that we don't end up with a winner model that the train and test performances are significantly different(overfitting); however, one can set their criteria according to the business objective. For instance, if the business only cares about maximizing the recall (minimizing $\mathrm{FN}$), they set a threshold for the difference in performance between train and validation data in predicting recall instead of PR-AUC.</li>
+                
+                <li>We were able to reduce the overfitting in the baseline model by conducting a sequntial grid search on the <code class="library">xgboost</code> classfier model parameters relevant to the imbalanced classification problem.</li>
+
               </ul>
 
             </div>
@@ -3992,10 +4495,10 @@ df_es[['tr_avg','val_avg','time_taken','early_stop','learning_rate']].iloc[:,:10
             <div class="col-lg-4 col-md-6 footer-links">
               <h4><a class="header_arg" id=""></a>Useful Links</h4>
               <ul>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">About Me</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Projects</a></li>
-                <li><i class="bx bx-chevron-right"></i> <a href="#">Tutorials</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../index.html">Home</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../about.html">About Me</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../projects.html">Projects</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="../../tutorials.html">Tutorials</a></li>
               </ul>
             </div>
             <div class="col-lg-4 col-md-6 footer-contact">
@@ -4010,8 +4513,7 @@ df_es[['tr_avg','val_avg','time_taken','early_stop','learning_rate']].iloc[:,:10
             </div>
             <div class="col-lg-4 col-md-6 footer-info">
               <h3><a class="header_arg" id=""></a>About Me</h3>
-              <p>
-               <p> A data science enthusiast! I love developing new machine learning algorithms to address real-world problems. I try to learn something new on a daily basis.
+              <p> A data science enthusiast! I love developing new machine learning algorithms to address real-world problems. I try to learn something new on a daily basis.
               </p>
               <div class="social-links mt-3">
                 <a href="https://github.com/alineu" class="Github"><i class="bx bxl-github"></i></a>
@@ -4049,14 +4551,14 @@ df_es[['tr_avg','val_avg','time_taken','early_stop','learning_rate']].iloc[:,:10
     <script type="text/javascript" src="../../assets/vendor/aos/aos.js"></script>
     <!-- Template Main JS File -->
     <script src="../../assets/js/main.js"></script>
-    <!-- MathJax JS File -->
-    <script type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-      MathJax.Hub.Config({
-      tex2jax: {
-      inlineMath: [["$", "$"], ["\\(", "\\)"]],
-      processEscapes: true
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
       }
-      });
+    };
     </script>
+    <script id="MathJax-script"  type="text/javascript" async src="../../assets/mathjax/tex-chtml.js"></script>
+    </div>
   </body>
 </html>
