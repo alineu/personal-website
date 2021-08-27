@@ -1,5 +1,7 @@
 **/.ipynb_checkpoints
 **/*.ipynb
+*.csv
+*.xlsx
 *.bak
 *.tex
 *.md
