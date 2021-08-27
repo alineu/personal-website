@@ -1,9 +1,4 @@
-/**
-* Template Name: Moderna - v2.2.0
-* Template URL: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+
 
 /*--------------------------------------------------------------
 # General
@@ -154,6 +149,11 @@ code.library {
 #main {
   margin-top: 80px;
 }
+
+
+
+
+
 
 /*--------------------------------------------------------------
 # Navigation Menu
@@ -2381,12 +2381,109 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Blog
+# Projects
 --------------------------------------------------------------*/
 .projects {
   padding: 40px 0 20px 0;
 }
 
+
+.projects input[type=range] {
+  -webkit-appearance: none;
+  margin-left: 2.5px;
+  width: 99%;
+}
+.projects input[type=range]:focus {
+  outline: none;
+}
+.projects input[type=range]::-webkit-slider-runnable-track {
+  width: 99%;
+  height: 8.4px;
+  cursor: pointer;
+  background: lightgray;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+.projects input[type=range]::-webkit-slider-thumb {
+  border: 1px solid #000000;
+  height: 28px;
+  width: 16px;
+  border-radius: 3px;
+  background: whitesmoke;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -11px;
+}
+.projects input[type=range]:focus::-webkit-slider-runnable-track {
+  background: lightgray;
+}
+.projects input[type=range]::-moz-range-track {
+  width: 99%;
+  height: 8.4px;
+  cursor: pointer;
+  background: lightgray;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+.projects input[type=range]::-moz-range-thumb {
+  border: 1px solid #000000;
+  height: 28px;
+  width: 16px;
+  border-radius: 3px;
+  background: whitesmoke;
+  cursor: pointer;
+}
+
+
+.projects input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: lightgray;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+
+.projects input[type=range]::-ms-fill-lower {
+  
+  background: white;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+}
+.projects input[type=range]::-ms-fill-upper {
+  
+  background: white;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+}
+.projects input[type=range]::-ms-thumb {
+  border: 1px solid #000000;
+  height: 28px;
+  width: 16px;
+  border-radius: 3px;
+  background: whitesmoke;
+  cursor: pointer;
+}
+.projects input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+.projects input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd;
+}
+/*--------------------------------------------------------------
+# 
+--------------------------------------------------------------*/
+
+.projects datalist {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  width: 100%;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+}
 
 .projects .entry {
   background-color: rgba(219, 234, 240, 0.5); 
@@ -2949,6 +3046,180 @@ section {
   padding-left: 5px;
   color: #bedae8;
   font-size: 14px;
+}
+
+
+/*--------------------------------------------------------------
+# Tutorials
+--------------------------------------------------------------*/
+.projects {
+  padding: 20px 0;
+}
+.projects h1 {
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+  line-height: 1em;
+}
+
+.projects ul {
+  padding: 1em 0em 0.5em 1em;
+  margin: 0em 0em 0em 1em;
+}
+
+.projects ul li {
+  padding: 0em 0em 0.5em 0em;
+}
+
+.projects li a {
+  color: #003399;
+}
+
+.projects li a:hover {
+  color: #68A4C4;
+  cursor: pointer;
+}
+
+.projects a.header_arg {
+    display: block;
+    position: relative;
+    top: -60px;
+    visibility: hidden;
+}
+
+.projects a.definition {
+    top: -60px;
+    visibility: hidden;
+    position: relative;
+}
+
+.projects h1 .major_line{
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
+.projects h1 .minor_line{
+  font-size: .6em;
+  font-weight: 400;
+}
+
+.projects h2 {
+  font-family: "Open Sans", sans-serif;
+  text-align: left;
+  font-size: 1.8em;
+  font-weight: 750;
+  margin: 20px 0px 20px 0px
+}
+
+.projects h3 {
+  font-size: 1.65em;
+  font-weight: 650;
+  margin: 1em 0em 1em 0em;
+}
+
+.projects h3.category_header {
+  display: block;
+  background-color: #fff0cc;/*ffbf2a;*/
+  color: #990000;
+  letter-spacing: 1px;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  border: solid 0.2em #ffe099;
+  border-radius: 0.5em;
+  margin: 0em 0em 1em 0em;
+}
+
+.projects h4 {
+  font-size: 1.5em;
+  font-weight: 500;
+  margin: 0.75em 0em 0.75em 0em;
+}
+
+.projects h5 {
+  font-size: 1.4em;
+  font-weight: 450;
+  margin: 0.5em 0em 0.5em 0em;
+}
+
+.projects h6 {
+  font-size: 1.3em;
+  font-weight: 400;
+  margin: 0.5em 0em 0.5em 0em;
+}
+
+.projects p {
+  font-size: 1.1em;
+}
+
+.projects div.quote {
+  text-align: center;
+  font-style: italic;
+  background-color: #fff0cc;
+  border: solid 0.2em #ffe099;
+  border-radius: 0.5em;
+  margin: 0em 12em 0em 12em;
+  padding: 0.25em 0.25em 0.25em 0.25em;
+}
+
+.projects thead:nth-child(odd) {
+    background-color: #ffcabd;
+    }
+
+.projects tr:nth-child(even) {
+    background-color: #ffebe6;
+    line-height: 0.8em;
+    min-height: 0.8em;
+    height: 0.8em;
+    }
+
+.projects tr:nth-child(odd) {
+    line-height: 0.8em;
+    min-height: 0.8em;
+    height: 0.8em;
+    }
+
+.projects th:nth-child(even) {
+  /*index*/
+    background-color: #ffcabd;
+    }
+
+.projects .table{
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-family: Roboto;
+  font-size: 0.9em;
+  /*width: fit-content;*/
+  margin: 1em 0em 2.0em;
+}
+
+
+.projects span.latex_math {
+  font-size: 1.2em;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+}
+
+
+
+.projects .notebook_link{
+   font-family: Roboto;
+   font-size: 0.9em;
+   width: fit-content;
+   margin: 1em 0em 2.0em;
+}
+
+.projects .blurb{
+  margin-bottom: 1.5em;
+}
+
+.projects .btn-primary {
+    color: #fff;
+    background-color: #32627b;
+    /*border: 3px solid  #68a4c4;*/
+}
+.projects .btn-primary:hover {
+    color: #fff;
+    background-color: #32627b;
+    /*border: 3px solid  #68a4c4;*/
 }
 
 /*--------------------------------------------------------------

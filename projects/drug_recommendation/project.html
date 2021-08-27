@@ -1206,7 +1206,7 @@ $$
 $$  
                 </p>
                 <p>
-                  Finally, setting the <code class="arg">smooth_idf</code> argument of <code class="library">sklearn</code>'s <code class="module">TfidVectorizer</code> to <code class="bool">False</code> changes the above definition to:
+                  Finally, setting the <code class="arg">smooth_idf</code> argument of <code class="library">sklearn</code>'s <code class="module">TfidfVectorizer</code> to <code class="bool">False</code> changes the above definition to:
                 </p>
 $$
 \text{idf}(t) = \log{\dfrac{n}{\text{df}(t)}}+1.
@@ -1397,23 +1397,70 @@ ax.set_title('Correlation Matrix', fontsize=18, y=1.02);</code></pre>
                     <li>The weak correlation of <code>year</code> with <code>unique_w_count</code> and <code>unique_w_count</code> that we are able to see thanks to feature engineering. It implies that the newer reviews are longer?!</li>
                   </ul>
                 </p>
-                <h3>Machine learning sentiment analysis models</h3>
+                <h3>Machine learning models for sentiment analysis</h3>
                 <p>
-                  We start off by asessing the performance of a simple Bayesian classifier in <strong>identifying  positive and negative</strong> reviews, simply by knowing the review column as feature. The target variable in this case would be the column <code>rating_binary</code>.
+                  We start off by asessing the performance of a simple Bayesian classifier, <code class="module">MultinomialNB()</code> and a more sophisticated <code class="module">RandomForestClassifier()</code> in <strong>identifying positive and negative</strong> reviews, simply by knowing the review column as feature. The target variable in this case would be the column <code>rating_binary</code>.
+                </p>
+                <p>
+                  I use to common word vectorizers from <code class='library'>sklearn</code>, namely, <code class="module">CountVectorizer()</code> and <code class="module">TfidfVectorizer</code> to see how each influence the performance of the ML models.
                 </p>
                 <pre class="prettyprint lang-language"><code class="language-python"># split the feature-engineered data
 X_train, X_test, y_train, y_test = train_test_split(df_all.review, 
                                                     df_all.rating_binary, 
-                                                    test_size=0.2)
+                                                    test_size=0.1,random_state=110,
+                                                    stratify = df_all.rating_binary 
+                                                    )
+
 # Pipeline to serialize the vectorizer and classifier
-estimator = Pipeline([('vectorizer', TfidfVectorizer()),
-                      ('classifier', MultinomialNB())])
+estimators = [Pipeline([('CountVectorizer', CountVectorizer()),
+                        ('Naive Bayes classifier', MultinomialNB())]
+                      ), 
+              Pipeline([('TfidfVectorizer', TfidfVectorizer()),
+                        ('Naive Bayes classifier', MultinomialNB())]
+                      ),
+              Pipeline([('CountVectorizer', TfidfVectorizer()),
+                        ('Random Forest classifier', RandomForestClassifier(n_estimators=100, 
+                                                            random_state=42, 
+                                                            max_depth = 10000, 
+                                                            min_samples_split = 0.001))]
+                      ),
+              Pipeline([('TfidfVectorizer', TfidfVectorizer()),
+                        ('Random Forest classifier', RandomForestClassifier(n_estimators=100, 
+                                                            random_state=42, 
+                                                            max_depth = 10000, 
+                                                            min_samples_split = 0.001))]
+                      )
+             ]
+
 # fit
-now = time()
-estimator.fit(X_train, y_train)
-print(f"took {time()-now:.2f} seconds!\nAccuracy: {estimator.score(X_test, y_test)*100:.2f}%")</code></pre>
-                <pre>took 8.77 seconds!
-Accuracy: 75.72%</pre>
+preds = []
+for i,estimator in enumerate(estimators):
+    now = time()
+    estimator.fit(X_train, y_train)
+    preds.append(estimator.predict(X_test))
+    print("took {:.2f} seconds for {} using {}".format(time()-now, 
+                                                   estimator.get_params()['steps'][1][0], 
+                                                   estimator.get_params()['steps'][0][0], 
+                                                   ))
+    print(f"train accuracy: {estimator.score(X_train, y_train)*100:.2f}%")
+    print(f"test accuracy: {estimator.score(X_test, y_test)*100:.2f}%")</code></pre>
+                <pre>took 10.38 seconds Naive Bayes classifier using CountVectorizer
+train accuracy: 82.26%
+test accuracy: 80.76%
+took 10.80 seconds Naive Bayes classifier using TfidfVectorizer
+train accuracy: 77.40%
+test accuracy: 76.54%
+took 211.20 seconds Random Forest classifier using CountVectorizer
+train accuracy: 88.04%
+test accuracy: 78.28%
+took 243.36 seconds Random Forest classifier using TfidfVectorizer
+train accuracy: 95.18%
+test accuracy: 83.89%</pre>
+
+                <p>
+                  <a href="../../ML/confusion_matrix.html">Confusion matrix</a> provides a nice way to assess the performance of the machine learning models we trained in this part.
+                </p>
+
                 <pre class="prettyprint lang-language"><code class="language-python">fig, ax = plt.subplots(1, 1, figsize=(6,6), dpi=100)
 labels = ["Negative", "Positive"]
 y_pred = estimator.predict(X_test)
@@ -1428,49 +1475,548 @@ ax.set_xlabel('Predicted class', fontsize=16, labelpad=10)
 plt.setp(ax.get_xticklabels(), fontsize=14)
 plt.setp(ax.get_yticklabels(), fontsize=14)
 plt.show()</code></pre>
-                <div style="text-align: center;">
-                  <a id="fig_output_100_0" style="font-size: 1.5em;">Figure 16</a>
+                <div style="text-align:center">
+                  <a id="mlclfconfmat" style="font-size: 1.5em;">Figure 16</a>
                 </div>
                 <p class="text-align: center;">
-                  <img src="output_100_0.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+                  <img src="mlclfconfmat.png" style="width: 80%; display: block; margin: 10px auto 20px;"/>
                 </p>
                 <p>
-                  Not horrible! We now advance to the next step which is using a more sophisticated classifier to perform the same task. I use <code class="module">RandomForestClassifier()</code> of <code class="library">sklearn</code> in this part.
+                  <ul>
+                    <li>
+                      Confusion matrices suggest that <code class="module">MultinomialNB()</code> shows a better classification performance when combind with <code>CountVectorizer()</code> compared to when it's combined with <code>TfidfVectorizer()</code>. In this regard, <code class="module">RandomForestClassifier()</code> is in sharp contrast to <code class="module">MultinomialNB()</code> and it performs better when using <code>TfidfVectorizer()</code>.
+                    </li>
+                    <li>
+                      Among the <strong>model+vectorizer</strong> combinations, <code class="module">MultinomialNB() + CountVectorizer()</code> does the best job in <strong>correctly identifying the negative reviews</strong>. However, this comes at the cost of poorer performance in identifying positive reviews with a significantly <strong>higher false negatives</strong> and <strong>lower true positives</strong>.
+                    </li>
+                    <li>
+                      Predictions using <code class="module">RandomForestClassifier()</code> appear to be suffering from overfitting. This is easy to notice when looking at the $\approx$11% difference in performance between the train and test data. This can be remedied by reducing the complexity of the <code class="module">RandomForestClassifier()</code>, for instance, by reducing the <code>max_depth</code>.
+                    </li>
+                  </ul>
                 </p>
-                <pre class="prettyprint lang-language"><code class="language-python"># Pipeline to serialize the vectorizer and classifier
-estimator = Pipeline([('vectorizer', TfidfVectorizer()),
-                      ('classifier', RandomForestClassifier(n_estimators=100, 
-                                                            random_state=42, 
-                                                            max_depth = 10000, 
-                                                            min_samples_split = 0.001))
-                     ]
-                    )
+                <h4>Influence of n-grams on the performance of ML classifiers</h4>
+                <p>
+                  In this part, we are interested to see if training the ML models using n-grams ($n\geq2$) leads to improvement in their performance.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">estimators = []
+for i in range(2,6):
+    estimators.append(Pipeline([('CountVectorizer', CountVectorizer(ngram_range=(i,i), 
+                                                                    max_features=10000)),
+                                ('Naive Bayes classifier', MultinomialNB())
+                               ]
+                              )
+                     )
 # fit
-now = time()
-estimator.fit(X_train, y_train)
-print(f"took {time()-now:.2f} seconds!\nAccuracy: {estimator.score(X_test, y_test)*100:.2f}%")</code></pre>
-                <pre>took 208.50 seconds!
-    Accuracy: 83.86%</pre>
-                <pre class="prettyprint lang-language"><code class="language-python">from sklearn.metrics import confusion_matrix
-fig, ax = plt.subplots(1, 1, figsize=(6,6), dpi=100)
+preds = []
+for i,estimator in enumerate(estimators):
+    now = time()
+    #estimator.fit(X_train, y_train)
+    preds.append(estimator.predict(X_test))
+    print("took {:.2f} seconds {} using {:d}-grams".format(time()-now, 
+                                                           estimator.get_params()['steps'][1][0], 
+                                                           i+2)
+         )
+    print(f"train accuracy: {estimator.score(X_train, y_train)*100:.2f}%")
+    print(f"test accuracy: {estimator.score(X_test, y_test)*100:.2f}%")</code></pre>
+<pre>took 21.79 seconds Naive Bayes classifier using 2-grams
+train accuracy: 82.80%
+test accuracy: 82.17%
+took 39.43 seconds Naive Bayes classifier using 3-grams
+train accuracy: 81.30%
+test accuracy: 80.55%
+took 53.77 seconds Naive Bayes classifier using 4-grams
+train accuracy: 78.54%
+test accuracy: 77.73%
+took 60.52 seconds Naive Bayes classifier using 5-grams
+train accuracy: 76.02%
+test accuracy: 74.72%</pre>
+                <p>
+                  The following table shows the summary of performances of the two ML models using n-grams.
+                </p>
+                <table class="table table-striped">
+                  <thead>
+                    <tr style="text-align: center;">
+                      <th style="color: white;"></th>
+                      <th colspan=4><strong><code style="color: #000;">Naive Bayes</code></strong></th>
+                      <th colspan=4><strong><code style="color: #000;">Random Forest</code></strong></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="text-align: center;">
+                      <th scope="row">vectorizer</th>
+                      <td colspan=2><code style="color: #000;">CountVectorizer</code></td>
+                      <td colspan=2><code style="color: #000;">TfidfVectorizer</code></td>
+                      <td colspan=2><code style="color: #000;">CountVectorizer</code></td>
+                      <td colspan=2><code style="color: #000;">TfidfVectorizer</code></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">data</th>
+                      <td>train</td>
+                      <td>test</td>
+                      <td>train</td>
+                      <td>test</td>
+                      <td>train</td>
+                      <td>test</td>
+                      <td>train</td>
+                      <td>test</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1-gram</th>
+                      <td>82.26</td>
+                      <td>80.76</td>
+                      <td>77.40</td>
+                      <td>76.54</td>
+                      <td>88.04</td>
+                      <td>78.28</td>
+                      <td>95.18</td>
+                      <td>83.89</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2-gram</th>
+                      <td>82.80</td>
+                      <td>82.17</td>
+                      <td>82.41</td>
+                      <td>82.17</td>
+                      <td>97.01</td>
+                      <td>89.84</td>
+                      <td>99.02</td>
+                      <td>92.79</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3-gram</th>
+                      <td>81.30</td>
+                      <td>80.55</td>
+                      <td>81.54</td>
+                      <td>80.83</td>
+                      <td>92.87</td>
+                      <td>86.21</td>
+                      <td>95.15</td>
+                      <td>88.27</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4-gram</th>
+                      <td>78.54</td>
+                      <td>77.73</td>
+                      <td>79.14</td>
+                      <td>77.97</td>
+                      <td>train acc</td>
+                      <td>80.04</td>
+                      <td>87.92</td>
+                      <td>81.99</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">5-gram</th>
+                      <td>76.02</td>
+                      <td>74.72</td>
+                      <td>76.51</td>
+                      <td>74.90</td>
+                      <td>train acc</td>
+                      <td>75.80</td>
+                      <td>81.60</td>
+                      <td>77.22</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ul>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+                <h3>Deep learning models for sentiment analysis</h3>
+                <p>
+                  In this section we develop deep learning models for sentiment analysis. In the <strong>Model Selection</strong> process, I explore different neural network architectures for sentiment analysis. Model selection is the process of fitting multiple models on a given dataset and choosing one over all others. I start with the baseline model which uses <code>CountVectorizer</code> as the encoding method which is piped into a simlple neural network. This model is the baseline model. I used <code class="library">tensorflow</code> to design the neural networks in this project. 
+                </p>
+                <h4>Sentiment analysis using <code>CountVectorizer</code> and a simple NN</h4>
+                <p>
+                  First, we split the data into train, validation, and test data and then, transform the review data into a numerical representation using<code>CountVectorizer</code>. We also save the transformed features using <code>pickle</code> and <code>bz2</code> because the transformation can take some time. This way we can use them again later as we develop the sentiment analysis models. 
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python"># split the feature-engineered data to train and test
+X_train, X_test, y_train, y_test = train_test_split(df_all.review, 
+                                                    df_all.rating_binary, 
+                                                    test_size=0.1, 
+                                                    random_state=110,
+                                                    stratify = df_all.rating_binary 
+                                                    )
+
+# further split train to tr and validation
+X_tr, X_val, y_tr, y_val = train_test_split(X_train, 
+                                            y_train, 
+                                            test_size=0.2, 
+                                            random_state=110, 
+                                            stratify = y_train
+                                            )
+
+vectorizer = CountVectorizer(analyzer = 'word', 
+                             tokenizer = None,
+                             preprocessor = None, 
+                             stop_words = None, 
+                             max_features = 10000
+                            )
+# transform
+vectorizer.fit(X_train)
+vectorized_features_train = vectorizer.transform(X_train)
+vectorized_features_tr = vectorizer.transform(X_tr)
+vectorized_features_val = vectorizer.transform(X_val)
+vectorized_features_test = vectorizer.transform(X_test)
+
+# save the vectorized features
+with bz2.open('CountVect_10000_train.pkl.bz2', 'wb') as f:
+    pickle.dump(vectorized_features_train, f)
+f.close()
+with bz2.open('CountVect_10000_tr.pkl.bz2', 'wb') as f:
+    pickle.dump(vectorized_features_tr, f)
+f.close()
+with bz2.open('CountVect_10000_val.pkl.bz2', 'wb') as f:
+    pickle.dump(vectorized_features_val, f)
+f.close()
+with bz2.open('CountVect_10000_test.pkl.bz2', 'wb') as f:
+    pickle.dump(vectorized_features_test, f)
+f.close()
+
+# to load:
+# with bz2.open('file.pkl.bz2', 'rb') as f:
+#     vectorized_features = pickle.load(f)
+# f.close()</code></pre>
+
+                <p>
+                Next, we build the neural network. I used <code class="method">SGD()</code> as the optimizer with <code>lr=0.005</code>.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">opt = SGD(lr=0.005)
+# Build the model 
+
+model = Sequential(name='baseline')
+
+model.add(Dense(400, input_shape=(10000,)))# hidden layer 1
+model.add(Activation('relu'))
+
+model.add(Dense(100, activation='relu'))# hidden layer 2
+model.add(Dense(units=1, activation='sigmoid'))# output layer
+model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
+model.summary()</code></pre>
+<pre>Model: "baseline"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense (Dense)                (None, 400)               4000400   
+_________________________________________________________________
+activation (Activation)      (None, 400)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 100)               40100     
+_________________________________________________________________
+dense_2 (Dense)              (None, 1)                 101       
+=================================================================
+Total params: 4,040,601
+Trainable params: 4,040,601
+Non-trainable params: 0
+_________________________________________________________________</pre>
+                <p>
+                  We are redy to train the model! I use a <code>ModelCheckpoint</code> that tracks <code>'val_loss'</code> and saves the model weights at the iteration with the minimum validation loss. In addition, I used <strong>early stopping</strong> with validation loss as the stopping criteria to reduce the overfitting. I used <code>100</code> epochs with <code>patience=30</code>, i.e., 100 rounds of training where the trianing stops if there's no improvement in validation loss after 30 iterations. Lastly, I define a dictionary to keep track of different model configurations and keeping track of their performances.
+                </p>
+<pre class="prettyprint lang-language"><code class="language-python">model_config = model.get_config()
+checkpoint = ModelCheckpoint(filepath=f"{model_config['name']}.h5", monitor='val_loss', mode='min', verbose=1, 
+                             save_best_only=True)
+es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=30)
+callbacks_list = [checkpoint, es]
+# fit model
+history = model.fit(vectorized_features_tr.toarray(), y_tr, epochs=100, 
+                    batch_size=64, callbacks=callbacks_list, 
+                    shuffle=False, validation_data=(vectorized_features_val.toarray(), y_val))
+# update the model_dict
+model_config['hist']=history.history
+model_dict = {}
+model_dict[model_config['name']]=model_config
+f = open(f"model_dict.pkl", "wb")
+pickle.dump(model_dict, f)
+f.close()</code></pre>
+<pre>Epoch 1/100
+2387/2387 [==============================] - ETA: 0s - loss: 0.5460 - accuracy: 0.7283
+Epoch 00001: val_loss improved from inf to 0.48128, saving model to baseline.h5
+2387/2387 [==============================] - 14s 6ms/step - loss: 0.5460 - accuracy: 0.7283 - val_loss: 0.4813 - val_accuracy: 0.7653
+...
+...
+...
+Epoch 64/100
+2386/2387 [============================>.] - ETA: 0s - loss: 0.0063 - accuracy: 0.9995
+Epoch 00064: val_loss did not improve from 0.27788
+2387/2387 [==============================] - 14s 6ms/step - loss: 0.0063 - accuracy: 0.9995 - val_loss: 0.3521 - val_accuracy: 0.9279
+Epoch 00064: early stopping</pre>
+                <p>
+                  Even though the validation accuracy is reasonable, there's a relatively large gap between the train and validation performances which is due to overfitting. In the next part, I'll go through my attempts to reduce overfitting by adding <code>BatchNormalization()</code> and/or <code>Dropout()</code> layers to the network architecture. 
+                </p>
+                <h4>Modifications to the baseline model</h4>
+                <p>
+                  <a href="#tab-nn-summary">Table 8</a> shows a summary of the modifications that I made to the baseline model in attempt to improve the model performance. All the models in the table used <code>SGD()</code> optimizer with <code>lr=0.005</code>.
+                </p>
+                <div id="tab-nn-summary">
+                 <table class="table table-striped" style="display: inline-table;">
+                  <caption style="font-size: 1.3em; text-align: center;">Table 8: Summary of the NN models used for drug review classification</caption><!-- - <strong>*</strong> lr=0.001 -->
+                  <thead  style="background-color: #ffebe6;">
+                    <tr style="text-align: left; background-color: #ffebe6;">
+                      <th>Layers</th>
+                      <td><strong>Baseline</strong></td>
+                      <td><strong>model_00</strong></td>
+                      <td><strong>model_01</strong></td>
+                      <td><strong>model_02</strong></td>
+                      <td><strong>model_03</strong></td>
+                      <!-- <td><strong>model_04</strong><sup>*</sup></td> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><code class="arg">Dense(400, input_shape=(10000,))</code></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <!-- <td><span style="color: #37CF4E;">&#10004;</span></td> -->
+                    </tr>
+                    <tr>
+                      <th scope="row" style="text-align: left;"><code class="arg">BatchNormalization()</code></td>
+                      <td><span style="color: #F73100;">&#10007;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #F73100;">&#10007;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <!-- <td><span style="color: #37CF4E;">&#10004;</span></td> -->
+                    </tr>
+                    <tr>
+                      <th scope="row" style="text-align: left;"><code class="arg">Activation('relu')</code></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <!-- <td><span style="color: #37CF4E;">&#10004;</span></td> -->
+                    </tr>
+                    <tr>
+                      <th scope="row" style="text-align: left;"><code class="arg">Dropout</code></td>
+                      <td><span style="color: #F73100;">&#10007;</span></td>
+                      <td><span style="color: #F73100;">&#10007;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span>(=0.5)</td>
+                      <td><span style="color: #37CF4E;">&#10004;</span>(=0.5)</td>
+                      <td><span style="color: #37CF4E;">&#10004;</span>(=0.8)</td>
+                      <!-- <td><span style="color: #37CF4E;">&#10004;</span>(=0.8)</td> -->
+                    </tr>
+                    <tr>
+                      <th scope="row" style="text-align: left;"><code class="arg">Dense(100, activation='relu')</code></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <!-- <td><span style="color: #37CF4E;">&#10004;</span></td> -->
+                    </tr>
+                    <tr>
+                      <th scope="row" style="text-align: left;"><code class="arg">Dense(units=1, activation='sigmoid')</code></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <td><span style="color: #37CF4E;">&#10004;</span></td>
+                      <!-- <td><span style="color: #37CF4E;">&#10004;</span></td> -->
+                    </tr>
+                  </tbody>
+                </table>
+                <p>
+                  We first load the models and make predictions for both training and validation data.
+                </p>
+                <pre class="prettyprint lang-language"><code class="language-python">model_names = ['baseline', 'model_00', 'model_01', 'model_02', 'model_03']
+preds = []
+for name in model_names:
+    model = load_model(f"{name}.h5")
+    preds.append(model.predict(vectorized_features_tr.toarray()))
+    preds.append(model.predict(vectorized_features_val.toarray()))</code></pre>
+                <p>
+                  Next, we use accuracy and loss plots along with <code>confusion_matrix</code> to assess the performance of each model.
+                </p>
+                </div>
+                <button class="btn btn-primary plus-minus-code collapsed" type="button" data-toggle="collapse" data-target="#collapsenn1" aria-expanded="false" aria-controls="collapsenn1"></button>  
+<div class="collapse" id="collapsenn1" aria-expanded="true" style="height: 0px;">
+                <pre class="prettyprint lang-language"><code class="language-python"># helper function
+def col_to_hex(colmap, n=10, alpha=1):
+    """named colormap to n hex colors"""
+    out = []
+    for i in range(n):
+        r,g,b,_ = plt.cm.get_cmap(colmap,n)(i)
+        out.append(f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}{int(alpha*255):02x}")
+    return out
+
+# figure, axes, and adjustments
+sns.set(rc={'axes.facecolor':'silver', 'figure.facecolor':'gainsboro', 'legend.facecolor':'white'})
+fig = plt.figure(figsize=(9, 25), dpi=120)
+plt.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=0.3, hspace=0.75)
+
+# Accuracy and Loss curves
+gs = gridspec.GridSpec(7, 1, height_ratios=[2,2,1,1,1,1,1]) # because matplotlib is weird
+ax0 = plt.subplot(gs[0]) # accuracy
+ax1 = plt.subplot(gs[1]) # loss
+axes=[ax0, ax1]
+# labels, constants etc.
+colors = col_to_hex('Dark2', n=8)
+mfc = ['deepskyblue', 'orange']
+titles = ['Accuracy', 'Loss']
+data_label_dict = dict(zip(['loss', 'accuracy', 'val_loss', 'val_accuracy'],
+                           ['tr loss', 'tr acc', 'val loss', 'val acc']))
+patience = 30
+n_epochs = 100
+history_results = []
+for i,model_name in enumerate(model_names):
+    model_data_dict = model_dict[model_name]
+    hist = model_data_dict['hist']
+    for j,key in enumerate(hist.keys()):
+        n_epochs = len(hist[key])
+        start = (n_epochs+1)%2 # to reduce the number of data points displayed
+        if key.endswith('y'): # accuracy
+            ax_index=0
+        else: # loss
+            ax_index=1
+        data_index=j//2 # 0:train, 1:val
+        axes[ax_index].plot(np.arange(1, n_epochs+1)[start::2], hist[key][start::2], marker='o', 
+                            markerfacecolor=mfc[data_index], markersize=6, color=colors[i], 
+                            markeredgewidth=0, markeredgecolor=colors[i], linewidth=5, linestyle='-', 
+                            label = f'{data_label_dict[key]} ({model_names[i]})')
+        if key.startswith('val'): # show min val loss and the corresponding val accuracy
+            axes[ax_index].plot(n_epochs-patience, hist[key][-patience-1], color='cyan', 
+                                marker='x', markersize=6, markeredgewidth=3, zorder=200)
+    history_results.append(hist['accuracy'][-patience-1])
+    history_results.append(hist['val_accuracy'][-patience-1])
+print()
+for i,ax in enumerate(axes):
+    ax.set_title(titles[i], fontsize=28, y=1.02)
+    ax.set_xlabel('epochs', fontsize=22, labelpad=10)
+    ax.legend(bbox_to_anchor=(1,1.02,0,0), loc='upper left', fontsize=14)
+    ax.grid(False)
+    plt.setp(ax.get_xticklabels(), fontsize=16)
+    plt.setp(ax.get_yticklabels(), fontsize=16)
+    
+# Confusion Matrix plot
+gs = gridspec.GridSpec(7, 3)
+conf_mat_ax_ids = np.reshape(np.arange(9,21).reshape(4,-1), 12, order='F')
+conf_mat_ax = [plt.subplot(gs[i]) for i in conf_mat_ax_ids]
+# labels, constants etc.
 labels = ["Negative", "Positive"]
-y_pred = estimator.predict(X_test)
-conf_mat = confusion_matrix(y_test, y_pred)
-sns.heatmap(conf_mat, xticklabels=labels, 
-            yticklabels=labels, cmap="tab20", 
-            annot=True, annot_kws={'fontsize':'large'}, 
-            fmt="d", ax=ax, cbar=False);
-ax.set_title('Confusion matrix of the RandomForest classifier', fontsize=18, y=1.05)
-ax.set_ylabel('True class', fontsize=16, labelpad=10)
-ax.set_xlabel('Predicted class', fontsize=16, labelpad=10)
-plt.setp(ax.get_xticklabels(), fontsize=14)
-plt.setp(ax.get_yticklabels(), fontsize=14)
-plt.show()</code></pre>
+data_labels = ['tr', 'val']
+trues = [y_tr, y_val]
+cbars = [False]*2*len(model_names)
+cbars[-1]=True # one colorbar for all the plots
+ylabels = [False]*2*len(model_names)
+ylabels[0], ylabels[1] = True, True
+y_ticklabel_visibility = [True, False]
+for i,ax in enumerate(conf_mat_ax):
+    pred = np.round(preds[i].ravel()) # probabilities to binary
+    print(f"{model_names[i//2]} {data_labels[i%2]} acc: from model history={history_results[i]:.3f} - " \
+        + f"from model eval={np.mean(pred==trues[i%2]):.3f}")
+    conf_mat = confusion_matrix(trues[i%2].values, pred, normalize='true')
+    if i>7: # new colorbar axis otherwise the confusion matrix plot will shrink!
+        ax_pos = ax.get_position().bounds
+        cbar_ax = fig.add_axes([(ax_pos[0]+ax_pos[2])*1.05, ax_pos[1], .02, ax_pos[3]])
+        sns.heatmap(conf_mat, xticklabels=labels, 
+                yticklabels=labels, cmap="YlGnBu", 
+                annot=True, annot_kws={'fontsize':'x-large'}, 
+                fmt=".3f", ax=ax, cbar_ax=cbar_ax, vmax=1, vmin=0)
+        cbar = ax.collections[0].colorbar
+        cbar.set_ticks(np.linspace(0,1,11))
+        cbar.set_ticklabels([f'{x:.2f}' for x in np.linspace(0,1,11)])
+    else:
+        sns.heatmap(conf_mat, xticklabels=labels, 
+                yticklabels=labels, cmap="YlGnBu", 
+                annot=True, annot_kws={'fontsize':'x-large'}, 
+                fmt=".3f", ax=ax, cbar=False)
+    ax.set_title(f'{model_names[i//2]} ({data_labels[i%2]})', fontsize=20, y=1.35)
+    ax.xaxis.set_label_position('top') 
+    ax.xaxis.tick_top()  
+    ax.yaxis.set_label_position('left') 
+    ax.yaxis.tick_left()
+    plt.setp(ax.get_xticklabels(), fontsize=14, rotation=0, ha='center')
+    plt.setp(ax.get_yticklabels(), fontsize=14, rotation=90, va='center')
+    ax.set_xlabel('Predicted class', fontsize=18, labelpad=12)
+    if ylabels[i]:
+        ax.set_ylabel('True class', fontsize=18, labelpad=10)</code></pre></div>
+        <pre>baseline tr acc: from model history=0.988 - from model eval=0.985
+baseline val acc: from model history=0.910 - from model eval=0.910
+model_00 tr acc: from model history=0.895 - from model eval=0.895
+model_00 val acc: from model history=0.852 - from model eval=0.852
+model_01 tr acc: from model history=0.963 - from model eval=0.990
+model_01 val acc: from model history=0.922 - from model eval=0.922
+model_02 tr acc: from model history=0.954 - from model eval=0.981
+model_02 val acc: from model history=0.911 - from model eval=0.911
+model_03 tr acc: from model history=0.955 - from model eval=0.897
+model_03 val acc: from model history=0.917 - from model eval=0.862</pre>
                 <div style="text-align:center">
-                  <a id="fig_output_103_0" style="font-size: 1.5em;">Figure 17</a>
+                <a id="fig17" style="font-size: 1.5em;">Figure 17</a>
                 </div>
                 <p class="text-align: center;">
-                  <img src="output_103_0.png" style="width: 50%; display: block; margin: 10px auto 20px;"/>
+                  <img src="NN_fig1.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+                </p>
+
+                <p>
+                  <a href="#fig17">Figure 17</a> shows the accuracy and loss curves for the training and validation data, along with the confusion matrix of the predictions made by the models listed in <a href="#tab-nn-summary">Table 8</a>. A lot of information to digest so let's go ahead and seeif we can gain any insights from <a href="#fig17">Figure 17</a> to improve our classifier! 
+                </p>
+                <ul>
+                  <li>We used the model training history data from <code>model_dict</code>, the dictionary we created earlier, to plot the accuracy and loss curves.</li>
+                  <li>For each curve, <span style="color: cyan; background-color: lightgray; font-size: 1.2em;">&times;</span> shows the epoch with the minimum loss. Model training stops 30 epochs after this epoch (<code>patience=30</code>).</li>
+                  <li>Some of the <strong>accuracy and loss curves might be a bit misleading/inaccurate</strong> for the following reasons:
+                    <p>
+                      Notice that I printed out the accuracy of the optimal network (the network with the weights saved at the minimum loss epoch) for training and validation data. For each metric there are two printed values: <strong>The first number is obtained from the model history during trainig phase and the second is calculated during evaluation</strong>. We can see that the validation accuracy is the same for all of the model. However, in some of these neural networks, the model accuracy for trainig data from model history is higher than that of the evaluation, i.e., <strong>inference</strong>. To provide more details, I re-ran the model_02 calculations while saving the model at every epoch, so that I can evaluate the model in inference mode. <a href="#fig18">Figure 18</a> shows the results.
+<pre class="prettyprint lang-language"><code class="language-python">checkpoint = ModelCheckpoint(filepath='model_02_all.{epoch:02d}.h5', monitor='val_loss', mode='min', verbose=1, 
+                             save_best_only=False, save_weights_only=False,save_freq='epoch')
+es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=30)
+callbacks_list = [checkpoint, es]
+history = model.fit(vectorized_features_tr.toarray(), y_tr, epochs=100, 
+                    batch_size=64, callbacks=callbacks_list, shuffle=False, 
+                    validation_data=(vectorized_features_val.toarray(), y_val))
+                <div style="text-align:center">
+                <a id="fig18" style="font-size: 1.5em;">Figure 18</a>
+                </div>
+                <p class="text-align: center;">
+                  <img src="NN_fig2.png" style="width: 65%; display: block; margin: 10px auto 20px;"/>
+                </p>
+                    <p>
+                      Noteably, this is the case for the models that have <code>Dropout</code> layer in their architecture. The question is what causes this discrepancy?
+                    </p>
+                    <p>
+                      <a href="https://keras.io/getting-started/faq/#why-is-the-training-loss-much-higher-than-the-testing-loss">Here</a> is the official <code><a href="https://keras.io">Keras</a></code> answer to this question. In short, <strong>during the training phase and depending on the dropout value, a portion of neurons are dropped, in attempt to a reduce overfitting. The accuracy and loss for training data is calculated without taking the weights of the dropped neurons into account.</strong>
+                      In contrast, during the model evaluation/prediction (<em>inference</em>) all neurons remain in the network structure. The accuracy and loss for validation data, whether in training or evaluation phase, are calculated using the full network. That is why we don't see any difference in the printed values for the validation data. There are other reasons that can contribute to this behavior which is outside the scope of this project (See <a href="https://github.com/keras-team/keras/pull/9965">here</a> and <a href="http://blog.datumbox.com/the-batch-normalization-layer-of-keras-is-broken/">here</a>).
+                    </p>
+                  </li>
+                  <li>When comparing the performance of the network on training and validation data, we notice that the inaccuracies in predicting negative reviews contributes the most to the poorer performance of the model on validation data. Looking at the confusion matrix, in any case, the model seems to be doing a great job in identifying the positive reviews. <code>Keras</code> offers the <code>class_weight</code> argument in the <code>fit()</code> method which can be used to treat the two classes differently when calculating the loss function. This is something that I explored and I'll present the outcomes later in the project.</li>
+                  <li></li>
+                  <li></li>
+                </ul>
+                <pre class="prettyprint lang-language"><code class="language-python"># load the histories
+with open('model_baseline_history.pkl', 'rb') as pickle_file:
+    hist_baseline = pickle.load(pickle_file)
+pickle_file.close()
+with open('model_00_history.pkl', 'rb') as pickle_file:
+    hist_model_00 = pickle.load(pickle_file)
+pickle_file.close()
+
+
+                  <h4>Adding a dropout layer</h4>
+                  <ul>
+
+                    <li>vectorizers
+                      <ul>
+                        <li><code>CountVectorizer</code></li>
+                        <li><code>TfidfVectorizer</code></li>
+                        <li><code>Tokenizer</code></li>
+                      </ul>
+                    </li>
+                    <li>NN architectures
+                      <ul>
+                        <li><code>ANN</code></li>
+                        <li><code>CNN</code></li>
+                        <li><code>Glove</code></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <p>
+                    
+                  </p>
+                    </ul>
+                  </ul>
                 </p>
              </p></div></div></section>
 
@@ -1584,13 +2130,13 @@ plt.show()</code></pre>
   <!-- Template Main JS File -->
     <script src="../../assets/js/main.js"></script>
     <!-- MathJax JS File -->
-    <script type="text/javascript" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-      MathJax.Hub.Config({
-      tex2jax: {
-      inlineMath: [["$", "$"], ["\\(", "\\)"]],
-      processEscapes: true
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
       }
-      });
+    };
     </script>
+    <script id="MathJax-script"  type="text/javascript" async src="../../assets/mathjax/tex-chtml.js"></script>
   </body>
 </html>
