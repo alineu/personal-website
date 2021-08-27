@@ -1068,6 +1068,18 @@ y_val=np.delete(y_val, remove_ids, axis=0)
 <pre>    3 rows are being removed from the validation data!
 </pre>
 <h3><a id="data_inspect"></a> Embeddings</h3>
+<p>
+  A word embedding is a representation of text as a vector where similar words are expected to have a similar representation in the vector space. In this work, I tested two well known word embeddings <a href="https://github.com/commonsense/conceptnet-numberbatch">Conceptnet Numberbatch</a> and <a href="https://nlp.stanford.edu/projects/glove/">Glove</a>. Conceptnet Numberbatch (CN) and Glove have about 500'000 and 400'000 word embeddings, respectively. Glove offeres word embeddings in 50, 100, and 300 dimensions and CN word embeddings' dimension is 300. 
+<div style="text-align:center">
+  <a id="fig_encoder" style="font-size: 1.5em;">From Sentences to Embeddings</a>
+</div>
+<p class="text-align: center;">
+  <img src="embeddings.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
+</p>
+
+  This is called representation learning. The output of this approach is a representation of a word in some vector space, and the word can be considered embedded in that space. Consequently, these word vectors are also called embeddings.
+The core hypothesis behind word vector algorithms is that words that occur near each other are related to each other.
+</p>
 <h4><a id="data_inspect"></a> Using <a href="https://github.com/commonsense/conceptnet-numberbatch">Conceptnet Numberbatch</a> for word embeddings</h4>
 <pre class="prettyprint lang-language"><code class="language-python">embeddings_index = {}
 with open('numberbatch-en-19.08.txt', encoding='utf-8') as f:
@@ -1167,7 +1179,7 @@ embedding_dim=300
 </p>
 <pre class="prettyprint lang-language"><code class="language-python">encoder_inputs = Input(shape=(text_max_num_words,))
 
-#embedding layer
+# embedding layer
 enc_emb = Embedding(
     text_vocab_size,
     embedding_dim,
@@ -1175,15 +1187,17 @@ enc_emb = Embedding(
     trainable=True,
 )(encoder_inputs)
 
-#encoder lstm 1
+# The output of the embedding layer is fed to a LSTM
+
+# encoder lstm 1
 encoder_lstm1 = LSTM(latent_dim,return_sequences=True,return_state=True,dropout=0.4,recurrent_dropout=0.4)
 encoder_output1, state_h1, state_c1 = encoder_lstm1(enc_emb)
 
-#encoder lstm 2
+# encoder lstm 2
 encoder_lstm2 = LSTM(latent_dim,return_sequences=True,return_state=True,dropout=0.4,recurrent_dropout=0.4)
 encoder_output2, state_h2, state_c2 = encoder_lstm2(encoder_output1)
 
-#encoder lstm 3
+# encoder lstm 3
 encoder_lstm3=LSTM(latent_dim, return_state=True, return_sequences=True,dropout=0.4,recurrent_dropout=0.4)
 encoder_outputs, state_h, state_c= encoder_lstm3(encoder_output2)
 </code></pre>
@@ -1200,7 +1214,7 @@ encoder_outputs, state_h, state_c= encoder_lstm3(encoder_output2)
 <pre class="prettyprint lang-language"><code class="language-python"># Set up the decoder, using `encoder_states` as initial state.
 decoder_inputs = Input(shape=(None,))
 
-#embedding layer
+# embedding layer
 dec_emb_layer = Embedding(
     summary_vocab_size,
     embedding_dim,
@@ -1211,6 +1225,18 @@ dec_emb = dec_emb_layer(decoder_inputs)
 decoder_lstm = LSTM(latent_dim, return_sequences=True, return_state=True,dropout=0.4,recurrent_dropout=0.2)
 decoder_outputs,decoder_fwd_state, decoder_back_state = decoder_lstm(dec_emb,initial_state=[state_h, state_c])</code></pre>
 <h4><a id="attention"></a>Attention</h4>
+<p>
+  The main intuition behind <strong></strong> model is to understand in order to generate a summary word at time step $t$, how much weight, i.e. <strong>Attention</strong>, is required to be assigned to each word in the input sequence. For instance, for the input sentence:
+  <ul>
+    <li>"The weather is so nice today that I can imagine myself being outdoor for the entire day</li>
+  </ul>
+  with the summary
+  <ul>
+    <li>Love this weather!,</li>
+  </ul>
+we can see that the third word in the summary, <em>weather</em>, has a direct reference to the second word in the input sentence. Similarly, the first word of the summary, <em>love</em>, corresponds to the word <em>nice</em> in the input sentence. Attention model tries to take into account such relations to increase or decrease the importance level of each word in the input sentence. I used the attention model implemented <a href="https://github.com/thushv89/attention_keras/blob/master/layers/attention.py">here</a> for this project.
+
+</p>
 <pre class="prettyprint lang-language"><code class="language-python">from tensorflow.python.keras.layers import Layer
 from tensorflow.python.keras import backend as K
 
@@ -1311,7 +1337,7 @@ attn_layer = BahdanauAttention(name='attention_layer')
 attn_out, attn_states = attn_layer([encoder_outputs, decoder_outputs])
 # Concat attention input and decoder LSTM output
 decoder_concat_input = Concatenate(axis=-1, name='concat_layer')([decoder_outputs, attn_out])
-#dense layer
+# dense layer
 decoder_dense =  TimeDistributed(Dense(summary_vocab_size, activation='softmax'))
 decoder_outputs = decoder_dense(decoder_concat_input)
 # Define the model 
@@ -1571,6 +1597,9 @@ decoder_model = Model(
 </code></pre>
 
 <h5><a id="greedy"></a>Greedy Search</h5>
+<p>
+  Greedy search identifies the token with the highest probability at each time step, adds the word corresponding to that token to the start of the generated summary, and feeds the token back to the model to generate the next work. Summary generation goes on until the stop condition is met which is either receiving the end token or the summary reaching <code>max_summary_num_words</code>.
+</p>
 <pre class="prettyprint lang-language"><code class="language-python">def greedy_search(text):
       
       input_seq = text2seq(text)
@@ -2050,7 +2079,12 @@ def summarize(text, original_summary=None, algo='greedy', beam_width=3, verbose=
               <p class="text-align: center;">
                 <img src="output_116_9.png" style="width: 100%; display: block; margin: 10px auto 20px;"/>
               </p>
+              <h3>Summary and Conclusion</h3>
+              <p>
+                I hope that you found this project to be rather interesting and informative. One of my main recommendations for working with this dataset and model is either use a GPU, a subset of the dataset, or plenty of time to train your model. As you might be able to expect, the model will not be able to make good predictions just by seeing many reviews, it needs so see the reviews many times to be able to understand the relationship between words and between descriptions & summaries. 
 
+In short, I'm pleased with how well this model performs. After creating numerous reviews and checking those from the dataset, I can happily say that most of the generated summaries are appropriate, some of them are great, and some of them make mistakes. 
+              </p>
           </div>
         </div>
       </section>
