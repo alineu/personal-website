@@ -24,6 +24,6 @@ public/pydsvenv/
 public/.env
 public/**/*.py
 .firebaserc
-.firebase
-.firebase.json
+.firebase/
+firebase.json
 .DS_Store
