@@ -11,6 +11,7 @@ public/*.pdf
 **/*.ppt
 **/*.pptx
 **/*.py
+**/*.log
 public/assets/img/later/*
 public/team.html
 public/portfolio-details.html
