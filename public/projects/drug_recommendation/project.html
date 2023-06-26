@@ -1617,12 +1617,6 @@ test accuracy: 74.72%</pre>
                     </tr>
                   </tbody>
                 </table>
-                <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                </ul>
                 <h3>Deep learning models for sentiment analysis</h3>
                 <p>
                   In this section we develop deep learning models for sentiment analysis. In the <strong>Model Selection</strong> process, I explore different neural network architectures for sentiment analysis. Model selection is the process of fitting multiple models on a given dataset and choosing one over all others. I start with the baseline model which uses <code>CountVectorizer</code> as the encoding method which is piped into a simlple neural network. This model is the baseline model. I used <code class="library">tensorflow</code> to design the neural networks in this project. 
@@ -1966,7 +1960,7 @@ es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=30)
 callbacks_list = [checkpoint, es]
 history = model.fit(vectorized_features_tr.toarray(), y_tr, epochs=100, 
                     batch_size=64, callbacks=callbacks_list, shuffle=False, 
-                    validation_data=(vectorized_features_val.toarray(), y_val))
+                    validation_data=(vectorized_features_val.toarray(), y_val))</code></pre>
                 <div style="text-align:center">
                 <a id="fig18" style="font-size: 1.5em;">Figure 18</a>
                 </div>
@@ -1982,8 +1976,6 @@ history = model.fit(vectorized_features_tr.toarray(), y_tr, epochs=100,
                     </p>
                   </li>
                   <li>When comparing the performance of the network on training and validation data, we notice that the inaccuracies in predicting negative reviews contributes the most to the poorer performance of the model on validation data. Looking at the confusion matrix, in any case, the model seems to be doing a great job in identifying the positive reviews. <code>Keras</code> offers the <code>class_weight</code> argument in the <code>fit()</code> method which can be used to treat the two classes differently when calculating the loss function. This is something that I explored and I'll present the outcomes later in the project.</li>
-                  <li></li>
-                  <li></li>
                 </ul>
                 <pre class="prettyprint lang-language"><code class="language-python"># load the histories
 with open('model_baseline_history.pkl', 'rb') as pickle_file:
@@ -1991,7 +1983,7 @@ with open('model_baseline_history.pkl', 'rb') as pickle_file:
 pickle_file.close()
 with open('model_00_history.pkl', 'rb') as pickle_file:
     hist_model_00 = pickle.load(pickle_file)
-pickle_file.close()
+pickle_file.close()</code></pre>
 
 
                   <h4>Adding a dropout layer</h4>
